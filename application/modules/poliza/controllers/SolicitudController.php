@@ -2441,8 +2441,8 @@ public function renovacionAutomotoresAction()
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -2579,8 +2579,8 @@ public function renovacionAutomotoresAction()
 
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 	
@@ -2712,8 +2712,8 @@ public function enviarSolicitudCompaniaResponsabilidadCivilAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -2830,8 +2830,8 @@ public function enviarSolicitudCompaniaResponsabilidadCivilAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -2945,8 +2945,8 @@ public function enviarSolicitudCompaniaTransporteMercaderiaAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -3076,8 +3076,8 @@ public function enviarSolicitudCompaniaAccidentesPersonalesAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -3197,8 +3197,8 @@ public function enviarSolicitudCompaniaIgjAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -3327,8 +3327,8 @@ public function enviarSolicitudCompaniaIgjAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		
@@ -3457,8 +3457,8 @@ public function enviarSolicitudCompaniaIgjAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
 	    $to = $email;
 		

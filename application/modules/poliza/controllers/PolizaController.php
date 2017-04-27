@@ -3549,8 +3549,8 @@ public  function enviarSolicitudEndosoCompaniaAduanerosAction(){
 		
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	   //Si es solicitud de endoso
 	    $subject = " Solicitud de Endoso de Poliza Nro.".$m_poliza->numero_poliza." de Cliente".$m_asegurado->nombre;
 	   
@@ -3689,8 +3689,8 @@ public function enviarSolicitudEndosoCompaniaConstruccionAction(){
 
 		$headers = "MIME-Version: 1.0\r\n";
 	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
-	    $headers .= "From: SConsultora <solicitud@sconsultora.com.ar>\r\n";
-	    $headers .= "Bcc:solicitud@sconsultora.com.ar\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
 	      $subject = " Solicitud de Endoso de Poliza Nro.".$m_poliza->numero_poliza." de Cliente".$m_asegurado->nombre;
 	    $to = $email;
 	
