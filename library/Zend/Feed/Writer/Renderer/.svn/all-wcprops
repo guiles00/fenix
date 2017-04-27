@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Feed/Writer/Renderer
+END
+RendererInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Feed/Writer/Renderer/RendererInterface.php
+END
+RendererAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Feed/Writer/Renderer/RendererAbstract.php
+END

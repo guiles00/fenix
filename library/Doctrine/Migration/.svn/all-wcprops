@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration
+END
+Builder.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/Builder.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/Exception.php
+END
+IrreversibleMigrationException.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/IrreversibleMigrationException.php
+END
+Process.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/Process.php
+END
+Base.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/Base.php
+END
+Diff.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Migration/Diff.php
+END

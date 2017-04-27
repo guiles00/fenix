@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query
+END
+Groupby.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Groupby.php
+END
+Tokenizer.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Tokenizer.php
+END
+Filter.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Filter.php
+END
+Condition.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Condition.php
+END
+Limit.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Limit.php
+END
+Select.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Select.php
+END
+Registry.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Registry.php
+END
+Parser.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Parser.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Abstract.php
+END
+Set.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Set.php
+END
+Having.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Having.php
+END
+Orderby.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Orderby.php
+END
+Where.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Where.php
+END
+Check.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Check.php
+END
+From.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/From.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Exception.php
+END
+JoinCondition.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/JoinCondition.php
+END
+Forupdate.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Forupdate.php
+END
+Offset.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Offset.php
+END
+Part.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Query/Part.php
+END

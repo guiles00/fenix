@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Iterator
+END
+Normal.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Iterator/Normal.php
+END
+Offset.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Iterator/Offset.php
+END
+Expandable.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Iterator/Expandable.php
+END

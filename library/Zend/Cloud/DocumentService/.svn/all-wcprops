@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService
+END
+DocumentSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/DocumentSet.php
+END
+QueryAdapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/QueryAdapter.php
+END
+Query.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Query.php
+END
+Factory.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Factory.php
+END
+Document.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Document.php
+END
+Adapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Adapter.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Exception.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/StorageService/Adapter
+END
+FileSystem.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/StorageService/Adapter/FileSystem.php
+END
+Nirvanix.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/StorageService/Adapter/Nirvanix.php
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/StorageService/Adapter/WindowsAzure.php
+END
+S3.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/StorageService/Adapter/S3.php
+END

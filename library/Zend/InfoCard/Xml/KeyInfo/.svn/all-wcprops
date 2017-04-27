@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/InfoCard/Xml/KeyInfo
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/InfoCard/Xml/KeyInfo/Interface.php
+END
+Default.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/InfoCard/Xml/KeyInfo/Default.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/InfoCard/Xml/KeyInfo/Abstract.php
+END
+XmlDSig.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/InfoCard/Xml/KeyInfo/XmlDSig.php
+END

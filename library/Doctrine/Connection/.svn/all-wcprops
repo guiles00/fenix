@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection
+END
+Pgsql.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Pgsql.php
+END
+Mssql.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Mssql.php
+END
+Profiler.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Profiler.php
+END
+Mock.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Mock.php
+END
+Common.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Common.php
+END
+Module.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Module.php
+END
+Sqlite.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Sqlite.php
+END
+UnitOfWork.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/UnitOfWork.php
+END
+Oracle.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Oracle.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Exception.php
+END
+Statement.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Statement.php
+END
+Mysql.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Mysql.php
+END
+Db2.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Connection/Db2.php
+END

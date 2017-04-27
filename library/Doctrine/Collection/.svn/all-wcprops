@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection
+END
+OnDemand.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/OnDemand.php
+END
+Iterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Iterator.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Exception.php
+END
+Offset.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Collection/Offset.php
+END

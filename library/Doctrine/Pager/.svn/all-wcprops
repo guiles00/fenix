@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Pager
+END
+Layout.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Pager/Layout.php
+END
+Range.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Pager/Range.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Pager/Exception.php
+END

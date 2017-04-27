@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation
+END
+Nest.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/Nest.php
+END
+ForeignKey.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/ForeignKey.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/Exception.php
+END
+Parser.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/Parser.php
+END
+Association.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/Association.php
+END
+LocalKey.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Relation/LocalKey.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Signature
+END
+Hmac.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Signature/Hmac.php
+END
+Plaintext.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Signature/Plaintext.php
+END
+SignatureAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Signature/SignatureAbstract.php
+END
+Rsa.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Signature/Rsa.php
+END

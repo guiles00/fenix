@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage
+END
+Maildir.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Maildir.php
+END
+Folder.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Folder.php
+END
+Mbox.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Mbox.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Exception.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Abstract.php
+END
+Pop3.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Pop3.php
+END
+Imap.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Storage/Imap.php
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle/Interface.php
+END
+Sliding.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle/Sliding.php
+END
+All.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle/All.php
+END
+Jumping.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle/Jumping.php
+END
+Elastic.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/ScrollingStyle/Elastic.php
+END

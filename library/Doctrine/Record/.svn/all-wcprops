@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record
+END
+Filter.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Filter.php
+END
+Iterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Iterator.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Exception.php
+END
+UnknownPropertyException.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/UnknownPropertyException.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Abstract.php
+END
+Generator.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Generator.php
+END
+Listener.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Record/Listener.php
+END

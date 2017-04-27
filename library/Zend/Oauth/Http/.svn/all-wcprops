@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Http
+END
+RequestToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Http/RequestToken.php
+END
+Utility.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Http/Utility.php
+END
+UserAuthorization.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Http/UserAuthorization.php
+END
+AccessToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Oauth/Http/AccessToken.php
+END

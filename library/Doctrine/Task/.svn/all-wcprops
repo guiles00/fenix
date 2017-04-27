@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task
+END
+GenerateMigrationsDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateMigrationsDb.php
+END
+BuildAllLoad.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/BuildAllLoad.php
+END
+GenerateMigration.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateMigration.php
+END
+GenerateSql.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateSql.php
+END
+RebuildDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/RebuildDb.php
+END
+CreateDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/CreateDb.php
+END
+GenerateYamlDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateYamlDb.php
+END
+GenerateModelsDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateModelsDb.php
+END
+DumpData.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/DumpData.php
+END
+Dql.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/Dql.php
+END
+GenerateMigrationsDiff.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateMigrationsDiff.php
+END
+CreateTables.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/CreateTables.php
+END
+GenerateMigrationsModels.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateMigrationsModels.php
+END
+GenerateModelsYaml.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateModelsYaml.php
+END
+GenerateYamlModels.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/GenerateYamlModels.php
+END
+Migrate.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/Migrate.php
+END
+BuildAllReload.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/BuildAllReload.php
+END
+DropDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/DropDb.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/Exception.php
+END
+LoadData.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/LoadData.php
+END
+BuildAll.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/BuildAll.php
+END
+Compile.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Task/Compile.php
+END

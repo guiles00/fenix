@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache
+END
+Driver.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Driver.php
+END
+Array.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Array.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Interface.php
+END
+Xcache.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Xcache.php
+END
+Memcache.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Memcache.php
+END
+Db.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Db.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Exception.php
+END
+Apc.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Cache/Apc.php
+END

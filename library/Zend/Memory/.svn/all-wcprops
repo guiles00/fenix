@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory
+END
+Manager.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory/Manager.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory/Exception.php
+END
+AccessController.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory/AccessController.php
+END
+Container.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory/Container.php
+END
+Value.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Memory/Value.php
+END

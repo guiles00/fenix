@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict
+END
+Pgsql.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Pgsql.php
+END
+Mssql.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Mssql.php
+END
+Sqlite.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Sqlite.php
+END
+Oracle.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Oracle.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Exception.php
+END
+Mysql.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/DataDict/Mysql.php
+END

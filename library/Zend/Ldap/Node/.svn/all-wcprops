@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node
+END
+ChildrenIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/ChildrenIterator.php
+END
+Collection.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Collection.php
+END
+Schema.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Schema.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Abstract.php
+END
+RootDse.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/RootDse.php
+END

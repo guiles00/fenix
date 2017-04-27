@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension
+END
+ThumbnailLink.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/ThumbnailLink.php
+END
+BooksCategory.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/BooksCategory.php
+END
+InfoLink.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/InfoLink.php
+END
+Review.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/Review.php
+END
+AnnotationLink.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/AnnotationLink.php
+END
+Embeddability.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/Embeddability.php
+END
+PreviewLink.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/PreviewLink.php
+END
+BooksLink.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/BooksLink.php
+END
+Viewability.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Gdata/Books/Extension/Viewability.php
+END

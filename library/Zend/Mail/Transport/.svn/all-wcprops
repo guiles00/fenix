@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport
+END
+Smtp.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport/Smtp.php
+END
+File.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport/File.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport/Exception.php
+END
+Sendmail.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport/Sendmail.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Mail/Transport/Abstract.php
+END

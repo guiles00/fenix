@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word
+END
+SeparatorToCamelCase.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/SeparatorToCamelCase.php
+END
+DashToUnderscore.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/DashToUnderscore.php
+END
+UnderscoreToDash.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/UnderscoreToDash.php
+END
+DashToSeparator.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/DashToSeparator.php
+END
+DashToCamelCase.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/DashToCamelCase.php
+END
+CamelCaseToUnderscore.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/CamelCaseToUnderscore.php
+END
+UnderscoreToSeparator.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/UnderscoreToSeparator.php
+END
+UnderscoreToCamelCase.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/UnderscoreToCamelCase.php
+END
+SeparatorToDash.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/SeparatorToDash.php
+END
+CamelCaseToDash.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/CamelCaseToDash.php
+END
+CamelCaseToSeparator.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/CamelCaseToSeparator.php
+END
+SeparatorToSeparator.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Filter/Word/SeparatorToSeparator.php
+END

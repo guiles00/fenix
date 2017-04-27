@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Adapter
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure.php
+END
+AbstractAdapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Adapter/AbstractAdapter.php
+END
+SimpleDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/DocumentService/Adapter/SimpleDb.php
+END

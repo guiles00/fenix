@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/EventListener
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/EventListener/Interface.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/EventListener/Exception.php
+END
+Chain.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/EventListener/Chain.php
+END

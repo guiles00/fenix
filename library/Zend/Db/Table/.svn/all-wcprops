@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table
+END
+Rowset.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Rowset.php
+END
+Row.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Row.php
+END
+Select.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Select.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Exception.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Abstract.php
+END
+Definition.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Table/Definition.php
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Currency
+END
+CurrencyInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Currency/CurrencyInterface.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Currency/Exception.php
+END

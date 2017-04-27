@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Auth/Storage
+END
+Session.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Auth/Storage/Session.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Auth/Storage/Interface.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Auth/Storage/Exception.php
+END
+NonPersistent.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Auth/Storage/NonPersistent.php
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator
+END
+SerializableLimitIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/SerializableLimitIterator.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/Exception.php
+END
+AdapterAggregate.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Paginator/AdapterAggregate.php
+END

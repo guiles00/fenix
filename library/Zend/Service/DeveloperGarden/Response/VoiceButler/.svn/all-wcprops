@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler
+END
+NewCallSequencedResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/NewCallSequencedResponse.php
+END
+VoiceButlerAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/VoiceButlerAbstract.php
+END
+NewCallResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/NewCallResponse.php
+END
+CallStatusResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/CallStatusResponse.php
+END
+CallStatus2Response.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/CallStatus2Response.php
+END
+TearDownCallResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/TearDownCallResponse.php
+END

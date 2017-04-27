@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter
+END
+Null.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/Null.php
+END
+PlatformJobQueue.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/PlatformJobQueue.php
+END
+Array.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/Array.php
+END
+Activemq.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/Activemq.php
+END
+AdapterInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/AdapterInterface.php
+END
+Db.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/Db.php
+END
+AdapterAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/AdapterAbstract.php
+END
+Memcacheq.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Queue/Adapter/Memcacheq.php
+END

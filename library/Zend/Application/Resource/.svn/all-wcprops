@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource
+END
+Session.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Session.php
+END
+Mail.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Mail.php
+END
+Multidb.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Multidb.php
+END
+Locale.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Locale.php
+END
+Useragent.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Useragent.php
+END
+Db.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Db.php
+END
+Log.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Log.php
+END
+Frontcontroller.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Frontcontroller.php
+END
+View.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/View.php
+END
+Modules.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Modules.php
+END
+Router.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Router.php
+END
+Layout.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Layout.php
+END
+Cachemanager.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Cachemanager.php
+END
+Resource.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Resource.php
+END
+Translate.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Translate.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Exception.php
+END
+Dojo.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Dojo.php
+END
+ResourceAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/ResourceAbstract.php
+END
+Navigation.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Application/Resource/Navigation.php
+END

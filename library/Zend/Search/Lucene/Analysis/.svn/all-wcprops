@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Analysis
+END
+Analyzer.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Analysis/Analyzer.php
+END
+Token.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Analysis/Token.php
+END
+TokenFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Analysis/TokenFilter.php
+END

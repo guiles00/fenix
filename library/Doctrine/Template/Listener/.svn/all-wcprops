@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Template/Listener
+END
+Sluggable.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Template/Listener/Sluggable.php
+END
+Timestampable.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Template/Listener/Timestampable.php
+END
+SoftDelete.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Doctrine/Template/Listener/SoftDelete.php
+END

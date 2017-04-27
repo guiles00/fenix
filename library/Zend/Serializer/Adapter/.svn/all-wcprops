@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter
+END
+Amf0.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/Amf0.php
+END
+PythonPickle.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/PythonPickle.php
+END
+Json.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/Json.php
+END
+PhpSerialize.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/PhpSerialize.php
+END
+Amf3.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/Amf3.php
+END
+AdapterInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/AdapterInterface.php
+END
+Igbinary.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/Igbinary.php
+END
+AdapterAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/AdapterAbstract.php
+END
+Wddx.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/Wddx.php
+END
+PhpCode.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Serializer/Adapter/PhpCode.php
+END

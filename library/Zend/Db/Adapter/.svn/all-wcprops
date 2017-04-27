@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter
+END
+Mysqli.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Mysqli.php
+END
+Sqlsrv.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Sqlsrv.php
+END
+Oracle.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Oracle.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Exception.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Abstract.php
+END
+Db2.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Db/Adapter/Db2.php
+END

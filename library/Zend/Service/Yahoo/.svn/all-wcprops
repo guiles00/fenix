@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo
+END
+PageDataResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/PageDataResult.php
+END
+ImageResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/ImageResult.php
+END
+VideoResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/VideoResult.php
+END
+LocalResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/LocalResultSet.php
+END
+Image.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/Image.php
+END
+InlinkDataResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/InlinkDataResultSet.php
+END
+Result.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/Result.php
+END
+ResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/ResultSet.php
+END
+InlinkDataResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/InlinkDataResult.php
+END
+LocalResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/LocalResult.php
+END
+ImageResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/ImageResultSet.php
+END
+VideoResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/VideoResultSet.php
+END
+PageDataResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/PageDataResultSet.php
+END
+NewsResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/NewsResult.php
+END
+WebResult.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/WebResult.php
+END
+WebResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/WebResultSet.php
+END
+NewsResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Service/Yahoo/NewsResultSet.php
+END

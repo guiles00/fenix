@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Schema/ObjectClass
+END
+ActiveDirectory.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Schema/ObjectClass/ActiveDirectory.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Schema/ObjectClass/Interface.php
+END
+OpenLdap.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Ldap/Node/Schema/ObjectClass/OpenLdap.php
+END

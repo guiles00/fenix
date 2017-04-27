@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index
+END
+SegmentWriter.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/SegmentWriter.php
+END
+TermsPriorityQueue.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/TermsPriorityQueue.php
+END
+FieldInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/FieldInfo.php
+END
+DictionaryLoader.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/DictionaryLoader.php
+END
+TermInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/TermInfo.php
+END
+Term.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/Term.php
+END
+SegmentMerger.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/SegmentMerger.php
+END
+SegmentInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/SegmentInfo.php
+END
+DocsFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/DocsFilter.php
+END
+Writer.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Search/Lucene/Index/Writer.php
+END

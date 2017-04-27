@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud
+END
+AbstractFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/AbstractFactory.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/Exception.php
+END
+OperationNotAvailableException.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/repositorio/!svn/ver/209/appmvc_gseguros_1/library/Zend/Cloud/OperationNotAvailableException.php
+END
