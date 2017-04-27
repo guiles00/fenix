@@ -1,0 +1,77 @@
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content='text/html; charset=iso-8859-1'>
+</HEAD>
+<BODY bgcolor='edebc0'>
+<BR>
+<TABLE width=600 border=0 align=center cellPadding=0 cellSpacing=1 bgcolor='#336666'>
+  <!--DWLayoutTable-->
+  
+  <TBODY>
+    <TR> 
+      <TD width='598' height="597" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+        <!--DWLayoutTable-->
+        <tr>
+          <td width="19" rowspan="2" valign="top"><!--DWLayoutEmptyCell-->&nbsp;</td>
+          <td width="558" height="20" valign="top"><!--DWLayoutEmptyCell-->&nbsp;</td>
+          <td width="21" rowspan="2" valign="top"><!--DWLayoutEmptyCell-->&nbsp;</td>
+        </tr>
+        <tr>
+          <TD height='551' align=left valign='top'> <P class=titulo>SRES: {compania}<br>
+                        Solicitud N&ordm; {numero_solicitud}.</P>
+                        <P class=subtitulo>Solicitamos emitir poliza de Seguros de acuerdo a los siguientes datos:</P>
+              <p class='cuerpo'> <strong>Tomador / Proponente:</strong> {cliente} <br>
+                          Domicilio: {domicilio_cliente}<br>
+                Cuit: {cuit_cliente} - 
+              IVA: {iva_cliente} </p>
+                        <p class='cuerpo'> Productor: {productor} - 
+						Codigo Productor: {codigo_productor}</p>
+                        <p class='cuerpo'>Tipo de Seguro: {tipo_seguro}<br>
+                           
+                          Tipo de Movimiento:  {tipo_movimiento}<br>
+              Vigencia: Desde {vigencia_desde}  Hasta {vigencia_hasta}   </p>
+                        <p class='cuerpo'>                          <strong>Asegurado:</strong> {asegurado} <br>
+                          <strong>Beneficiario:</strong> {beneficiario} <br>
+                          Cuit Beneficiario: {cuit_beneficiario} <br>
+              Domicilio del Beneficiario: {domicilio_beneficiario} </p>
+                        <p class='cuerpo'>              Cobertura: {motivo_garantia}   <br>
+                          Suma asegurada: {moneda}{suma_asegurada} - Prima: {prima} 
+                            <br>
+              Objeto del Seguro: {objeto}
+<p class='cuerpo'>Nro de Licitaci&oacute;n: {licitacion}<br>
+                          Expediente: {expediente}<br>
+                        Obra: {obra} 
+                        <br>
+                        Apertura Licitaci&oacute;n: {apertura} <br>
+		                  <br>
+<strong>Clausula Especial:</strong>{clausula}
+<p class='cuerpo'>
+  Certificaciones: {certificaciones} 
+<p class='cuerpo'><strong>Descripci&oacute;n Adicional:</strong><br> 
+                          {adicional} 
+              <p class='cuerpo'><strong>Observaciones:</strong><br> 
+              {observaciones_compania} </p>
+                       
+                          .........................................................................................................................................
+                          <p class='cuerpo'>Cordiales saludos,<br>
+                        Miriam Malet</p>
+<p><strong>S Consultora<br>
+  </strong>Tel: 011-4381-7312 / 011-4383-1617<br>
+  Nextel: 575*342 / 15-6094-8159<br>
+              .........................................................................................................................................<span class='cuerpo'><br>
+              </span></p>
+                        <div align='left'>
+                          <div align='left'></div>
+                        </div>
+                        <div align='left'>
+<div align='left'></div>
+            </div>                      </TD>
+          </tr>
+        
+        
+        
+      </table>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</BODY></HTML>
