@@ -1,0 +1,125 @@
+@CHARSET "ISO-8859-1";
+
+#page, #header, #footer, #squeeze, #container #content .sidebar {
+	word-wrap:break-word;
+}
+/********************************** Cabecera *********************************/
+#header {
+	display: block;
+	height: 35px;
+	min-height: 35px;
+	margin-bottom: 15px;
+	background-color: #2A2A2A;
+}
+
+#header-content {
+	display: inline-block;
+	position: relative;
+	border-bottom: 1px solid white;
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+
+#logo{
+	display: inline-block;
+	float: left;
+	width: 40px;
+	height: 35px;	
+}
+
+#logo img{
+	width: 40px;
+	height: 35px;
+}
+
+#title{
+	display: inline-block;
+	height: 33px;
+	color: white;
+	position: relative;
+	float: left;
+}
+
+/********************************** /Fin Cabecera ****************************/
+
+/*Estilos del Menú de la Página Principal*/
+	#menu-accordion .menu-item {
+		cursor:pointer;
+		outline-color:-moz-use-text-color;
+		outline-style:none;
+		outline-width:0;
+		padding:0.2em 0.5em;
+		position:relative;
+		text-align:center;
+		text-decoration:none !important;
+		line-height:2em;
+		width: 100px;
+	}
+	
+	#menu-accordion .ui-accordion .ui-accordion-content {
+		padding:1em /*2.2em*/;
+	}
+	
+/* /Fin Menú*/
+
+
+.column_actions span:hover {
+	color: #0033CC;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#footer {
+	display: block;
+	height: auto;
+	min-height: 15px;
+	
+}
+
+.ui-layout-center, .ui-layout-north, .ui-layout-west, .ui-layout-east {
+	background-color: white;
+}
+.ui-layout-south {
+	text-align: center;
+}
+
+
+/*Splitter style */
+
+
+#LeftPane, #CenterPane {
+	/* optional, initial splitbar position */
+	overflow: auto;
+}
+/*
+ * Right-side element of the splitter.
+*/
+
+#RightPane {
+	padding: 2px;
+	overflow: auto;
+}
+.ui-tabs-nav li {position: relative;}
+.ui-tabs-selected a span {padding-right: 10px;}
+.ui-tabs-close {display: none;position: absolute;top: 3px;right: 0px;z-index: 800;width: 16px;height: 14px;font-size: 10px; font-style: normal;cursor: pointer;}
+.ui-tabs-selected .ui-tabs-close {display: block;}
+.ui-layout-west .ui-jqgrid tr.jqgrow td { border-bottom: 0px none;}
+.ui-datepicker {z-index:1200;}
+
+
+.nobr {white-space: nowrap}
+
+.input-container{
+	display:block;
+	float:left;
+	white-space:nowrap;
+	width:30em;
+}
+
+.input-container label { 
+	float:left;
+	margin:5px 0 0;
+	padding:0;
+	text-align:right;
+	width:5em;
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jquery/jquery.metadata.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Alta solicitud Aduaneros.html">Alta solicitud Aduaneros</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Solicitud Aduaneros.html">Solicitud Aduaneros</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: jquery/jquery.metadata.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*
+ * Metadata - jQuery plugin for parsing metadata from elements
+ *
+ * Copyright (c) 2006 John Resig, Yehuda Katz, J�rn Zaefferer
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ *
+ * Revision: $Id: metadata.js 1631 2007-04-05 16:02:19Z joern $
+ *
+ */
+
+/**
+ * Sets the type of metadata to use. Metadata is encoded in JSON, and each property
+ * in the JSON will become a property of the element itself.
+ *
+ * There are three supported types of metadata storage:
+ *
+ *   attr:  Inside an attribute. The name parameter indicates *which* attribute.
+ *          
+ *   class: Inside the class attribute, wrapped in curly braces: { }
+ *   
+ *   elem:  Inside a child element (e.g. a script tag). The
+ *          name parameter indicates *which* element.
+ *          
+ * The metadata for an element is loaded the first time the element is accessed via jQuery.
+ *
+ * As a result, you can define the metadata type, use $(expr) to load the metadata into the elements
+ * matched by expr, then redefine the metadata type and run another $(expr) for other elements.
+ * 
+ * @name $.meta.setType
+ *
+ * @example &lt;p id=&quot;one&quot; class=&quot;some_class {item_id: 1, item_label: &#x27;Label&#x27;}&quot;&gt;This is a p&lt;/p&gt;
+ * @before $.meta.setType(&quot;class&quot;)
+ * @after $(&quot;#one&quot;).data().item_id == 1; $(&quot;#one&quot;)[0].item_label == &quot;Label&quot;
+ * @desc Reads metadata from the class attribute
+ * 
+ * @example &lt;p id=&quot;one&quot; class=&quot;some_class&quot; data=&quot;{item_id: 1, item_label: &#x27;Label&#x27;}&quot;&gt;This is a p&lt;/p&gt;
+ * @before $.meta.setType(&quot;attr&quot;, &quot;data&quot;)
+ * @after $(&quot;#one&quot;).data().item_id == 1; $(&quot;#one&quot;)[0].item_label == &quot;Label&quot;
+ * @desc Reads metadata from a &quot;data&quot; attribute
+ * 
+ * @example &lt;p id=&quot;one&quot; class=&quot;some_class&quot;&gt;&lt;script&gt;{item_id: 1, item_label: &#x27;Label&#x27;}&lt;/script&gt;This is a p&lt;/p&gt;
+ * @before $.meta.setType(&quot;elem&quot;, &quot;script&quot;)
+ * @after $(&quot;#one&quot;).data().item_id == 1; $(&quot;#one&quot;)[0].item_label == &quot;Label&quot;
+ * @desc Reads metadata from a nested script element
+ * 
+ * @param String type The encoding type
+ * @param String name The name of the attribute to be used to get metadata (optional)
+ * @cat Plugins/Metadata
+ * @descr Sets the type of encoding to be used when loading metadata for the first time
+ * @type undefined
+ * @see data()
+ */
+
+(function($) {
+	// settings
+	$.meta = {
+	  type: &quot;class&quot;,
+	  name: &quot;metadata&quot;,
+	  setType: function(type,name){
+	    this.type = type;
+	    this.name = name;
+	  },
+	  cre: /({.*})/,
+	  single: &#x27;metadata&#x27;
+	};
+	
+	// reference to original setArray()
+	var setArray = $.fn.setArray;
+	
+	// define new setArray()
+	$.fn.setArray = function(arr){
+	    return setArray.apply( this, arguments ).each(function(){
+	      if ( this.nodeType == 9 || $.isXMLDoc(this) || this.metaDone ) return;
+	      
+	      var data = &quot;{}&quot;;
+	      
+	      if ( $.meta.type == &quot;class&quot; ) {
+	        var m = $.meta.cre.exec( this.className );
+	        if ( m )
+	          data = m[1];
+	      } else if ( $.meta.type == &quot;elem&quot; ) {
+	      	if( !this.getElementsByTagName ) return;
+	        var e = this.getElementsByTagName($.meta.name);
+	        if ( e.length )
+	          data = $.trim(e[0].innerHTML);
+	      } else if ( this.getAttribute != undefined ) {
+	        var attr = this.getAttribute( $.meta.name );
+	        if ( attr )
+	          data = attr;
+	      }
+	      
+	      if ( !/^{/.test( data ) )
+	        data = &quot;{&quot; + data + &quot;}&quot;;
+	
+	      eval(&quot;data = &quot; + data);
+	
+	      if ( $.meta.single )
+	        this[ $.meta.single ] = data;
+	      else
+	        $.extend( this, data );
+	      
+	      this.metaDone = true;
+	    });
+	};
+	
+	/**
+	 * Returns the metadata object for the first member of the jQuery object.
+	 *
+	 * @name data
+	 * @descr Returns element&#x27;s metadata object
+	 * @type jQuery
+	 * @cat Plugins/Metadata
+	 */
+	$.fn.data = function() {
+	  return this[0][$.meta.single];
+	};
+})(jQuery);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+table {
+	text-align: left;
+	font-size: 12px;
+	font-family: verdana;
+	background: #c0c0c0;
+}
+
+table thead tr,
+table tfoot tr {
+	background: #c0c0c0;
+}
+
+table tbody {
+	overflow-x: hidden; 
+	overflow-y: scroll; 
+	height: 160px;
+}
+
+table tbody tr {
+	background: #f0f0f0;
+}
+
+td, th {
+	border: 1px solid white;
+}

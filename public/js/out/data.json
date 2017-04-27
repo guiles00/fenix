@@ -1,0 +1,1333 @@
+{
+    "project": {},
+    "files": {
+        "jquery/jquery.cookie.js": {
+            "name": "jquery/jquery.cookie.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "jquery/jquery.layout.js": {
+            "name": "jquery/jquery.layout.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "jquery/jquery.metadata.js": {
+            "name": "jquery/jquery.metadata.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "jquery/jquery.sexy-combo.js": {
+            "name": "jquery/jquery.sexy-combo.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "jquery/jquery.sexy-combo.min.js": {
+            "name": "jquery/jquery.sexy-combo.min.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "jquery/jquery.sexy-combo.pack.js": {
+            "name": "jquery/jquery.sexy-combo.pack.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "js/date.js": {
+            "name": "js/date.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "js/jquery.tablesorter.js": {
+            "name": "js/jquery.tablesorter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "gseguros.poliza.solicitud.alta-aduaneros.js": {
+            "name": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "modules": {
+                "Solicitud Aduaneros": 1
+            },
+            "classes": {
+                "Alta solicitud Aduaneros": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Solicitud Aduaneros": {
+            "name": "Solicitud Aduaneros",
+            "submodules": {},
+            "classes": {
+                "Alta solicitud Aduaneros": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 7
+        }
+    },
+    "classes": {
+        "Alta solicitud Aduaneros": {
+            "name": "Alta solicitud Aduaneros",
+            "shortname": "Alta solicitud Aduaneros",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Solicitud Aduaneros",
+            "namespace": "",
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 7
+        }
+    },
+    "classitems": [
+        {
+            "file": "jquery/jquery.cookie.js",
+            "line": 1,
+            "description": "Cookie plugin\n\nCopyright (c) 2006 Klaus Hartl (stilbuero.de)\nDual licensed under the MIT and GPL licenses:\nhttp://www.opensource.org/licenses/mit-license.php\nhttp://www.gnu.org/licenses/gpl.html",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.cookie.js",
+            "line": 11,
+            "description": "Create a cookie with the given name and value and other optional parameters.",
+            "example": [
+                " $.cookie('the_cookie', 'the_value');",
+                " $.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });",
+                " $.cookie('the_cookie', 'the_value');",
+                " $.cookie('the_cookie', null);"
+            ],
+            "desc": "Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain\n      used when the cookie was set.",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "name The name of the cookie."
+                },
+                {
+                    "name": "String",
+                    "description": "value The value of the cookie."
+                },
+                {
+                    "name": "Object",
+                    "description": "options An object literal containing key/value pairs to provide optional cookie attributes."
+                }
+            ],
+            "option": "Boolean secure If true, the secure attribute of the cookie will be set and the cookie transmission will\n                       require a secure protocol (like HTTPS).",
+            "type": "undefined",
+            "name": "$.cookie",
+            "cat": "Plugins/Cookie",
+            "author": "Klaus Hartl/klaus.hartl@stilbuero.de",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.cookie.js",
+            "line": 42,
+            "description": "Get the value of a cookie with the given name.",
+            "example": [
+                " $.cookie('the_cookie');"
+            ],
+            "desc": "Get the value of a cookie.",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "name The name of the cookie."
+                }
+            ],
+            "return": {
+                "description": "The value of the cookie."
+            },
+            "type": "String",
+            "name": "$.cookie",
+            "cat": "Plugins/Cookie",
+            "author": "Klaus Hartl/klaus.hartl@stilbuero.de",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 313,
+            "description": "isStr\n\nReturns true if passed param is EITHER a simple string OR a 'string object' - otherwise returns false",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 330,
+            "description": "str\n\nReturns a simple string if the passed param is EITHER a simple string OR a 'string object',\n else returns the original object",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 341,
+            "description": "min / max\n\nAlias for Math.min/.max to simplify coding",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 349,
+            "description": "transformData\n\nProcesses the options passed in and transforms them into the format used by layout()\nMissing keys are added, and converts the data if passed in 'flat-format' (no sub-keys)\nIn flat-format, pane-specific-settings are prefixed like: north__optName  (2-underscores)\nTo update effects, options MUST use nested-keys format, with an effects key",
+            "callers": "initOptions()",
+            "params": [
+                {
+                    "name": "JSON",
+                    "description": "d  Data/options passed by user - may be a single level or nested levels"
+                }
+            ],
+            "return": {
+                "description": "JSON  Creates a data struture that perfectly matches 'options', ready to be imported"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 375,
+            "description": "setFlowCallback\n\nSet an INTERNAL callback to avoid simultaneous animation\nRuns only if needed and only if all callbacks are not 'already set'!",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "action  Either 'open' or 'close'"
+                }
+            ],
+            "pane": "Boolean  param   Extra param for callback (optional)",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 411,
+            "description": "execFlowCallback\n\nRUN the INTERNAL callback for this pane - if one exists",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "action  Either 'open' or 'close'"
+                }
+            ],
+            "pane": "Boolean  param   Extra param for callback (optional)",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 443,
+            "description": "execUserCallback\n\nExecutes a Callback function after a trigger event, like resize, open or close",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   This is passed only so we can pass the 'pane object' to the callback"
+                },
+                {
+                    "name": "String",
+                    "description": "v_fn  Accepts a function name, OR a comma-delimited array: [0]=function name, [1]=argument"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 478,
+            "description": "cssNum\n\nReturns the 'current CSS value' for an element - returns 0 if property does not exist",
+            "callers": "Called by many methods",
+            "params": [
+                {
+                    "name": "jQuery",
+                    "description": "$Elem  Must pass a jQuery object - first element is processed"
+                },
+                {
+                    "name": "String",
+                    "description": "property  The name of the CSS property, eg: top, width, etc."
+                }
+            ],
+            "return": {
+                "description": "Variant  Usually is used to get an integer value for position (top, left) or size (height, width)"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 513,
+            "description": "cssW / cssH / cssSize\n\nContains logic to check boxModel & browser, and return the correct width/height for the current browser/doctype",
+            "callers": "initPanes(), sizeMidPanes(), initHandles(), sizeHandles()",
+            "params": [
+                {
+                    "name": "Variant",
+                    "description": "elem  Can accept a 'pane' (east, west, etc) OR a DOM object OR a jQuery object"
+                },
+                {
+                    "name": "Integer",
+                    "description": "outerWidth/outerHeight  (optional) Can pass a width, allowing calculations BEFORE element is resized"
+                }
+            ],
+            "return": {
+                "description": "Integer  Returns the innerHeight of the elem by subtracting padding and borders"
+            },
+            "todo": [
+                "May need to add additional logic to handle more browser/doctype variations?"
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 584,
+            "description": "getPaneSize\n\nCalculates the current 'size' (width or height) of a border-pane - optionally with 'pane spacing' added",
+            "return": {
+                "description": "Integer  Returns EITHER Width for east/west panes OR Height for north/south panes - adjusted for boxModel & browser"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 646,
+            "description": "getPaneDims\n\nReturns data for setting the size/position of center pane. Date is also used to set Height for east/west panes",
+            "return": {
+                "description": "JSON  Returns a hash of all dimensions: top, bottom, left, right, (outer) width and (outer) height"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 677,
+            "description": "getElemDims\n\nReturns data for setting size of an element (container or a pane).",
+            "callers": "create(), onWindowResize() for container, plus others for pane",
+            "return": {
+                "description": "JSON  Returns a hash of all dimensions: top, bottom, left, right, outerWidth, innerHeight, etc"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 744,
+            "description": "create\n\nInitialize the layout - called automatically whenever an instance of layout is created",
+            "callers": "NEVER explicity called",
+            "return": {
+                "description": "An object pointer to the instance created"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 781,
+            "description": "initContainer\n\nValidate and initialize container CSS and events",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 825,
+            "description": "initHotkeys\n\nBind layout hotkeys - if options enabled",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 843,
+            "description": "initOptions\n\nBuild final CONFIG and OPTIONS data",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 967,
+            "description": "initPanes\n\nInitialize module objects, styling, size and position for all panes",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1120,
+            "description": "initHandles\n\nInitialize module objects, styling, size and position for all resize bars and toggler buttons",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1216,
+            "description": "initResizable\n\nAdd resize-bars to all panes that specify it in options",
+            "dependancies": "$.fn.resizable - will abort if not found",
+            "callers": "create()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1358,
+            "description": "hide / show\n\nCompletely 'hides' a pane, including its spacing - as if it does not exist\nThe pane is not actually 'removed' from the source, so can use 'show' to un-hide it",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   The pane being hidden, ie: north, south, east, or west"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1421,
+            "description": "toggle\n\nToggles a pane open/closed by calling either open or close",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   The pane being toggled, ie: north, south, east, or west"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1438,
+            "description": "close\n\nClose the specified pane (animation optional), and resize all other panes as needed",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   The pane being closed, ie: north, south, east, or west"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1550,
+            "description": "open\n\nOpen the specified pane (animation optional), and resize all other panes as needed",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   The pane being opened, ie: north, south, east, or west"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1678,
+            "description": "lockPaneForFX\n\nMust set left/top on East/South panes so animation will work properly",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane  The pane to lock, 'east' or 'south' - any other is ignored!"
+                },
+                {
+                    "name": "Boolean",
+                    "description": "doLock  true = set left/top, false = remove"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1705,
+            "description": "bindStartSlidingEvent\n\nToggle sliding functionality of a specific pane on/off by adding removing 'slide open' trigger",
+            "callers": "open(), close()",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane  The pane to enable/disable, 'north', 'south', etc."
+                },
+                {
+                    "name": "Boolean",
+                    "description": "enable  Enable or Disable sliding?"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1732,
+            "description": "bindStopSlidingEvents\n\nAdd or remove 'mouseout' events to 'slide close' when pane is 'sliding' open or closed\nAlso increases zIndex when pane is sliding open\nSee bindStartSlidingEvent for code to control 'slide open'",
+            "callers": "slideOpen(), slideClosed()",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane  The pane to process, 'north', 'south', etc."
+                },
+                {
+                    "name": "Boolean",
+                    "description": "isOpen  Is pane open or closed?"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1822,
+            "description": "sizePane",
+            "callers": "initResizable.stop()",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "pane   The pane being resized - usually west or east, but potentially north or south"
+                },
+                {
+                    "name": "Integer",
+                    "description": "newSize  The new size for this pane - will be validated"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1860,
+            "description": "sizeMidPanes",
+            "callers": "create(), open(), close(), onWindowResize()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 1963,
+            "description": "sizeHandles\n\nCalled every time a pane is opened, closed, or resized to slide the togglers to 'center' and adjust their length if necessary",
+            "callers": "initHandles(), open(), close(), resizeAll()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2095,
+            "description": "resizeAll",
+            "callers": "window.onresize(), callbacks or custom code",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2131,
+            "description": "keyDown\n\nCapture keys when enableCursorHotkey - toggle pane if hotkey pressed",
+            "callers": "document.keydown()",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2293,
+            "description": "getBtn\n\nHelper function to validate params received by addButton utilities",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "selector \tjQuery selector for button, eg: \".ui-layout-north .toggle-button\""
+                },
+                {
+                    "name": "String",
+                    "description": "pane \t\tName of the pane the button is for: 'north', 'south', etc."
+                }
+            ],
+            "return": {
+                "description": "If both params valid, the element matching 'selector' in a jQuery wrapper - otherwise 'false'"
+            },
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2320,
+            "description": "addToggleBtn\n\nAdd a custom Toggler button for a pane",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "selector \tjQuery selector for button, eg: \".ui-layout-north .toggle-button\""
+                },
+                {
+                    "name": "String",
+                    "description": "pane \t\tName of the pane the button is for: 'north', 'south', etc."
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2340,
+            "description": "addOpenBtn\n\nAdd a custom Open button for a pane",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "selector \tjQuery selector for button, eg: \".ui-layout-north .open-button\""
+                },
+                {
+                    "name": "String",
+                    "description": "pane \t\tName of the pane the button is for: 'north', 'south', etc."
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2360,
+            "description": "addCloseBtn\n\nAdd a custom Close button for a pane",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "selector \tjQuery selector for button, eg: \".ui-layout-north .close-button\""
+                },
+                {
+                    "name": "String",
+                    "description": "pane \t\tName of the pane the button is for: 'north', 'south', etc."
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2380,
+            "description": "addPinBtn\n\nAdd a custom Pin button for a pane\n\nFour classes are added to the element, based on the paneClass for the associated pane...\nAssuming the default paneClass and the pin is 'up', these classes are added for a west-pane pin:\n - ui-layout-pane-pin\n - ui-layout-pane-west-pin\n - ui-layout-pane-pin-up\n - ui-layout-pane-west-pin-up",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "selector \tjQuery selector for button, eg: \".ui-layout-north .ui-layout-pin\""
+                },
+                {
+                    "name": "String",
+                    "description": "pane \t\tName of the pane the pin is for: 'north', 'south', etc."
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2413,
+            "description": "syncPinBtns\n\nINTERNAL function to sync 'pin buttons' when pane is opened or closed\nUnpinned means the pane is 'sliding' - ie, over-top of the adjacent panes",
+            "callers": "open(), close()",
+            "params": [
+                {
+                    "name": "pane",
+                    "description": "These are the params returned to callbacks by layout()"
+                },
+                {
+                    "name": "doPin",
+                    "description": "True means set the pin 'down', False means 'up'"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.layout.js",
+            "line": 2429,
+            "description": "setPinState\n\nChange the class of the pin button to make it look 'up' or 'down'",
+            "callers": "addPinBtn(), syncPinBtns()",
+            "params": [
+                {
+                    "name": "Element",
+                    "description": "$Pin\t\tThe pin-span element in a jQuery wrapper"
+                },
+                {
+                    "name": "Boolean",
+                    "description": "doPin\t\tTrue = set the pin 'down', False = set it 'up'"
+                },
+                {
+                    "name": "String",
+                    "description": "pinClass\tThe root classname for pins - will add '-up' or '-down' suffix"
+                }
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.metadata.js",
+            "line": 14,
+            "description": "Sets the type of metadata to use. Metadata is encoded in JSON, and each property\nin the JSON will become a property of the element itself.\n\nThere are three supported types of metadata storage:\n\n  attr:  Inside an attribute. The name parameter indicates *which* attribute.\n         \n  class: Inside the class attribute, wrapped in curly braces: { }\n  \n  elem:  Inside a child element (e.g. a script tag). The\n         name parameter indicates *which* element.\n         \nThe metadata for an element is loaded the first time the element is accessed via jQuery.\n\nAs a result, you can define the metadata type, use $(expr) to load the metadata into the elements\nmatched by expr, then redefine the metadata type and run another $(expr) for other elements.",
+            "name": "$.meta.setType",
+            "example": [
+                " <p id=\"one\" class=\"some_class {item_id: 1, item_label: 'Label'}\">This is a p</p>",
+                " <p id=\"one\" class=\"some_class\" data=\"{item_id: 1, item_label: 'Label'}\">This is a p</p>",
+                " <p id=\"one\" class=\"some_class\"><script>{item_id: 1, item_label: 'Label'}</script>This is a p</p>"
+            ],
+            "before": "$.meta.setType(\"elem\", \"script\")",
+            "after": "$(\"#one\").data().item_id == 1; $(\"#one\")[0].item_label == \"Label\"",
+            "desc": "Reads metadata from a nested script element",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "type The encoding type"
+                },
+                {
+                    "name": "String",
+                    "description": "name The name of the attribute to be used to get metadata (optional)"
+                }
+            ],
+            "cat": "Plugins/Metadata",
+            "descr": "Sets the type of encoding to be used when loading metadata for the first time",
+            "type": "undefined",
+            "see": [
+                "data()"
+            ],
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.metadata.js",
+            "line": 109,
+            "description": "Returns the metadata object for the first member of the jQuery object.",
+            "name": "data",
+            "descr": "Returns element's metadata object",
+            "type": "jQuery",
+            "cat": "Plugins/Metadata",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.sexy-combo.js",
+            "line": 1,
+            "description": "sexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.sexy-combo.min.js",
+            "line": 1,
+            "description": "sexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *\n ***************************************************************************/;(function($){$.fn.sexyCombo=function(config){return this.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}new $sc(this,config);});};var defaults={skin:\"sexy\",suffix:\"__sexyCombo\",hiddenSuffix:\"__sexyComboHidden\",renameOriginal:false,initialHiddenValue:\"\",emptyText:\"\",autoFill:false,triggerSelected:true,filterFn:null,dropUp:false,separator:\",\",key:\"value\",value:\"text\",showListCallback:null,hideListCallback:null,initCallback:null,initEventsCallback:null,changeCallback:null,textChangeCallback:null,checkWidth:true};$.sexyCombo=function(selectbox,config){if(selectbox.tagName.toUpperCase()!=\"SELECT\")return;this.config=$.extend({},defaults,config||{});this.selectbox=$(selectbox);this.options=this.selectbox.children().filter(\"option\");this.wrapper=this.selectbox.wrap(\"<div>\").hide().parent().addClass(\"combo\").addClass(this.config.skin);this.input=$(\"<input type='text' />\").appendTo(this.wrapper).attr(\"autocomplete\",\"off\").attr(\"value\",\"\").attr(\"name\",this.selectbox.attr(\"name\")+this.config.suffix);var origName=this.selectbox.attr(\"name\");var newName=origName+this.config.hiddenSuffix;if(this.config.renameOriginal){this.selectbox.attr(\"name\",newName);}this.hidden=$(\"<input type='hidden' />\").appendTo(this.wrapper).attr(\"autocomplete\",\"off\").attr(\"value\",this.config.initialHiddenValue).attr(\"name\",this.config.renameOriginal?origName:newName);this.icon=$(\"<div />\").appendTo(this.wrapper).addClass(\"icon\");this.listWrapper=$(\"<div />\").appendTo(this.wrapper).addClass(\"list-wrapper\");this.updateDrop();this.list=$(\"<ul />\").appendTo(this.listWrapper);var self=this;var optWidths=[];this.options.each(function(){var optionText=$.trim($(this).text());if(self.config.checkWidth){optWidths.push($(\"<li />\").appendTo(self.list).html(\"<span>\"+optionText+\"</span>\").addClass(\"visible\").find(\"span\").outerWidth());}else{$(\"<li />\").appendTo(self.list).html(\"<span>\"+optionText+\"</span>\").addClass(\"visible\");}});this.listItems=this.list.children();if(optWidths.length){optWidths=optWidths.sort(function(a,b){return a-b;});var maxOptionWidth=optWidths[optWidths.length-1];}this.singleItemHeight=this.listItems.outerHeight();this.listWrapper.addClass(\"invisible\");if($.browser.opera){this.wrapper.css({position:\"relative\",left:\"0\",top:\"0\"});}this.filterFn=(\"function\"==typeof(this.config.filterFn))?this.config.filterFn:this.filterFn;this.lastKey=null;this.multiple=this.selectbox.attr(\"multiple\");var self=this;this.wrapper.data(\"sc:lastEvent\",\"click\");this.overflowCSS=\"overflowY\";if((this.config.checkWidth)&&(this.listWrapper.innerWidth()<maxOptionWidth)){this.overflowCSS=\"overflow\";}this.notify(\"init\");this.initEvents();};var $sc=$.sexyCombo;$sc.fn=$sc.prototype={};$sc.fn.extend=$sc.extend=$.extend;$sc.fn.extend({initEvents:function(){var self=this;this.icon.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.input.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.wrapper.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.icon.bind(\"click\",function(){if(self.input.attr(\"disabled\")){self.input.attr(\"disabled\",false);}self.wrapper.data(\"sc:lastEvent\",\"click\");self.filter();self.iconClick();});this.listItems.bind(\"mouseover\",function(e){if(\"LI\"==e.target.nodeName.toUpperCase()){self.highlight(e.target);}else{self.highlight($(e.target).parent());}});this.listItems.bind(\"click\",function(e){self.listItemClick($(e.target));});this.input.bind(\"keyup\",function(e){self.wrapper.data(\"sc:lastEvent\",\"key\");self.keyUp(e);});this.input.bind(\"keypress\",function(e){if($sc.KEY.RETURN==e.keyCode){e.preventDefault();}if($sc.KEY.TAB==e.keyCode)e.preventDefault();});$(document).bind(\"click\",function(e){if((self.icon.get(0)==e.target)||(self.input.get(0)==e.target))return;self.hideList();});this.triggerSelected();this.applyEmptyText();this.input.bind(\"click\",function(e){self.wrapper.data(\"sc:lastEvent\",\"click\");self.icon.trigger(\"click\");});this.wrapper.bind(\"click\",function(){self.wrapper.data(\"sc:lastEvent\",\"click\");});this.input.bind(\"keydown\",function(e){if(9==e.keyCode){e.preventDefault();}});this.wrapper.bind(\"keyup\",function(e){var k=e.keyCode;for(key in $sc.KEY){if($sc.KEY[key]==k){return;}}self.wrapper.data(\"sc:lastEvent\",\"key\");});this.input.bind(\"click\",function(){self.wrapper.data(\"sc:lastEvent\",\"click\");});this.icon.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.input.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.wrapper.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.notify(\"initEvents\");},getTextValue:function(){return this.__getValue(\"input\");},getCurrentTextValue:function(){return this.__getCurrentValue(\"input\");},getHiddenValue:function(){return this.__getValue(\"hidden\");},getCurrentHiddenValue:function(){return this.__getCurrentValue(\"hidden\");},__getValue:function(prop){prop=this[prop];if(!this.multiple)return $.trim(prop.val());var tmpVals=prop.val().split(this.config.separator);var vals=[];for(var i=0,len=tmpVals.length;i<len;++i){vals.push($.trim(tmpVals[i]));}vals=$sc.normalizeArray(vals);return vals;},__getCurrentValue:function(prop){prop=this[prop];if(!this.multiple)return $.trim(prop.val());return $.trim(prop.val().split(this.config.separator).pop());},iconClick:function(){if(this.listVisible()){this.hideList();this.input.blur();}else{this.showList();this.input.focus();if(this.input.val().length){this.selection(this.input.get(0),0,this.input.val().length);}}},listVisible:function(){return this.listWrapper.hasClass(\"visible\");},showList:function(){if(!this.listItems.filter(\".visible\").length)return;this.listWrapper.removeClass(\"invisible\").addClass(\"visible\");this.wrapper.css(\"zIndex\",\"99999\");this.listWrapper.css(\"zIndex\",\"99999\");this.setListHeight();var listHeight=this.listWrapper.height();var inputHeight=this.wrapper.height();var bottomPos=parseInt(this.wrapper.data(\"sc:positionY\"))+inputHeight+listHeight;var maxShown=$(window).height()+$(document).scrollTop();if(bottomPos>maxShown){this.setDropUp(true);}else{this.setDropUp(false);}if(\"\"==$.trim(this.input.val())){this.highlightFirst();this.listWrapper.scrollTop(0);}else{this.highlightSelected();}this.notify(\"showList\");},hideList:function(){if(this.listWrapper.hasClass(\"invisible\"))return;this.listWrapper.removeClass(\"visible\").addClass(\"invisible\");this.wrapper.css(\"zIndex\",\"0\");this.listWrapper.css(\"zIndex\",\"99999\");this.notify(\"hideList\");},getListItemsHeight:function(){var itemHeight=this.singleItemHeight;return itemHeight*this.liLen();},setOverflow:function(){var maxHeight=this.getListMaxHeight();if(this.getListItemsHeight()>maxHeight)this.listWrapper.css(this.overflowCSS,\"scroll\");else\nthis.listWrapper.css(this.overflowCSS,\"hidden\");},highlight:function(activeItem){if(($sc.KEY.DOWN==this.lastKey)||($sc.KEY.UP==this.lastKey))return;this.listItems.removeClass(\"active\");$(activeItem).addClass(\"active\");},setComboValue:function(val,pop,hideList){var oldVal=this.input.val();var v=\"\";if(this.multiple){v=this.getTextValue();if(pop)v.pop();v.push($.trim(val));v=$sc.normalizeArray(v);v=v.join(this.config.separator)+this.config.separator;}else{v=$.trim(val);}this.input.val(v);this.setHiddenValue(val);this.filter();if(hideList)this.hideList();this.input.removeClass(\"empty\");if(this.multiple)this.input.focus();if(this.input.val()!=oldVal)this.notify(\"textChange\");},setHiddenValue:function(val){var set=false;val=$.trim(val);var oldVal=this.hidden.val();if(!this.multiple){for(var i=0,len=this.options.length;i<len;++i){if(val==this.options.eq(i).text()){this.hidden.val(this.options.eq(i).val());set=true;break;}}}else{var comboVals=this.getTextValue();var hiddenVals=[];for(var i=0,len=comboVals.length;i<len;++i){for(var j=0,len1=this.options.length;j<len1;++j){if(comboVals[i]==this.options.eq(j).text()){hiddenVals.push(this.options.eq(j).val());}}}if(hiddenVals.length){set=true;this.hidden.val(hiddenVals.join(this.config.separator));}}if(!set){this.hidden.val(this.config.initialHiddenValue);}if(oldVal!=this.hidden.val())this.notify(\"change\");this.selectbox.val(this.hidden.val());this.selectbox.trigger(\"change\");},listItemClick:function(item){this.setComboValue(item.text(),true,true);this.inputFocus();},filter:function(){if(\"yes\"==this.wrapper.data(\"sc:optionsChanged\")){var self=this;this.listItems.remove();this.options=this.selectbox.children().filter(\"option\");this.options.each(function(){var optionText=$.trim($(this).text());$(\"<li />\").appendTo(self.list).text(optionText).addClass(\"visible\");});this.listItems=this.list.children();this.listItems.bind(\"mouseover\",function(e){self.highlight(e.target);});this.listItems.bind(\"click\",function(e){self.listItemClick($(e.target));});self.wrapper.data(\"sc:optionsChanged\",\"\");}var comboValue=this.input.val();var self=this;this.listItems.each(function(){var $this=$(this);var itemValue=$this.text();if(self.filterFn.call(self,self.getCurrentTextValue(),itemValue,self.getTextValue())){$this.removeClass(\"invisible\").addClass(\"visible\");}else{$this.removeClass(\"visible\").addClass(\"invisible\");}});this.setOverflow();this.setListHeight();},filterFn:function(currentComboValue,itemValue,allComboValues){if(\"click\"==this.wrapper.data(\"sc:lastEvent\")){return true;}if(!this.multiple){return itemValue.toLowerCase().indexOf(currentComboValue.toLowerCase())==0;}else{for(var i=0,len=allComboValues.length;i<len;++i){if(itemValue==allComboValues[i]){return false;}}return itemValue.toLowerCase().search(currentComboValue.toLowerCase())==0;}},getListMaxHeight:function(){var result=parseInt(this.listWrapper.css(\"maxHeight\"),10);if(isNaN(result)){result=this.singleItemHeight*10;}return result;},setListHeight:function(){var liHeight=this.getListItemsHeight();var maxHeight=this.getListMaxHeight();var listHeight=this.listWrapper.height();if(liHeight<listHeight){this.listWrapper.height(liHeight);return liHeight;}else if(liHeight>listHeight){this.listWrapper.height(Math.min(maxHeight,liHeight));return Math.min(maxHeight,liHeight);}},getActive:function(){return this.listItems.filter(\".active\");},keyUp:function(e){this.lastKey=e.keyCode;var k=$sc.KEY;switch(e.keyCode){case k.RETURN:case k.TAB:this.setComboValue(this.getActive().text(),true,true);if(!this.multiple)break;case k.DOWN:this.highlightNext();break;case k.UP:this.highlightPrev();break;case k.ESC:this.hideList();break;default:this.inputChanged();break;}},liLen:function(){return this.listItems.filter(\".visible\").length;},inputChanged:function(){this.filter();if(this.liLen()){this.showList();this.setOverflow();this.setListHeight();}else{this.hideList();}this.setHiddenValue(this.input.val());this.notify(\"textChange\");},highlightFirst:function(){this.listItems.removeClass(\"active\").filter(\".visible:eq(0)\").addClass(\"active\");this.autoFill();},highlightSelected:function(){this.listItems.removeClass(\"active\");var val=$.trim(this.input.val());try{this.listItems.each(function(){var $this=$(this);if($this.text()==val){$this.addClass(\"active\");self.listWrapper.scrollTop(0);self.scrollDown();}});this.highlightFirst();}catch(e){}},highlightNext:function(){var $next=this.getActive().next();while($next.hasClass(\"invisible\")&&$next.length){$next=$next.next();}if($next.length){this.listItems.removeClass(\"active\");$next.addClass(\"active\");this.scrollDown();}},scrollDown:function(){if(\"scroll\"!=this.listWrapper.css(this.overflowCSS))return;var beforeActive=this.getActiveIndex()+1;var minScroll=this.listItems.outerHeight()*beforeActive-this.listWrapper.height();if($.browser.msie)minScroll+=beforeActive;if(this.listWrapper.scrollTop()<minScroll)this.listWrapper.scrollTop(minScroll);},highlightPrev:function(){var $prev=this.getActive().prev();while($prev.length&&$prev.hasClass(\"invisible\"))$prev=$prev.prev();if($prev.length){this.getActive().removeClass(\"active\");$prev.addClass(\"active\");this.scrollUp();}},getActiveIndex:function(){return $.inArray(this.getActive().get(0),this.listItems.filter(\".visible\").get());},scrollUp:function(){if(\"scroll\"!=this.listWrapper.css(this.overflowCSS))return;var maxScroll=this.getActiveIndex()*this.listItems.outerHeight();if(this.listWrapper.scrollTop()>maxScroll){this.listWrapper.scrollTop(maxScroll);}},applyEmptyText:function(){if(!this.config.emptyText.length)return;var self=this;this.input.bind(\"focus\",function(){self.inputFocus();}).bind(\"blur\",function(){self.inputBlur();});if(\"\"==this.input.val()){this.input.addClass(\"empty\").val(this.config.emptyText);}},inputFocus:function(){if(this.input.hasClass(\"empty\")){this.input.removeClass(\"empty\").val(\"\");}},inputBlur:function(){if(\"\"==this.input.val()){this.input.addClass(\"empty\").val(this.config.emptyText);}},triggerSelected:function(){if(!this.config.triggerSelected)return;var self=this;try{this.options.each(function(){if($(this).attr(\"selected\")){self.setComboValue($(this).text(),false,true);throw new Error();}});}catch(e){return;}self.setComboValue(this.options.eq(0).text(),false,false);},autoFill:function(){if(!this.config.autoFill||($sc.KEY.BACKSPACE==this.lastKey)||this.multiple)return;var curVal=this.input.val();var newVal=this.getActive().text();this.input.val(newVal);this.selection(this.input.get(0),curVal.length,newVal.length);},selection:function(field,start,end){if(field.createTextRange){var selRange=field.createTextRange();selRange.collapse(true);selRange.moveStart(\"character\",start);selRange.moveEnd(\"character\",end);selRange.select();}else if(field.setSelectionRange){field.setSelectionRange(start,end);}else{if(field.selectionStart){field.selectionStart=start;field.selectionEnd=end;}}},updateDrop:function(){if(this.config.dropUp)this.listWrapper.addClass(\"list-wrapper-up\");else\nthis.listWrapper.removeClass(\"list-wrapper-up\");},setDropUp:function(drop){this.config.dropUp=drop;this.updateDrop();},notify:function(evt){if(!$.isFunction(this.config[evt+\"Callback\"]))return;this.config[evt+\"Callback\"].call(this);}});$sc.extend({KEY:{UP:38,DOWN:40,DEL:46,TAB:9,RETURN:13,ESC:27,COMMA:188,PAGEUP:33,PAGEDOWN:34,BACKSPACE:8},log:function(msg){var $log=$(\"#log\");$log.html($log.html()+msg+\"<br />\");},createSelectbox:function(config){var $selectbox=$(\"<select />\").appendTo(config.container).attr({name:config.name,id:config.id,size:\"1\"});if(config.multiple)$selectbox.attr(\"multiple\",true);var data=config.data;var selected=false;for(var i=0,len=data.length;i<len;++i){selected=data[i].selected||false;$(\"<option />\").appendTo($selectbox).attr(\"value\",data[i][config.key]).text(data[i][config.value]).attr(\"selected\",selected);}return $selectbox.get(0);},create:function(config){var defaults={name:\"\",id:\"\",data:[],multiple:false,key:\"value\",value:\"text\",container:$(document),url:\"\",ajaxData:{}};config=$.extend({},defaults,config||{});if(config.url){return $.getJSON(config.url,config.ajaxData,function(data){delete config.url;delete config.ajaxData;config.data=data;return $sc.create(config);});}config.container=$(config.container);var selectbox=$sc.createSelectbox(config);return new $sc(selectbox,config);},deactivate:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);if(!$this.parent().is(\".combo\")){return;}});},activate:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);if(!$this.parent().is(\".combo\")){return;}$this.parent().find(\"input[type='text']\").attr(\"disabled\",false);});},changeOptions:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);var $wrapper=$this.parent();var $input=$wrapper.find(\"input[type='text']\");var $listWrapper=$wrapper.find(\"ul\").parent();$listWrapper.removeClass(\"visible\").addClass(\"invisible\");$wrapper.css(\"zIndex\",\"0\");$listWrapper.css(\"zIndex\",\"99999\");$input.val(\"\");$wrapper.data(\"sc:optionsChanged\",\"yes\");var $selectbox=$this;$selectbox.parent().find(\"input[type='text']\").val($selectbox.find(\"option:eq(0)\").text());$selectbox.parent().data(\"sc:lastEvent\",\"click\");$selectbox.find(\"option:eq(0)\").attr('selected','selected');});},normalizeArray:function(arr){var result=[];for(var i=0,len=arr.length;i<len;++i){if(\"\"==arr[i])continue;result.push(arr[i]);}return result;}});})(jQuery);",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "jquery/jquery.sexy-combo.pack.js",
+            "line": 1,
+            "description": "sexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "js/date.js",
+            "line": 1,
+            "description": "Version: 1.0 Alpha-1 \nBuild Date: 13-Nov-2007\nCopyright (c) 2006-2007, Coolite Inc. (http://www.coolite.com/). All rights reserved.\nLicense: Licensed under The MIT License. See license.txt and http://www.datejs.com/license/. \nWebsite: http://www.datejs.com/ or http://www.coolite.com/datejs/",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "js/jquery.tablesorter.js",
+            "line": 14,
+            "description": "Create a sortable table with multi-column sorting capabilitys",
+            "example": [
+                " $('table').tablesorter();",
+                " $('table').tablesorter({ sortList:[[0,0],[1,0]] });",
+                " $('table').tablesorter({ headers: { 0: { sorter: false}, 1: {sorter: false} } });",
+                " $('table').tablesorter({ headers: { 0: {sorter:\"integer\"}, 1: {sorter:\"currency\"} } });"
+            ],
+            "desc": "Create a tablesorter interface and set a column parser for the first\n       and second column.",
+            "params": [
+                {
+                    "name": "Object!~YUIDOC_LINE~!",
+                    "description": "settings An object literal containing key/value pairs to provide\n            optional settings."
+                }
+            ],
+            "option": "Boolean debug (optional) Boolean flag indicating if tablesorter\n         should display debuging information usefull for development.",
+            "type": "jQuery",
+            "name": "tablesorter",
+            "cat": "Plugins/Tablesorter",
+            "author": "Christian Bach/christian.bach@polyester.se",
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "js/jquery.tablesorter.js",
+            "line": 264,
+            "class": "Alta solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 13,
+            "itemtype": "method",
+            "name": "confirmar",
+            "return": {
+                "description": "Confirm",
+                "type": "Object"
+            },
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 22,
+            "itemtype": "method",
+            "name": "formatItem",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "String formateada",
+                "type": "String"
+            },
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 35,
+            "itemtype": "method",
+            "name": "formatResult",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "String formateada",
+                "type": "String"
+            },
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 47,
+            "description": "Autocomplete del Asegurado",
+            "itemtype": "event",
+            "name": "Autocomplete del Asegurado",
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 60,
+            "description": "Autocomplete del Asegurado",
+            "itemtype": "event",
+            "name": "change",
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        },
+        {
+            "file": "gseguros.poliza.solicitud.alta-aduaneros.js",
+            "line": 74,
+            "description": "Plugin de fecha",
+            "itemtype": "event",
+            "name": "change",
+            "class": "Alta solicitud Aduaneros",
+            "module": "Solicitud Aduaneros"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: cat",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.cookie.js:42"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " jquery/jquery.cookie.js:42"
+        },
+        {
+            "message": "unknown tag: cat",
+            "line": " jquery/jquery.cookie.js:42"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:349"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " jquery/jquery.layout.js:349"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:349"
+        },
+        {
+            "message": "unknown tag: pane",
+            "line": " jquery/jquery.layout.js:375"
+        },
+        {
+            "message": "unknown tag: pane",
+            "line": " jquery/jquery.layout.js:375"
+        },
+        {
+            "message": "unknown tag: pane",
+            "line": " jquery/jquery.layout.js:411"
+        },
+        {
+            "message": "unknown tag: pane",
+            "line": " jquery/jquery.layout.js:411"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:478"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:478"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:513"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:513"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:584"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:646"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:677"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:677"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:744"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:744"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:781"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:825"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:843"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:967"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1120"
+        },
+        {
+            "message": "unknown tag: dependancies",
+            "line": " jquery/jquery.layout.js:1216"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1216"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1705"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1732"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1822"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1860"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:1963"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:2095"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:2131"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " jquery/jquery.layout.js:2293"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:2413"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " jquery/jquery.layout.js:2413"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " jquery/jquery.layout.js:2413"
+        },
+        {
+            "message": "unknown tag: callers",
+            "line": " jquery/jquery.layout.js:2429"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: before",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: after",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: before",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: after",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: before",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: after",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: cat",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: descr",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " jquery/jquery.metadata.js:109"
+        },
+        {
+            "message": "unknown tag: descr",
+            "line": " jquery/jquery.metadata.js:109"
+        },
+        {
+            "message": "unknown tag: cat",
+            "line": " jquery/jquery.metadata.js:109"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: desc",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: option",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "unknown tag: cat",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "Missing item type\nCookie plugin\n\nCopyright (c) 2006 Klaus Hartl (stilbuero.de)\nDual licensed under the MIT and GPL licenses:\nhttp://www.opensource.org/licenses/mit-license.php\nhttp://www.gnu.org/licenses/gpl.html",
+            "line": " jquery/jquery.cookie.js:1"
+        },
+        {
+            "message": "Missing item type\nCreate a cookie with the given name and value and other optional parameters.",
+            "line": " jquery/jquery.cookie.js:11"
+        },
+        {
+            "message": "Missing item type\nGet the value of a cookie with the given name.",
+            "line": " jquery/jquery.cookie.js:42"
+        },
+        {
+            "message": "Missing item type\nisStr\n\nReturns true if passed param is EITHER a simple string OR a 'string object' - otherwise returns false",
+            "line": " jquery/jquery.layout.js:313"
+        },
+        {
+            "message": "Missing item type\nstr\n\nReturns a simple string if the passed param is EITHER a simple string OR a 'string object',\n else returns the original object",
+            "line": " jquery/jquery.layout.js:330"
+        },
+        {
+            "message": "Missing item type\nmin / max\n\nAlias for Math.min/.max to simplify coding",
+            "line": " jquery/jquery.layout.js:341"
+        },
+        {
+            "message": "Missing item type\ntransformData\n\nProcesses the options passed in and transforms them into the format used by layout()\nMissing keys are added, and converts the data if passed in 'flat-format' (no sub-keys)\nIn flat-format, pane-specific-settings are prefixed like: north__optName  (2-underscores)\nTo update effects, options MUST use nested-keys format, with an effects key",
+            "line": " jquery/jquery.layout.js:349"
+        },
+        {
+            "message": "Missing item type\nsetFlowCallback\n\nSet an INTERNAL callback to avoid simultaneous animation\nRuns only if needed and only if all callbacks are not 'already set'!",
+            "line": " jquery/jquery.layout.js:375"
+        },
+        {
+            "message": "Missing item type\nexecFlowCallback\n\nRUN the INTERNAL callback for this pane - if one exists",
+            "line": " jquery/jquery.layout.js:411"
+        },
+        {
+            "message": "Missing item type\nexecUserCallback\n\nExecutes a Callback function after a trigger event, like resize, open or close",
+            "line": " jquery/jquery.layout.js:443"
+        },
+        {
+            "message": "Missing item type\ncssNum\n\nReturns the 'current CSS value' for an element - returns 0 if property does not exist",
+            "line": " jquery/jquery.layout.js:478"
+        },
+        {
+            "message": "Missing item type\ncssW / cssH / cssSize\n\nContains logic to check boxModel & browser, and return the correct width/height for the current browser/doctype",
+            "line": " jquery/jquery.layout.js:513"
+        },
+        {
+            "message": "Missing item type\ngetPaneSize\n\nCalculates the current 'size' (width or height) of a border-pane - optionally with 'pane spacing' added",
+            "line": " jquery/jquery.layout.js:584"
+        },
+        {
+            "message": "Missing item type\ngetPaneDims\n\nReturns data for setting the size/position of center pane. Date is also used to set Height for east/west panes",
+            "line": " jquery/jquery.layout.js:646"
+        },
+        {
+            "message": "Missing item type\ngetElemDims\n\nReturns data for setting size of an element (container or a pane).",
+            "line": " jquery/jquery.layout.js:677"
+        },
+        {
+            "message": "Missing item type\ncreate\n\nInitialize the layout - called automatically whenever an instance of layout is created",
+            "line": " jquery/jquery.layout.js:744"
+        },
+        {
+            "message": "Missing item type\ninitContainer\n\nValidate and initialize container CSS and events",
+            "line": " jquery/jquery.layout.js:781"
+        },
+        {
+            "message": "Missing item type\ninitHotkeys\n\nBind layout hotkeys - if options enabled",
+            "line": " jquery/jquery.layout.js:825"
+        },
+        {
+            "message": "Missing item type\ninitOptions\n\nBuild final CONFIG and OPTIONS data",
+            "line": " jquery/jquery.layout.js:843"
+        },
+        {
+            "message": "Missing item type\ninitPanes\n\nInitialize module objects, styling, size and position for all panes",
+            "line": " jquery/jquery.layout.js:967"
+        },
+        {
+            "message": "Missing item type\ninitHandles\n\nInitialize module objects, styling, size and position for all resize bars and toggler buttons",
+            "line": " jquery/jquery.layout.js:1120"
+        },
+        {
+            "message": "Missing item type\ninitResizable\n\nAdd resize-bars to all panes that specify it in options",
+            "line": " jquery/jquery.layout.js:1216"
+        },
+        {
+            "message": "Missing item type\nhide / show\n\nCompletely 'hides' a pane, including its spacing - as if it does not exist\nThe pane is not actually 'removed' from the source, so can use 'show' to un-hide it",
+            "line": " jquery/jquery.layout.js:1358"
+        },
+        {
+            "message": "Missing item type\ntoggle\n\nToggles a pane open/closed by calling either open or close",
+            "line": " jquery/jquery.layout.js:1421"
+        },
+        {
+            "message": "Missing item type\nclose\n\nClose the specified pane (animation optional), and resize all other panes as needed",
+            "line": " jquery/jquery.layout.js:1438"
+        },
+        {
+            "message": "Missing item type\nopen\n\nOpen the specified pane (animation optional), and resize all other panes as needed",
+            "line": " jquery/jquery.layout.js:1550"
+        },
+        {
+            "message": "Missing item type\nlockPaneForFX\n\nMust set left/top on East/South panes so animation will work properly",
+            "line": " jquery/jquery.layout.js:1678"
+        },
+        {
+            "message": "Missing item type\nbindStartSlidingEvent\n\nToggle sliding functionality of a specific pane on/off by adding removing 'slide open' trigger",
+            "line": " jquery/jquery.layout.js:1705"
+        },
+        {
+            "message": "Missing item type\nbindStopSlidingEvents\n\nAdd or remove 'mouseout' events to 'slide close' when pane is 'sliding' open or closed\nAlso increases zIndex when pane is sliding open\nSee bindStartSlidingEvent for code to control 'slide open'",
+            "line": " jquery/jquery.layout.js:1732"
+        },
+        {
+            "message": "Missing item type\nsizePane",
+            "line": " jquery/jquery.layout.js:1822"
+        },
+        {
+            "message": "Missing item type\nsizeMidPanes",
+            "line": " jquery/jquery.layout.js:1860"
+        },
+        {
+            "message": "Missing item type\nsizeHandles\n\nCalled every time a pane is opened, closed, or resized to slide the togglers to 'center' and adjust their length if necessary",
+            "line": " jquery/jquery.layout.js:1963"
+        },
+        {
+            "message": "Missing item type\nresizeAll",
+            "line": " jquery/jquery.layout.js:2095"
+        },
+        {
+            "message": "Missing item type\nkeyDown\n\nCapture keys when enableCursorHotkey - toggle pane if hotkey pressed",
+            "line": " jquery/jquery.layout.js:2131"
+        },
+        {
+            "message": "Missing item type\ngetBtn\n\nHelper function to validate params received by addButton utilities",
+            "line": " jquery/jquery.layout.js:2293"
+        },
+        {
+            "message": "Missing item type\naddToggleBtn\n\nAdd a custom Toggler button for a pane",
+            "line": " jquery/jquery.layout.js:2320"
+        },
+        {
+            "message": "Missing item type\naddOpenBtn\n\nAdd a custom Open button for a pane",
+            "line": " jquery/jquery.layout.js:2340"
+        },
+        {
+            "message": "Missing item type\naddCloseBtn\n\nAdd a custom Close button for a pane",
+            "line": " jquery/jquery.layout.js:2360"
+        },
+        {
+            "message": "Missing item type\naddPinBtn\n\nAdd a custom Pin button for a pane\n\nFour classes are added to the element, based on the paneClass for the associated pane...\nAssuming the default paneClass and the pin is 'up', these classes are added for a west-pane pin:\n - ui-layout-pane-pin\n - ui-layout-pane-west-pin\n - ui-layout-pane-pin-up\n - ui-layout-pane-west-pin-up",
+            "line": " jquery/jquery.layout.js:2380"
+        },
+        {
+            "message": "Missing item type\nsyncPinBtns\n\nINTERNAL function to sync 'pin buttons' when pane is opened or closed\nUnpinned means the pane is 'sliding' - ie, over-top of the adjacent panes",
+            "line": " jquery/jquery.layout.js:2413"
+        },
+        {
+            "message": "Missing item type\nsetPinState\n\nChange the class of the pin button to make it look 'up' or 'down'",
+            "line": " jquery/jquery.layout.js:2429"
+        },
+        {
+            "message": "Missing item type\nSets the type of metadata to use. Metadata is encoded in JSON, and each property\nin the JSON will become a property of the element itself.\n\nThere are three supported types of metadata storage:\n\n  attr:  Inside an attribute. The name parameter indicates *which* attribute.\n         \n  class: Inside the class attribute, wrapped in curly braces: { }\n  \n  elem:  Inside a child element (e.g. a script tag). The\n         name parameter indicates *which* element.\n         \nThe metadata for an element is loaded the first time the element is accessed via jQuery.\n\nAs a result, you can define the metadata type, use $(expr) to load the metadata into the elements\nmatched by expr, then redefine the metadata type and run another $(expr) for other elements.",
+            "line": " jquery/jquery.metadata.js:14"
+        },
+        {
+            "message": "Missing item type\nReturns the metadata object for the first member of the jQuery object.",
+            "line": " jquery/jquery.metadata.js:109"
+        },
+        {
+            "message": "Missing item type\nsexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *",
+            "line": " jquery/jquery.sexy-combo.js:1"
+        },
+        {
+            "message": "Missing item type\nsexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *\n ***************************************************************************/;(function($){$.fn.sexyCombo=function(config){return this.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}new $sc(this,config);});};var defaults={skin:\"sexy\",suffix:\"__sexyCombo\",hiddenSuffix:\"__sexyComboHidden\",renameOriginal:false,initialHiddenValue:\"\",emptyText:\"\",autoFill:false,triggerSelected:true,filterFn:null,dropUp:false,separator:\",\",key:\"value\",value:\"text\",showListCallback:null,hideListCallback:null,initCallback:null,initEventsCallback:null,changeCallback:null,textChangeCallback:null,checkWidth:true};$.sexyCombo=function(selectbox,config){if(selectbox.tagName.toUpperCase()!=\"SELECT\")return;this.config=$.extend({},defaults,config||{});this.selectbox=$(selectbox);this.options=this.selectbox.children().filter(\"option\");this.wrapper=this.selectbox.wrap(\"<div>\").hide().parent().addClass(\"combo\").addClass(this.config.skin);this.input=$(\"<input type='text' />\").appendTo(this.wrapper).attr(\"autocomplete\",\"off\").attr(\"value\",\"\").attr(\"name\",this.selectbox.attr(\"name\")+this.config.suffix);var origName=this.selectbox.attr(\"name\");var newName=origName+this.config.hiddenSuffix;if(this.config.renameOriginal){this.selectbox.attr(\"name\",newName);}this.hidden=$(\"<input type='hidden' />\").appendTo(this.wrapper).attr(\"autocomplete\",\"off\").attr(\"value\",this.config.initialHiddenValue).attr(\"name\",this.config.renameOriginal?origName:newName);this.icon=$(\"<div />\").appendTo(this.wrapper).addClass(\"icon\");this.listWrapper=$(\"<div />\").appendTo(this.wrapper).addClass(\"list-wrapper\");this.updateDrop();this.list=$(\"<ul />\").appendTo(this.listWrapper);var self=this;var optWidths=[];this.options.each(function(){var optionText=$.trim($(this).text());if(self.config.checkWidth){optWidths.push($(\"<li />\").appendTo(self.list).html(\"<span>\"+optionText+\"</span>\").addClass(\"visible\").find(\"span\").outerWidth());}else{$(\"<li />\").appendTo(self.list).html(\"<span>\"+optionText+\"</span>\").addClass(\"visible\");}});this.listItems=this.list.children();if(optWidths.length){optWidths=optWidths.sort(function(a,b){return a-b;});var maxOptionWidth=optWidths[optWidths.length-1];}this.singleItemHeight=this.listItems.outerHeight();this.listWrapper.addClass(\"invisible\");if($.browser.opera){this.wrapper.css({position:\"relative\",left:\"0\",top:\"0\"});}this.filterFn=(\"function\"==typeof(this.config.filterFn))?this.config.filterFn:this.filterFn;this.lastKey=null;this.multiple=this.selectbox.attr(\"multiple\");var self=this;this.wrapper.data(\"sc:lastEvent\",\"click\");this.overflowCSS=\"overflowY\";if((this.config.checkWidth)&&(this.listWrapper.innerWidth()<maxOptionWidth)){this.overflowCSS=\"overflow\";}this.notify(\"init\");this.initEvents();};var $sc=$.sexyCombo;$sc.fn=$sc.prototype={};$sc.fn.extend=$sc.extend=$.extend;$sc.fn.extend({initEvents:function(){var self=this;this.icon.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.input.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.wrapper.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.icon.bind(\"click\",function(){if(self.input.attr(\"disabled\")){self.input.attr(\"disabled\",false);}self.wrapper.data(\"sc:lastEvent\",\"click\");self.filter();self.iconClick();});this.listItems.bind(\"mouseover\",function(e){if(\"LI\"==e.target.nodeName.toUpperCase()){self.highlight(e.target);}else{self.highlight($(e.target).parent());}});this.listItems.bind(\"click\",function(e){self.listItemClick($(e.target));});this.input.bind(\"keyup\",function(e){self.wrapper.data(\"sc:lastEvent\",\"key\");self.keyUp(e);});this.input.bind(\"keypress\",function(e){if($sc.KEY.RETURN==e.keyCode){e.preventDefault();}if($sc.KEY.TAB==e.keyCode)e.preventDefault();});$(document).bind(\"click\",function(e){if((self.icon.get(0)==e.target)||(self.input.get(0)==e.target))return;self.hideList();});this.triggerSelected();this.applyEmptyText();this.input.bind(\"click\",function(e){self.wrapper.data(\"sc:lastEvent\",\"click\");self.icon.trigger(\"click\");});this.wrapper.bind(\"click\",function(){self.wrapper.data(\"sc:lastEvent\",\"click\");});this.input.bind(\"keydown\",function(e){if(9==e.keyCode){e.preventDefault();}});this.wrapper.bind(\"keyup\",function(e){var k=e.keyCode;for(key in $sc.KEY){if($sc.KEY[key]==k){return;}}self.wrapper.data(\"sc:lastEvent\",\"key\");});this.input.bind(\"click\",function(){self.wrapper.data(\"sc:lastEvent\",\"click\");});this.icon.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.input.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.wrapper.bind(\"click\",function(e){if(!self.wrapper.data(\"sc:positionY\")){self.wrapper.data(\"sc:positionY\",e.pageY);}});this.notify(\"initEvents\");},getTextValue:function(){return this.__getValue(\"input\");},getCurrentTextValue:function(){return this.__getCurrentValue(\"input\");},getHiddenValue:function(){return this.__getValue(\"hidden\");},getCurrentHiddenValue:function(){return this.__getCurrentValue(\"hidden\");},__getValue:function(prop){prop=this[prop];if(!this.multiple)return $.trim(prop.val());var tmpVals=prop.val().split(this.config.separator);var vals=[];for(var i=0,len=tmpVals.length;i<len;++i){vals.push($.trim(tmpVals[i]));}vals=$sc.normalizeArray(vals);return vals;},__getCurrentValue:function(prop){prop=this[prop];if(!this.multiple)return $.trim(prop.val());return $.trim(prop.val().split(this.config.separator).pop());},iconClick:function(){if(this.listVisible()){this.hideList();this.input.blur();}else{this.showList();this.input.focus();if(this.input.val().length){this.selection(this.input.get(0),0,this.input.val().length);}}},listVisible:function(){return this.listWrapper.hasClass(\"visible\");},showList:function(){if(!this.listItems.filter(\".visible\").length)return;this.listWrapper.removeClass(\"invisible\").addClass(\"visible\");this.wrapper.css(\"zIndex\",\"99999\");this.listWrapper.css(\"zIndex\",\"99999\");this.setListHeight();var listHeight=this.listWrapper.height();var inputHeight=this.wrapper.height();var bottomPos=parseInt(this.wrapper.data(\"sc:positionY\"))+inputHeight+listHeight;var maxShown=$(window).height()+$(document).scrollTop();if(bottomPos>maxShown){this.setDropUp(true);}else{this.setDropUp(false);}if(\"\"==$.trim(this.input.val())){this.highlightFirst();this.listWrapper.scrollTop(0);}else{this.highlightSelected();}this.notify(\"showList\");},hideList:function(){if(this.listWrapper.hasClass(\"invisible\"))return;this.listWrapper.removeClass(\"visible\").addClass(\"invisible\");this.wrapper.css(\"zIndex\",\"0\");this.listWrapper.css(\"zIndex\",\"99999\");this.notify(\"hideList\");},getListItemsHeight:function(){var itemHeight=this.singleItemHeight;return itemHeight*this.liLen();},setOverflow:function(){var maxHeight=this.getListMaxHeight();if(this.getListItemsHeight()>maxHeight)this.listWrapper.css(this.overflowCSS,\"scroll\");else\nthis.listWrapper.css(this.overflowCSS,\"hidden\");},highlight:function(activeItem){if(($sc.KEY.DOWN==this.lastKey)||($sc.KEY.UP==this.lastKey))return;this.listItems.removeClass(\"active\");$(activeItem).addClass(\"active\");},setComboValue:function(val,pop,hideList){var oldVal=this.input.val();var v=\"\";if(this.multiple){v=this.getTextValue();if(pop)v.pop();v.push($.trim(val));v=$sc.normalizeArray(v);v=v.join(this.config.separator)+this.config.separator;}else{v=$.trim(val);}this.input.val(v);this.setHiddenValue(val);this.filter();if(hideList)this.hideList();this.input.removeClass(\"empty\");if(this.multiple)this.input.focus();if(this.input.val()!=oldVal)this.notify(\"textChange\");},setHiddenValue:function(val){var set=false;val=$.trim(val);var oldVal=this.hidden.val();if(!this.multiple){for(var i=0,len=this.options.length;i<len;++i){if(val==this.options.eq(i).text()){this.hidden.val(this.options.eq(i).val());set=true;break;}}}else{var comboVals=this.getTextValue();var hiddenVals=[];for(var i=0,len=comboVals.length;i<len;++i){for(var j=0,len1=this.options.length;j<len1;++j){if(comboVals[i]==this.options.eq(j).text()){hiddenVals.push(this.options.eq(j).val());}}}if(hiddenVals.length){set=true;this.hidden.val(hiddenVals.join(this.config.separator));}}if(!set){this.hidden.val(this.config.initialHiddenValue);}if(oldVal!=this.hidden.val())this.notify(\"change\");this.selectbox.val(this.hidden.val());this.selectbox.trigger(\"change\");},listItemClick:function(item){this.setComboValue(item.text(),true,true);this.inputFocus();},filter:function(){if(\"yes\"==this.wrapper.data(\"sc:optionsChanged\")){var self=this;this.listItems.remove();this.options=this.selectbox.children().filter(\"option\");this.options.each(function(){var optionText=$.trim($(this).text());$(\"<li />\").appendTo(self.list).text(optionText).addClass(\"visible\");});this.listItems=this.list.children();this.listItems.bind(\"mouseover\",function(e){self.highlight(e.target);});this.listItems.bind(\"click\",function(e){self.listItemClick($(e.target));});self.wrapper.data(\"sc:optionsChanged\",\"\");}var comboValue=this.input.val();var self=this;this.listItems.each(function(){var $this=$(this);var itemValue=$this.text();if(self.filterFn.call(self,self.getCurrentTextValue(),itemValue,self.getTextValue())){$this.removeClass(\"invisible\").addClass(\"visible\");}else{$this.removeClass(\"visible\").addClass(\"invisible\");}});this.setOverflow();this.setListHeight();},filterFn:function(currentComboValue,itemValue,allComboValues){if(\"click\"==this.wrapper.data(\"sc:lastEvent\")){return true;}if(!this.multiple){return itemValue.toLowerCase().indexOf(currentComboValue.toLowerCase())==0;}else{for(var i=0,len=allComboValues.length;i<len;++i){if(itemValue==allComboValues[i]){return false;}}return itemValue.toLowerCase().search(currentComboValue.toLowerCase())==0;}},getListMaxHeight:function(){var result=parseInt(this.listWrapper.css(\"maxHeight\"),10);if(isNaN(result)){result=this.singleItemHeight*10;}return result;},setListHeight:function(){var liHeight=this.getListItemsHeight();var maxHeight=this.getListMaxHeight();var listHeight=this.listWrapper.height();if(liHeight<listHeight){this.listWrapper.height(liHeight);return liHeight;}else if(liHeight>listHeight){this.listWrapper.height(Math.min(maxHeight,liHeight));return Math.min(maxHeight,liHeight);}},getActive:function(){return this.listItems.filter(\".active\");},keyUp:function(e){this.lastKey=e.keyCode;var k=$sc.KEY;switch(e.keyCode){case k.RETURN:case k.TAB:this.setComboValue(this.getActive().text(),true,true);if(!this.multiple)break;case k.DOWN:this.highlightNext();break;case k.UP:this.highlightPrev();break;case k.ESC:this.hideList();break;default:this.inputChanged();break;}},liLen:function(){return this.listItems.filter(\".visible\").length;},inputChanged:function(){this.filter();if(this.liLen()){this.showList();this.setOverflow();this.setListHeight();}else{this.hideList();}this.setHiddenValue(this.input.val());this.notify(\"textChange\");},highlightFirst:function(){this.listItems.removeClass(\"active\").filter(\".visible:eq(0)\").addClass(\"active\");this.autoFill();},highlightSelected:function(){this.listItems.removeClass(\"active\");var val=$.trim(this.input.val());try{this.listItems.each(function(){var $this=$(this);if($this.text()==val){$this.addClass(\"active\");self.listWrapper.scrollTop(0);self.scrollDown();}});this.highlightFirst();}catch(e){}},highlightNext:function(){var $next=this.getActive().next();while($next.hasClass(\"invisible\")&&$next.length){$next=$next.next();}if($next.length){this.listItems.removeClass(\"active\");$next.addClass(\"active\");this.scrollDown();}},scrollDown:function(){if(\"scroll\"!=this.listWrapper.css(this.overflowCSS))return;var beforeActive=this.getActiveIndex()+1;var minScroll=this.listItems.outerHeight()*beforeActive-this.listWrapper.height();if($.browser.msie)minScroll+=beforeActive;if(this.listWrapper.scrollTop()<minScroll)this.listWrapper.scrollTop(minScroll);},highlightPrev:function(){var $prev=this.getActive().prev();while($prev.length&&$prev.hasClass(\"invisible\"))$prev=$prev.prev();if($prev.length){this.getActive().removeClass(\"active\");$prev.addClass(\"active\");this.scrollUp();}},getActiveIndex:function(){return $.inArray(this.getActive().get(0),this.listItems.filter(\".visible\").get());},scrollUp:function(){if(\"scroll\"!=this.listWrapper.css(this.overflowCSS))return;var maxScroll=this.getActiveIndex()*this.listItems.outerHeight();if(this.listWrapper.scrollTop()>maxScroll){this.listWrapper.scrollTop(maxScroll);}},applyEmptyText:function(){if(!this.config.emptyText.length)return;var self=this;this.input.bind(\"focus\",function(){self.inputFocus();}).bind(\"blur\",function(){self.inputBlur();});if(\"\"==this.input.val()){this.input.addClass(\"empty\").val(this.config.emptyText);}},inputFocus:function(){if(this.input.hasClass(\"empty\")){this.input.removeClass(\"empty\").val(\"\");}},inputBlur:function(){if(\"\"==this.input.val()){this.input.addClass(\"empty\").val(this.config.emptyText);}},triggerSelected:function(){if(!this.config.triggerSelected)return;var self=this;try{this.options.each(function(){if($(this).attr(\"selected\")){self.setComboValue($(this).text(),false,true);throw new Error();}});}catch(e){return;}self.setComboValue(this.options.eq(0).text(),false,false);},autoFill:function(){if(!this.config.autoFill||($sc.KEY.BACKSPACE==this.lastKey)||this.multiple)return;var curVal=this.input.val();var newVal=this.getActive().text();this.input.val(newVal);this.selection(this.input.get(0),curVal.length,newVal.length);},selection:function(field,start,end){if(field.createTextRange){var selRange=field.createTextRange();selRange.collapse(true);selRange.moveStart(\"character\",start);selRange.moveEnd(\"character\",end);selRange.select();}else if(field.setSelectionRange){field.setSelectionRange(start,end);}else{if(field.selectionStart){field.selectionStart=start;field.selectionEnd=end;}}},updateDrop:function(){if(this.config.dropUp)this.listWrapper.addClass(\"list-wrapper-up\");else\nthis.listWrapper.removeClass(\"list-wrapper-up\");},setDropUp:function(drop){this.config.dropUp=drop;this.updateDrop();},notify:function(evt){if(!$.isFunction(this.config[evt+\"Callback\"]))return;this.config[evt+\"Callback\"].call(this);}});$sc.extend({KEY:{UP:38,DOWN:40,DEL:46,TAB:9,RETURN:13,ESC:27,COMMA:188,PAGEUP:33,PAGEDOWN:34,BACKSPACE:8},log:function(msg){var $log=$(\"#log\");$log.html($log.html()+msg+\"<br />\");},createSelectbox:function(config){var $selectbox=$(\"<select />\").appendTo(config.container).attr({name:config.name,id:config.id,size:\"1\"});if(config.multiple)$selectbox.attr(\"multiple\",true);var data=config.data;var selected=false;for(var i=0,len=data.length;i<len;++i){selected=data[i].selected||false;$(\"<option />\").appendTo($selectbox).attr(\"value\",data[i][config.key]).text(data[i][config.value]).attr(\"selected\",selected);}return $selectbox.get(0);},create:function(config){var defaults={name:\"\",id:\"\",data:[],multiple:false,key:\"value\",value:\"text\",container:$(document),url:\"\",ajaxData:{}};config=$.extend({},defaults,config||{});if(config.url){return $.getJSON(config.url,config.ajaxData,function(data){delete config.url;delete config.ajaxData;config.data=data;return $sc.create(config);});}config.container=$(config.container);var selectbox=$sc.createSelectbox(config);return new $sc(selectbox,config);},deactivate:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);if(!$this.parent().is(\".combo\")){return;}});},activate:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);if(!$this.parent().is(\".combo\")){return;}$this.parent().find(\"input[type='text']\").attr(\"disabled\",false);});},changeOptions:function($select){$select=$($select);$select.each(function(){if(\"SELECT\"!=this.tagName.toUpperCase()){return;}var $this=$(this);var $wrapper=$this.parent();var $input=$wrapper.find(\"input[type='text']\");var $listWrapper=$wrapper.find(\"ul\").parent();$listWrapper.removeClass(\"visible\").addClass(\"invisible\");$wrapper.css(\"zIndex\",\"0\");$listWrapper.css(\"zIndex\",\"99999\");$input.val(\"\");$wrapper.data(\"sc:optionsChanged\",\"yes\");var $selectbox=$this;$selectbox.parent().find(\"input[type='text']\").val($selectbox.find(\"option:eq(0)\").text());$selectbox.parent().data(\"sc:lastEvent\",\"click\");$selectbox.find(\"option:eq(0)\").attr('selected','selected');});},normalizeArray:function(arr){var result=[];for(var i=0,len=arr.length;i<len;++i){if(\"\"==arr[i])continue;result.push(arr[i]);}return result;}});})(jQuery);",
+            "line": " jquery/jquery.sexy-combo.min.js:1"
+        },
+        {
+            "message": "Missing item type\nsexy-combo 2.1.3\t: A jQuery date time picker.\n\t\n\tAuthors: \n\t\tKadalashvili.Vladimir@gmail.com - Vladimir Kadalashvili\n\t\tthetoolman@gmail.com \n\t\t\n\tVersion: 2.1.3\n\t\n\tWebsite: http://code.google.com/p/sexy-combo/\n\t\n\n *   This program is free software; you can redistribute it and/or modify  *\n *   it under the terms of the GNU General Public License as published by  *\n *   the Free Software Foundation; either version 2 of the License, or     *\n *   (at your option) any later version.                                   *\n *                                                                         *\n *   This program is distributed in the hope that it will be useful,       *\n *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *\n *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *\n *   GNU General Public License for more details.                          *\n *                                                                         *\n *   You should have received a copy of the GNU General Public License     *\n *   along with this program; if not, write to the                         *\n *   Free Software Foundation, Inc.,                                       *\n *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *\n *                                                                         *",
+            "line": " jquery/jquery.sexy-combo.pack.js:1"
+        },
+        {
+            "message": "Missing item type\nVersion: 1.0 Alpha-1 \nBuild Date: 13-Nov-2007\nCopyright (c) 2006-2007, Coolite Inc. (http://www.coolite.com/). All rights reserved.\nLicense: Licensed under The MIT License. See license.txt and http://www.datejs.com/license/. \nWebsite: http://www.datejs.com/ or http://www.coolite.com/datejs/",
+            "line": " js/date.js:1"
+        },
+        {
+            "message": "Missing item type\nCreate a sortable table with multi-column sorting capabilitys",
+            "line": " js/jquery.tablesorter.js:14"
+        },
+        {
+            "message": "Missing item type",
+            "line": " js/jquery.tablesorter.js:264"
+        }
+    ]
+}

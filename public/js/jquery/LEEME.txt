@@ -1,0 +1,13 @@
+a la libreria jquery.js se le agrega las lineas
+
+//////////////////////////
+// attach event to ensure of jQuery.isReady will set to true every page load, avoiding race conditions(if jquery loads after the document)
+
+$(document).ready(function(){});
+
+//////////////////////////
+
+
+Mario: cambiar AJILE por RunJS. Es mas Simple de implementar y es un proyecto activo, la ultima version de ajile fue en el 2007
+		Ojo, tampoco permite cargar las clases de JQuery, que se agregaron en layout.phtml
+url:   http://code.google.com/p/runjs/ 

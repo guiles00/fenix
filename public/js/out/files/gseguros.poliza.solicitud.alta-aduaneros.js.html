@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>gseguros.poliza.solicitud.alta-aduaneros.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Alta solicitud Aduaneros.html">Alta solicitud Aduaneros</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Solicitud Aduaneros.html">Solicitud Aduaneros</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: gseguros.poliza.solicitud.alta-aduaneros.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+			/**
+			 * 
+			 *
+			 * @module Solicitud Aduaneros
+			 */
+$(document).ready(
+			/**
+			 * 
+			 *
+			 * @class Alta solicitud Aduaneros
+			 */
+		function() {
+			/**
+			 * 
+			 *
+			 * @method confirmar
+			 * @return {Object} Confirm
+			 */
+			function confirmar() {
+				return confirm(&#x27;Desea agregar el registro?&#x27;);
+			}
+			/**
+			 * 
+			 *
+			 * @method formatItem
+			 * @param {String} row 
+			 * @return {String} String formateada
+			 */	
+			// Autocomplete cliente
+			function formatItem(row) {
+				// console.debug(row);
+				return row[0] + &#x27; &#x27; + row[1];// + &quot;(&lt;strong&gt;id: &quot; + row[1] +
+												// &quot;&lt;/strong&gt;)&quot;;
+			}
+			/**
+			 * 
+			 *
+			 * @method formatResult
+			 * @param {String} row 
+			 * @return {String} String formateada
+			 */	
+			function formatResult(row) {
+				// console.debug(row);
+				return row[0] + &#x27; &#x27; + row[1];
+				// return row[0].replace(/(&lt;.+?&gt;)/gi, &#x27;&#x27;);
+			}
+			/**
+			 * Autocomplete del Asegurado
+			 *
+			 * @event Autocomplete del Asegurado
+			 */
+			$(&quot;#asegurado&quot;).autocomplete(
+					&#x27;./poliza/solicitud/listar-asegurados&#x27;, {
+						width : 300,
+						multiple : true,
+						matchContains : true,
+						formatItem : formatItem,
+						formatResult : formatResult
+					});
+			/**
+			 * Autocomplete del Asegurado
+			 *
+			 * @event change
+			 */
+			$(&quot;#asegurado&quot;).result(
+					function(event, data, formatted) {
+						var hidden = $(this).parent().next().find(&quot;&gt;:input&quot;);
+						hidden.val((hidden.val() ? hidden.val() + &quot;;&quot; : hidden
+								.val())
+								+ data[2]);
+						// console.debug(data[1]);
+						$(&quot;#asegurado_id&quot;).val(data[2]);
+					});
+			/**
+			 * Plugin de fecha
+			 *
+			 * @event change
+			 */
+			$(&#x27;#fecha_pedido&#x27;).datepicker(
+					{
+						dateFormat : &#x27;yy-mm-dd&#x27;,
+						dayNamesMin : [ &#x27;Do&#x27;, &#x27;Lu&#x27;, &#x27;Ma&#x27;, &#x27;Mi&#x27;, &#x27;Ju&#x27;, &#x27;Vi&#x27;,
+								&#x27;Sa&#x27; ],
+						monthNames : [ &#x27;Enero&#x27;, &#x27;Febrero&#x27;, &#x27;Marzo&#x27;, &#x27;Abril&#x27;,
+								&#x27;Mayo&#x27;, &#x27;Junio&#x27;, &#x27;Julio&#x27;, &#x27;Agosto&#x27;,
+								&#x27;Septiembre&#x27;, &#x27;Octubre&#x27;, &#x27;Noviembre&#x27;,
+								&#x27;Diciembre&#x27; ]
+					});
+
+			$(&#x27;#fecha_vigencia&#x27;).datepicker(
+					{
+						dateFormat : &#x27;yy-mm-dd&#x27;,
+						dayNamesMin : [ &#x27;Do&#x27;, &#x27;Lu&#x27;, &#x27;Ma&#x27;, &#x27;Mi&#x27;, &#x27;Ju&#x27;, &#x27;Vi&#x27;,
+								&#x27;Sa&#x27; ],
+						monthNames : [ &#x27;Enero&#x27;, &#x27;Febrero&#x27;, &#x27;Marzo&#x27;, &#x27;Abril&#x27;,
+								&#x27;Mayo&#x27;, &#x27;Junio&#x27;, &#x27;Julio&#x27;, &#x27;Agosto&#x27;,
+								&#x27;Septiembre&#x27;, &#x27;Octubre&#x27;, &#x27;Noviembre&#x27;,
+								&#x27;Diciembre&#x27; ]
+					});
+
+			$(&#x27;#fecha_vigencia_hasta&#x27;).datepicker(
+					{
+						dateFormat : &#x27;yy-mm-dd&#x27;,
+						dayNamesMin : [ &#x27;Do&#x27;, &#x27;Lu&#x27;, &#x27;Ma&#x27;, &#x27;Mi&#x27;, &#x27;Ju&#x27;, &#x27;Vi&#x27;,
+								&#x27;Sa&#x27; ],
+						monthNames : [ &#x27;Enero&#x27;, &#x27;Febrero&#x27;, &#x27;Marzo&#x27;, &#x27;Abril&#x27;,
+								&#x27;Mayo&#x27;, &#x27;Junio&#x27;, &#x27;Julio&#x27;, &#x27;Agosto&#x27;,
+								&#x27;Septiembre&#x27;, &#x27;Octubre&#x27;, &#x27;Noviembre&#x27;,
+								&#x27;Diciembre&#x27; ]
+					});
+
+			// Oculta campos dar de alta solicitud o buscar
+
+			//$(&#x27;#datos_seguro&#x27;).toggle();
+			//$(&#x27;#detalle_riesgo&#x27;).toggle();
+			//$(&#x27;#valores_seguro&#x27;).toggle();
+			// $(&#x27;#datos_solicitud&#x27;).toggle();
+			//$(&#x27;#observaciones_seguro_aduaneros&#x27;).toggle();
+			//$(&#x27;#valores_seguro_aduaneros&#x27;).toggle();
+
+			$(&#x27;#datos_seguro_show&#x27;).click(function() {
+				$(&#x27;#datos_seguro&#x27;).toggle();
+			});
+			$(&#x27;#detalle_riesgo_show&#x27;).click(function() {
+				$(&#x27;#detalle_riesgo&#x27;).toggle();
+			});
+			$(&#x27;#datos_solicitud_show&#x27;).click(function() {
+				$(&#x27;#datos_solicitud&#x27;).toggle();
+			});
+			$(&#x27;#valores_seguro_aduaneros_show&#x27;).click(function() {
+				$(&#x27;#valores_seguro_aduaneros&#x27;).toggle();
+			});
+
+			$(&#x27;#datos_solicitud_show&#x27;).click(function() {
+				$(&#x27;#datos_solicitud&#x27;).toggle();
+			});
+
+			$(&#x27;#observaciones_seguro_aduaneros_show&#x27;).click(function() {
+				$(&#x27;#observaciones_seguro_aduaneros&#x27;).toggle();
+			});
+			$(&#x27;#detalle_riesgo_aduaneros_show&#x27;).click(function() {
+				$(&#x27;#detalle_riesgo_aduaneros&#x27;).toggle();
+			});
+			
+			$(&quot;#datos_tarjeta_show&quot;).hide();
+			$(&#x27;#forma_pago_id&#x27;).change(function(){
+				//Si es el ID de pago con tarjeta
+				//No deberia estar hardcodeado
+				if($(&#x27;#forma_pago_id&#x27;).val()==2	){
+					$(&quot;#datos_tarjeta_show&quot;).show();
+				}else{
+					$(&quot;#datos_tarjeta_show&quot;).hide();
+				}
+			});
+			
+			/*
+			 * Calcular importe
+			 */
+			
+			/*
+			 * Muestra importe
+			 */
+
+			//cuando modifica los valores
+			$(&#x27;#valor_cuota_aduaneros&#x27;)
+					.change(
+							function() {
+
+								var s_cuotas = $(&#x27;#cuotas_aduaneros&#x27;),
+								s_valor_cuota = $(&#x27;#valor_cuota_aduaneros&#x27;);
+								var importe=0;
+								var cuotas=0;
+								var valor_cuota = 0;
+
+								cuotas = parseFloat(s_cuotas.val());
+								valor_cuota = parseFloat(s_valor_cuota.val());
+
+								if ((cuotas != 0 &amp;&amp; valor_cuota != 0)) {
+									importe = (valor_cuota * cuotas);
+									$(&#x27;#importe_aduaneros&#x27;).val(importe);
+								}
+
+							});
+
+			$(&#x27;#cuotas_aduaneros&#x27;)
+					.change(
+							function() {
+
+								var s_cuotas = $(&#x27;#cuotas_aduaneros&#x27;), 
+								s_valor_cuota = $(&#x27;#valor_cuota_aduaneros&#x27;);
+								var importe=0;
+								var cuotas=0;
+								var valor_cuota = 0;
+
+								cuotas = parseFloat(s_cuotas.val());
+								valor_cuota = parseFloat(s_valor_cuota.val());
+
+								if ((cuotas != 0 &amp;&amp; valor_cuota != 0)) {
+									importe = (valor_cuota * cuotas);
+									$(&#x27;#importe_aduaneros&#x27;).val(importe);
+								}
+
+							});
+			
+			// traigo la fecha actual con el formato yyyy-mm-dd
+			// sumo un mes, tres meses, etc.. y cambio el formato
+			// le asigno los valores
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1;// January is 0!
+			var yyyy = today.getFullYear();
+			if (dd &lt; 10) {
+				dd = &#x27;0&#x27; + dd
+			}
+			if (mm &lt; 10) {
+				mm = &#x27;0&#x27; + mm
+			}
+			var date_today = yyyy + &#x27;-&#x27; + mm + &#x27;-&#x27; + dd;
+			// alert(date_today);
+			// Por defecto va la fecha del pedido del dia
+			// alert($(&#x27;#fecha_pedido&#x27;).val());
+			 if($(&#x27;#fecha_pedido&#x27;).val()==&#x27;&#x27;){
+			$(&#x27;#fecha_pedido&#x27;).val(date_today);
+			$(&#x27;#fecha_vigencia&#x27;).val(date_today);
+		}
+			 $(&#x27;#fecha_pedido_agente&#x27;).val(date_today);
+				$(&#x27;#fecha_vigencia_agente&#x27;).val(date_today);
+			
+			
+			// Guardar Solicitud
+			$(&#x27;#save_solicitud_aduanero&#x27;).click(function() {
+				
+				if(!$(&quot;#solicitud_poliza_aduanero&quot;).valid())return false;	 
+
+								// alert(&#x27;clic&#x27;);
+								// trae id de tab
+								var tabs_sel = $(&#x27;#tabs&#x27;).tabs();
+								var idx = tabs_sel.tabs(&#x27;option&#x27;,
+										&#x27;selected&#x27;);
+
+								// Trae el tab correspondiente
+								var tab = $(&#x27;#tabs ul li a&#x27;)[idx];
+								// //console.debug($(&#x27;#tabs ul li a&#x27;));
+								var href = $(tab).attr(&#x27;href&#x27;);
+
+								// suponemos que el form es valido
+
+								var data = $(&#x27;#solicitud_poliza_aduanero&#x27;).serializeArray();
+								// console.debug(data);
+
+								$.ajax({
+											url : &quot;./poliza/solicitud/alta-aduaneros&quot;,
+											data : data,
+											success : function(result) {
+												$(href).html(result);
+											}
+										});
+								
+							});
+
+			
+			// Aprobar Solicitud
+			$(&#x27;#aprobar_solicitud_aduanero&#x27;).click(function() {
+
+				// busca el id de la solicitud a confirmar
+				var solicitud_id = $(&#x27;#solicitud_id&#x27;).val();
+				// trae id de tab
+				var tabs_sel = $(&#x27;#tabs&#x27;).tabs();
+				var idx = tabs_sel.tabs(&#x27;option&#x27;, &#x27;selected&#x27;);
+
+				// Trae el tab correspondiente
+				var tab = $(&#x27;#tabs ul li a&#x27;)[idx];
+				// //console.debug($(&#x27;#tabs ul li a&#x27;));
+				var href = $(tab).attr(&#x27;href&#x27;);
+
+				$.ajax({
+					url : &quot;./poliza/solicitud/aprobar-solicitud&quot;,
+					data : {
+						solicitud_id : solicitud_id
+					},
+					success : function(result) {
+						$(href).html(result);
+					}
+				});
+
+			});
+
+			// Confirmar Solicitud
+			$(&#x27;#confirmar_solicitud_aduanero&#x27;).click(function() {
+
+				// busca el id de la solicitud a confirmar
+				var solicitud_id = $(&#x27;#solicitud_id&#x27;).val();
+				// trae id de tab
+				var tabs_sel = $(&#x27;#tabs&#x27;).tabs();
+				var idx = tabs_sel.tabs(&#x27;option&#x27;, &#x27;selected&#x27;);
+
+				// Trae el tab correspondiente
+				var tab = $(&#x27;#tabs ul li a&#x27;)[idx];
+				// //console.debug($(&#x27;#tabs ul li a&#x27;));
+				var href = $(tab).attr(&#x27;href&#x27;);
+
+				var importe_aduaneros = $(&#x27;#importe_aduaneros&#x27;).val();
+				if(importe_aduaneros &lt;= 0 ){
+					alert(&#x27;No se puede crear la poliza - El importe debe ser mayor a cero!&#x27;);
+					return false;
+				}
+				$.ajax({
+					url : &quot;./poliza/solicitud/confirmar-solicitud-caucion&quot;,
+					data : {
+						solicitud_id : solicitud_id
+					},
+					success : function(result) {
+						$(href).html(result);
+					}
+				});
+
+			});
+
+			// Anular Solicitud
+			$(&#x27;#anular_solicitud_aduanero&#x27;).click(function() {
+
+				// busca el id de la solicitud a confirmar
+				var solicitud_id = $(&#x27;#solicitud_id&#x27;).val();
+				// trae id de tab
+				var tabs_sel = $(&#x27;#tabs&#x27;).tabs();
+				var idx = tabs_sel.tabs(&#x27;option&#x27;, &#x27;selected&#x27;);
+
+				// Trae el tab correspondiente
+				var tab = $(&#x27;#tabs ul li a&#x27;)[idx];
+				// //console.debug($(&#x27;#tabs ul li a&#x27;));
+				var href = $(tab).attr(&#x27;href&#x27;);
+
+				$.ajax({
+					url : &quot;./poliza/solicitud/anular-solicitud&quot;,
+					data : {
+						solicitud_id : solicitud_id
+					},
+					success : function(result) {
+						$(href).html(result);
+					}
+				});
+
+			});
+
+			
+//validar formulario de alta solicitud
+			$(&quot;#solicitud_poliza_aduanero&quot;).validate({
+			    rules: {
+			        asegurado: {
+			            required: true
+			        }
+			    },
+			    messages: {
+			        asegurado: {
+			            required: &quot;No puede estar vacio&quot;
+			        }
+			    }
+			});
+			
+			
+			// Enviar Solicitud Compania
+			$(&#x27;#enviar_compania_solicitud_aduaneros&#x27;).click(function() {
+
+				// busca el id de la solicitud a confirmar
+				var solicitud_id = $(&#x27;#solicitud_id&#x27;).val();
+				// trae id de tab
+				var tabs_sel = $(&#x27;#tabs&#x27;).tabs();
+				var idx = tabs_sel.tabs(&#x27;option&#x27;, &#x27;selected&#x27;);
+
+				// Trae el tab correspondiente
+				var tab = $(&#x27;#tabs ul li a&#x27;)[idx];
+				// //console.debug($(&#x27;#tabs ul li a&#x27;));
+				var href = $(tab).attr(&#x27;href&#x27;);
+				var show_result = href+&#x27; #show_result&#x27;;	
+				$.ajax({
+					url : &quot;./poliza/solicitud/enviar-solicitud-compania-aduaneros&quot;,
+					data : {
+						solicitud_id : solicitud_id
+					},
+					success : function(result) {
+						$(show_result).html(result);
+						//devuelve el resultado e indica si tuvo exito o no
+					}
+				});
+
+			});
+
+			
+			
+		});
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

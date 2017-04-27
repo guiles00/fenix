@@ -1,0 +1,28 @@
+#form-inner {
+background-color:#FFFFEE;
+border:1px solid #CCCCCC;
+margin-left:2px;
+margin-top:11px;
+padding:19px;
+width:378px;
+}
+#form-inner form label {
+float:left;
+font-family:times New Roman;
+font-size:15px;
+width:164px;
+color:#0A2A0A;
+font-style:normal;
+font-weight:bold;
+}
+#form-inner form input{
+margin: 0.4em;
+}
+
+#form-inner form label.error { 
+	color: #a10052; 
+	margin: 0 0 .5em 90px;  
+	display: block; 
+	font-size: 1em !important;
+	font-weight:bold; 
+}

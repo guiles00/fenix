@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QUnit Example</title>
+<script src="../jquery/jquery.js"></script>
+<script src="qunit.js"></script>
+<style src="qunit.css"></style>
+<script src="tests.js"></script>
+<script type="text/javascript">
+function changeText(){
+ document.getElementById("myElement").
+                   innerHTML="Hello qUnit";
+}
+</script>
+<link rel="stylesheet" href="qunit.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<div id="myElement"></div>
+<!--form>
+	<input type="text" value=""></input>
+	<input type="button" value="Ok" id="aceptar"></input>
+</form-->
+</body>
+</html>
