@@ -1,0 +1,101 @@
+<script type="text/javascript">
+function listarMenues(){
+	
+	url="./default/menues/list";
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+			$.ajax({url: url,
+		        success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		    return false;
+	}
+
+/*function editForm(f){
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{id: f.id.value 
+            ,menu: f.menu.value
+            ,url: f.url.value
+            ,padre_id: f.padre_id.value
+            ,orden: f.orden.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+      
+    return false;
+}*/
+
+function editMenu(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+    
+    $.ajax({url: url,
+        data:{
+            id: f.id.value 
+            ,menu: f.menu.value
+            ,url: f.url.value
+            ,padre_id: f.padre_id.value
+            ,orden: f.orden.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+function menues(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		var url="./default/menues/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+
+</script>
+<form action="./default/menues/edit" onSubmit="return editMenu(this)">
+
+<table>
+<tr><td>menu_id</td><td><input type="text" name="id" value="<?=$this->menu['menu_id']?>"></input></td></tr>
+<tr><td>menu</td><td><input type="text" name="menu" value="<?=$this->menu['menu']?>"></input></td></tr>
+<tr><td>url</td><td><input type="text" name="url" value="<?=$this->menu['url']?>"></input></td></tr>
+<tr><td>padre_id</td><td><input type="text" name="padre_id" value="<?=$this->menu['padre_id']?>"></input></td></tr>
+<tr><td>orden</td><td><input type="text" name="orden" value="<?=$this->menu['orden']?>"></input></td></tr>
+<tr><td></td><td><input type="submit" value="guardar"></input></td><td><input type="button" name="Cancel" onclick="return menues()" value="cancel" /></input></td></tr>
+</table>	
+
+</form>

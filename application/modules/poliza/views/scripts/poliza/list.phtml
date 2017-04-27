@@ -1,0 +1,778 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.list.js');?>
+
+<form action="./poliza/poliza/list" onSubmit="return listPolizas(this)">
+<input type="hidden" name="busqueda" value=true></input>
+	<table id="buscar_poliza">
+		<tr>
+			<td>Buscar Poliza:</td>
+			<td><input type="text" name="criterio" /></td>			
+		<?if($this->operador):?>
+			<td>Asegurado:</td>
+			<td><select name="asegurado_id">
+								<option value="">Todos</option>
+								<? foreach($this->asegurados as $row ):?>
+								<?if($this->asegurado_id==$row['asegurado_id']):
+								?>
+								<option selected value=<?=$row['asegurado_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								<option value=<?=$row['asegurado_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+		<?else:?>
+		<input type="hidden" name="asegurado_id" value=""></input>
+		<?endif;?>
+			<td><input type="submit" name="buscar" value="Buscar"></input></td>
+		</tr>
+
+
+
+	</table>
+
+</form>
+
+<!-- En polizas
+Tomador / Compañia / Nº Solicitud / Nº Poliza / Endoso / Operación / Sección 
+/ Tipo Cobertura / Suma Asegurada
+ / Prima / Premio(*) / Plus / Estado / Fecha de Baja // "Editar" / "baja" 
+  -->
+<table id="poliza_list" class="ui-widget" cellspacing="1" cellpadding="0" border="0" >
+
+<!-- style="background-image: url(./images/desc.gif);     
+     
+     
+    background-repeat: no-repeat; 
+    background-position: center right; 
+    padding-right: 20px; 
+    border-left: 1px solid #dad9c7; 
+    margin-right: -1px;"  -->
+	<thead  class="ui-widget-header" >
+		<tr>
+			<?if( !$this->isCliente): ?>
+			<th >Tomador</th>
+			<?endif; ?>
+			<th>Numero Solicitud</th>	
+			<th>Compania</th>
+			<th>Numero Poliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Secci&oacute;n</th>
+			<th>Tipo de Cobertura</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<?if($this->isAgente OR $this->isCliente): ?>
+			<th>Importe</th>
+			<?else:?>
+			<th>Premio</th>
+			<th>Plus</th>
+			<th>Importe</th>
+			<?endif; ?>		
+			<th>Estado</th>
+			<th>Fecha Baja</th>
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody   class="ui-widget-content" >
+	<?foreach ($this->rows as $poliza):?>
+	<? //Esto lo puedo hacer con metodos estaticos
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado = new Domain_Asegurado($poliza['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$compania = new Domain_Compania($poliza['compania_id']);
+	$m_compania = $compania->getModel();
+	$estado = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	$estado_codigo = Domain_EstadoPoliza::getCodigoById($poliza['estado_id']);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($poliza['tipo_poliza_id']);
+	$cantidad_cuotas = (float) Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float) Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+
+	//echo 'este tipo:'.$tipo_poliza.' este importe '.$importe;
+	$operacion = Domain_Helper::getHelperNameById('operacion', $poliza['operacion_id']);
+
+	$m_detalle_poliza = $d_poliza->getModelDetalle();
+	//Aca podria traer el objeto correspondiente en vez de instanciarlo por separado
+	
+	switch ($tipo_poliza) {
+		case 'AUTOMOTORES':
+
+			$tipo_cobertura = Domain_Helper::getHelperNameById('tipo_cobertura_automotores', $m_detalle_poliza->tipo_cobertura_id);
+			break;
+
+		case 'ADUANEROS':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			
+			break;
+			
+		case 'ACCIDENTES_PERSONALES':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+			
+		case 'CONSTRUCCION':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+		case 'SEGURO_TECNICO':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+		case 'ALQUILER':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id, $poliza['tipo_poliza_id']);
+			break;
+		case 'TRANSPORTE_MERCADERIA':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+        case 'RESPONSABILIDAD_CIVIL':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;       
+		 case 'IGJ':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;       
+		case 'JUDICIALES':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+        case 'INTEGRAL_COMERCIO':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;               
+			
+		default:
+			$tipo_cobertura = null;
+			break;
+
+	}
+
+
+	?>
+		<tr>
+		<?if( !$this->isCliente): ?>
+			<td><?=$m_asegurado->nombre ?></td>
+		<?endif;?>
+			<td><?=$poliza['numero_solicitud']?></td>	
+			<td><?=$m_compania->nombre ?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=$tipo_cobertura?></td>
+			<td><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->prima_comision,2)?></td>
+			<?$importe = $m_poliza_valores->premio_asegurado + $m_poliza_valores->plus;?>
+			<?if($this->isAgente OR $this->isCliente): ?>
+			<td><?=round($importe,2)?></td>
+			<?else:?>
+			<td><?=round($m_poliza_valores->premio_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->plus,2)?></td>
+			<td><?=round($importe,2)?></td>
+			<?endif;?>
+			<td><?=$estado?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+
+			<?php //dependiendo del tipo de poliza va a un view diferente
+			//Hay que sacar el tipo de poliza de la base para no hardcodearlo
+
+			?>
+
+			<?php switch ($tipo_poliza){
+				case '':?>
+			<td><input type='button' value='Ver' onClick="return false;"> </input>
+			</td>
+			<?break;
+case 'ADUANEROS':?>
+
+<?if($this->isOperadorSolicitud):?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-aduaneros/poliza_id/<?=$poliza['poliza_id']?>','Aduaneros','ADUANEROS')">
+				</input>
+			</td>
+			<?else:?>
+
+
+			<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-aduaneros/poliza_id/<?=$poliza['poliza_id']?>','Poliza Aduaneros','ADUANEROS')">
+				</input>
+			</td>
+			<?endif;?>
+
+
+
+<?if($this->operador):?>
+						
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-aduaneros/poliza_id/<?=$poliza['poliza_id']?>','Aduaneros','ADUANEROS')">
+				</input>
+			</td>
+			
+			<!-- 
+			Pregunto por el estado: 
+			ACEPTADA->BAJA OFICIO
+			AFECTADA->BAJA LIBERACION
+			BAJA LIBERACION->NOTA CREDITO
+			BAJA DEVOLUCION->NOTA CREDITO
+			 -->
+<?if($estado=='VIGENTE'):?>
+<?//Ademas dependiendo el motivo de garantia es renovar o refacturar (por ahora solvencia economica) 
+$motivo_garantia_id = $m_detalle_poliza->motivo_garantia_id;
+$solvencia_economica_aduaneros = Domain_Helper::getHelperIdByDominioAndName('constante','solvencia_economica_aduaneros');
+
+if($motivo_garantia_id == $solvencia_economica_aduaneros):?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-aduaneros/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION ADUANEROS','ADUANEROS')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return bajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+	<?endif;?>
+<?endif;?>
+			 
+			<?if($estado_codigo=='ACEPTADA'):?> 
+			
+			
+			<td><input type='button' value='BAJA OFICIO'
+				onClick="return bajaOficioPoliza('./poliza/poliza/baja-oficio-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<td><input type='button' value='Afectar'
+				onClick="return afectarPoliza('./poliza/poliza/afectar-poliza/poliza_id/<?=$poliza['poliza_id']?>','Aduaneros','ADUANEROS')">
+				</input>
+			</td>
+			
+
+			<?elseif($estado_codigo=='AFECTADA'):?>
+			<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-aduaneros/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO ADUANEROS','ADUANEROS')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA LIBERACION'
+				onClick="return bajaLiberacionPoliza('./poliza/poliza/baja-liberacion-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<!--//Para que no entre le pongo AND porque creo que este boton va en todas las polizas-->
+			<?elseif($estado_codigo=='BAJA_POR_LIBERACION' OR $estado_codigo=='BAJA_POR_DEVOLUCION'):?>
+			<td><input type='button' value='NOTA CREDITO'
+				onClick="return notaCreditoPoliza('./poliza/poliza/nota-credito-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			
+			<?endif; ?>
+			<?endif;?>
+	<?endif;?>
+			<?break;
+case 'CONSTRUCCION':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-construccion/poliza_id/<?=$poliza['poliza_id']?>','Construccion','CONSTRUCCION')">
+			</td>
+
+			<?else:?>
+
+	<?if($this->perfil_id == 1):?>
+
+		
+
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-construccion/poliza_id/<?=$poliza['poliza_id']?>','Poliza Construccion','CONSTRUCCION')">
+				</input>
+			</td>
+			<?endif;?>
+
+			<?if($this->operador):?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-construccion/poliza_id/<?=$poliza['poliza_id']?>','Construccion','CONSTRUCCION')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-construccion/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO CONSTRUCCION','CONSTRUCCION')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+				<?if($estado_codigo=='BAJA_POR_DEVOLUCION'):?>
+			<td><input type='button' value='NOTA CREDITO'
+				onClick="return notaCreditoPoliza('./poliza/poliza/nota-credito-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif?>
+
+			<?endif;?>
+
+			<?endif;?> <!-- ENDIF de Operador Solicitud -->
+			<?break;
+
+case 'SEGURO_TECNICO':?>
+
+		
+	<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-seguro-tecnico/poliza_id/<?=$poliza['poliza_id']?>','Poliza Seguro Tecnico','SEGURO_TECNICO')">
+			</td>
+
+			<?else:?>
+
+
+	<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-seguro-tecnico/poliza_id/<?=$poliza['poliza_id']?>','Poliza Seguro Tecnico','SEGURO_TECNICO')">
+				</input>
+			</td>
+			<?endif;?>
+
+			<?if($this->operador):?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-seguro-tecnico/poliza_id/<?=$poliza['poliza_id']?>','Seguro Tecnico','SEGURO_TECNICO')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-seguro-tecnico/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO SEGURO TECNICO','SEGURO_TECNICO')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+	<?endif;?>
+	<?endif;?>
+			<?break;			
+case 'ALQUILER':?>
+
+		
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-alquiler/poliza_id/<?=$poliza['poliza_id']?>','Poliza Alquiler','ALQUILER')">
+			</td>
+
+		<?else:?>
+
+
+		<?if($this->operador):?>
+			<?if($this->perfil_id == 1):?>
+					<td><input type='button' value='Editar'
+						onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-alquiler/poliza_id/<?=$poliza['poliza_id']?>','Poliza Alquiler','ALQUILER')">
+						</input>
+					</td>
+					<?endif;?>
+					<td><input type='button' value='Ver'
+						onClick="return loadTabPoliza('./poliza/poliza/view-poliza-alquiler/poliza_id/<?=$poliza['poliza_id']?>','Alquiler','ALQUILER')">
+					</td>
+					
+					<?if($estado_codigo == 'VIGENTE'):?>
+					<td><input type='button' value='RENOVAR'
+						onClick="return renovarPoliza('./poliza/solicitud/renovacion-alquiler/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION ALQUILER','ALQUILER')">
+						</input>
+					</td>
+					<td><input type='button' value='ENDOSO'
+						onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-alquiler/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO ALQUILER','ALQUILER')">
+						</input>
+					</td>
+					<td><input type='button' value='BAJA'
+						onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+						</input>
+					</td>
+					<?endif;?>
+		<?endif;?>
+		<?endif;?>
+<?break;
+case 'INTEGRAL_COMERCIO':?>
+
+	
+	<?if($this->isOperadorSolicitud):?>
+
+		<td><input type='button' value='Ver'
+			onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-integral-comercio/poliza_id/<?=$poliza['poliza_id']?>','Poliza Integ. Comercio','INTEGRAL_COMERCIO')">
+		</td>
+
+	<?else:?>
+
+			<?if($this->perfil_id == 1):?>
+					<td><input type='button' value='Editar'
+						onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-integral-comercio/poliza_id/<?=$poliza['poliza_id']?>','Poliza Integ. Comercio','INTEGRAL_COMERCIO')">
+						</input>
+					</td>
+					<?endif;?>
+			<?if($this->operador):?>
+
+					<td><input type='button' value='Ver'
+						onClick="return loadTabPoliza('./poliza/poliza/view-poliza-integral-comercio/poliza_id/<?=$poliza['poliza_id']?>','INTEGRAL DE COMERCIO','INTEGRAL_COMERCIO')">
+					</td>
+					
+					<?if($estado_codigo == 'VIGENTE'):?>
+					<td><input type='button' value='RENOVAR'
+						onClick="return renovarPoliza('./poliza/solicitud/renovacion-integral-comercio/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION INTEGRAL DE COMERCIO','INTEGRAL_COMERCIO')">
+						</input>
+					</td>
+					<td><input type='button' value='ENDOSO'
+						onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-integral-comercio/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO INTEGRAL DE COMERCIO','INTEGRAL_COMERCIO')">
+						</input>
+					</td>
+					<td><input type='button' value='BAJA'
+						onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+						</input>
+					</td>
+					<?endif;?>
+		<?endif;?>
+		<?endif;?>
+<?break;
+
+case 'RESPONSABILIDAD_CIVIL':?>
+
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-responsabilidad-civil/poliza_id/<?=$poliza['poliza_id']?>','Poliza R. Civil','RESPONSABILIDAD_CIVIL')">
+			</td>
+
+		<?else:?>
+
+	<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-responsabilidad-civil/poliza_id/<?=$poliza['poliza_id']?>','Poliza R. Civil','RESPONSABILIDAD_CIVIL')">
+				</input>
+			</td>
+			<?endif;?>
+		<?if($this->operador):?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-responsabilidad-civil/poliza_id/<?=$poliza['poliza_id']?>','Responsabilidad Civil','RESPONSABILIDAD_CIVIL')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-responsabilidad-civil/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION R. CIVIL','RESPONSABILIDAD_CIVIL')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-responsabilidad-civil/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO RESP. CIVIL','RESPONSABILIDAD_CIVIL')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+		
+		<?endif;?>
+		<?endif;?>
+
+<?break;
+
+case 'ACCIDENTES_PERSONALES':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-accidentes-personales/poliza_id/<?=$poliza['poliza_id']?>','Poliza Acc. Personales','ACCIDENTES_PERSONALES')">
+			</td>
+
+		<?else:?>
+	
+		<?if($this->operador):?>
+			<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-accidentes-personales/poliza_id/<?=$poliza['poliza_id']?>','Poliza Acc. Personales','ACCIDENTES_PERSONALES')">
+				</input>
+			</td>
+			<?endif;?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-accidentes-personales/poliza_id/<?=$poliza['poliza_id']?>','Accidentes Personales','ACCIDENTES_PERSONALES')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-accidentes-personales/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION Acc. PERSONALES','ACCIDENTES_PERSONALES')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-accidentes-personales/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO Acc. PERSONALES','ACCIDENTES_PERSONALES')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+		<?endif;?>
+		<?endif?>
+<?break;
+case 'IGJ':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-igj/poliza_id/<?=$poliza['poliza_id']?>','Poliza IGJ','IGJ')">
+			</td>
+
+		<?else:?>
+
+		<?if($this->operador):?>
+			<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-igj/poliza_id/<?=$poliza['poliza_id']?>','Poliza IGJ','IGJ')">
+				</input>
+			</td>
+			<?endif;?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-igj/poliza_id/<?=$poliza['poliza_id']?>','IGJ','IGJ')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-igj/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION IGJ','IGJ')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-igj/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO IGJ','IGJ')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+		<?endif;?>
+		<?endif;?>
+<?break;
+
+case 'JUDICIALES':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-judiciales/poliza_id/<?=$poliza['poliza_id']?>','Poliza Judiciales','JUDICIALES')">
+			</td>
+
+		<?else:?>
+
+		<?if($this->operador):?>
+		<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-judiciales/poliza_id/<?=$poliza['poliza_id']?>','Poliza Judiciales','JUDICIALES')">
+				</input>
+			</td>
+			<?endif;?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-judiciales/poliza_id/<?=$poliza['poliza_id']?>','JUDICIALES','JUDICIALES')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<!--td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-judiciales/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION JUDICIALES','JUDICIALES')">
+				</input>
+			</td-->
+			<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<td><input type='button' value='ENDOSO'
+				onClick="return endosoPoliza('./poliza/poliza/endoso-poliza-judiciales/poliza_id/<?=$poliza['poliza_id']?>','ENDOSO JUDICIALES','JUDICIALES')">
+				</input>
+			</td>
+			
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+			<?if($estado_codigo=='BAJA_POR_DEVOLUCION'):?>
+			<td><input type='button' value='NOTA CREDITO'
+				onClick="return notaCreditoPoliza('./poliza/poliza/nota-credito-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif?>
+		<?endif;?>
+		<?endif;?>
+<?break;
+
+case 'VIDA':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-vida/poliza_id/<?=$poliza['poliza_id']?>','Poliza Vida','VIDA')">
+			</td>
+
+		<?else:?>
+	
+		<?if($this->operador):?>
+		<?if($this->perfil_id == 1):?>
+				<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-vida/poliza_id/<?=$poliza['poliza_id']?>','Poliza Vida','VIDA')">
+				</input>
+			</td>
+			<?endif;?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-vida/poliza_id/<?=$poliza['poliza_id']?>','VIDA','VIDA')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-vida/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION VIDA','VIDA')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+		<?endif;?>
+		<?endif;?>
+	<?break;
+case 'TRANSPORTE_MERCADERIA':?>
+
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-transporte-mercaderia/poliza_id/<?=$poliza['poliza_id']?>','Transporte Mercaderia','TRANSPORTE_MERCADERIA')">
+			</td>
+
+		<?else:?>
+
+		<?if($this->operador):?>
+		<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-transporte-mercaderia/poliza_id/<?=$poliza['poliza_id']?>','Poliza Transporte Mercaderia','TRANSPORTE_MERCADERIA')">
+				</input>
+			</td>
+			<?endif;?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-transporte-mercaderia/poliza_id/<?=$poliza['poliza_id']?>','Transporte Mercaderia','TRANSPORTE_MERCADERIA')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<!--  td><input type='button' value='RENOVAR'
+				onClick="return refacturaPoliza('./poliza/poliza/alta-poliza-responsabilidad-civil/poliza_id/<? //=$poliza['poliza_id']?>')">
+				</input>
+			</td>-->
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+		<?endif;?>
+		<?endif;?>
+	<?break;
+				
+case 'INCENDIO':?>
+
+
+	<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-incendio/poliza_id/<?=$poliza['poliza_id']?>','Poliza Incencio','INCENDIO')">
+			</td>
+
+		<?else:?>
+
+			<?if($this->operador):?>
+			<?if($this->perfil_id == 1):?>
+			<td><input type='button' value='Editar'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-incendio/poliza_id/<?=$poliza['poliza_id']?>','Poliza Incencio','INCENDIO')">
+				</input>
+			</td>
+			<?endif;?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-incendio/poliza_id/<?=$poliza['poliza_id']?>','Incendio','INCENDIO')">
+			</td>
+			
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<!--  td><input type='button' value='RENOVAR'
+				onClick="return refacturaPoliza('./poliza/poliza/alta-poliza-responsabilidad-civil/poliza_id/<? //=$poliza['poliza_id']?>')">
+				</input>
+			</td>-->
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+<?endif;?>
+<?endif;?>
+<?break;			
+case 'AUTOMOTORES':?>
+		<?if($this->isOperadorSolicitud):?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/edit-poliza-factura-automotores/poliza_id/<?=$poliza['poliza_id']?>','Automotores','AUTOMOTORES')">
+			</td>
+
+		<?else:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-automotores/poliza_id/<?=$poliza['poliza_id']?>','Automotores','AUTOMOTORES')">
+				</input>
+			</td>
+			<?if($estado_codigo == 'VIGENTE'):?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-automotores/poliza_id/<?=$poliza['poliza_id']?>','RENOVACION AUTOMOTORES','AUTOMOTORES')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;?>
+			<?endif?>
+			<?break;
+default:
+
+	break;
+			}?>
+
+
+			<!--  td><input type='button' value='Baja' onClick="return false;"> </input>
+			</td>
+			<!--  td><input type='button' value='Refacturar' onClick="return false;"> </input>
+			</td>-->
+		
+		</tr>
+
+		<?endforeach; ?>
+	</tbody>
+</table>
+
+		<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio,'busqueda'=>$this->busqueda,'asegurado_id'=>$this->asegurado_id)); ?>

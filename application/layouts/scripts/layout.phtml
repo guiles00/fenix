@@ -1,0 +1,415 @@
+<?php
+$menu_manager=new Model_MenuManager();
+//$menu=$menu_manager->getMenuAndItems();
+
+$config = new Zend_Config_Ini('../config.ini','dev');
+         //echo"<pre>";
+         //print_r($config->logo);
+$logo =  $config->logo;
+$height= $config->height; 
+$width= $config->width;        
+         //exit;
+
+//Determino tipo de usuario para armar el menu
+$sesion = Domain_Sesion::getInstance();
+$usuario = $sesion->getUsuario();
+
+$t_usuario = $usuario->getTipoUsuario()->getNombre();
+$username = $usuario->getModel()->username;
+//Traigo el primer perfil por ahora
+$perfiles = $usuario->getUserPerfilTemp();
+
+
+
+$menu = $menu_manager->getMenuByPerfilId(array('perfilId' => $perfiles['0'] ));
+
+
+
+//echo "<pre>";
+//print_r($menu);
+//exit;
+//print_r($_SESSION);
+//print_r($usuario->getModel()->username);
+
+//exit;
+//$perfiles = $usuario->getUserPerfil();
+$perfiles = $usuario->getUserPerfilTemp();
+//echo "<pre>";
+//print_r($perfiles);
+//	exit;
+
+//$this->_helper->redirector->gotoSimple('login', 'index');
+//$logger = Zend_Registry::get('logger');
+//$logger->log($usuario,ZEND_Log::INFO);
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->headMeta()->appendHttpEquiv('Content-Type','text/html; charset=UTF-8')->appendHttpEquiv('Content-Language', 'es-AR')?>
+<?php echo $this->headTitle('GSeguros')?>
+<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon','href' => '/images/favicon.ico'),'PREPEND')
+/*
+ *  Todo lo que esta en /css/ *.css lo uno para hacer un solo request
+ */
+//->appendStylesheet('/min/b=css&f=layout.css,html-elements.css,ui.jqgrid.css,sexy-combo.css,jquery.autocomplete.css,redmond/jquery-ui-1.7.1.custom.css,sexy/sexy.css,jquery.contextMenu.css')
+->appendStylesheet('./css/layout.css') //saque
+->appendStylesheet('./css/html-elements.css') //saque
+//->appendStylesheet("./css/ui.jqgrid.css")
+//->appendStylesheet("./css/sexy-combo.css")
+->appendStylesheet("./css/jquery.autocomplete.css")
+//->appendStylesheet('./css/redmond/jquery-ui-1.7.1.custom.css','','',array('id' => 'linc'))
+->appendStylesheet('./css/ui/css/smoothness/jquery-ui-1.8.14.custom.css','','',array('id' => 'linc'))
+//->appendStylesheet('./css/css/ui-lightness/jquery-ui-1.10.4.custom.css','','',array('id' => 'linc'))
+//->appendStylesheet('./css/ui/css/jquery-ui-custom/css/custom-theme/jquery-ui-1.9.2.custom.css','','',array('id' => 'linc'))
+->appendStylesheet("./css/tablesorter/style.css")
+//->appendStylesheet("//cdn.datatables.net/1.10.4/css/jquery.dataTables.css")
+//<link rel="stylesheet" type="text/css" href="jNotify.jquery.css" media="screen" />
+//->appendStylesheet("./css/jNotify.jquery.css")
+//->appendStylesheet('./css/jquery-ui-1.8.14.custom.css','','',array('id' => 'linc'))
+//->appendStylesheet('./css/base/jquery.ui.all.css')
+//->appendStylesheet("./css/sexy/sexy.css")
+//->appendStylesheet("./css/validationEngine.jquery.css")
+//->appendStylesheet("./css/template.css")
+//->appendStylesheet("./css/jquery.contextMenu.css")
+//->appendStylesheet("./css/jquery.jgrowl.css");
+?>
+<?php echo $this->headScript()
+/*
+ *  Todo lo que esta en /js/ *.js lo uno hacer un solo request
+ */
+//->prependFile('/min/b=js&f=jquery/jquery.js,jquery/jquery.timer.js,jquery/jquery.autocomplete.js,jquery/jquery.bgiframe.min.js,jquery/jquery.sexy-combo.js,jquery/jquery.layout.js,grid.locale-sp.js,jquery/jquery-ui-1.7.2.custom.min.js,jquery/jquery.cascade.js,jquery/jquery.cascade.ext.js,jquery/jquery.jqGrid.min.js,jquery/jquery.validate.js,jquery/jquery.blockUI.js,activateUI.js,funciones.adminPersonas.js,jquery/jquery.cookie.js,jquery/jquery.contextMenu.js')
+->appendFile('./js/jquery/jquery.js')
+->appendFile('./js/jquery/jquery.timer.js')
+->appendFile('./js/jquery/jquery.bgiframe.min.js')
+->appendFile('./js/jquery/jquery.sexy-combo.js')
+->appendFile('./js/jquery/jquery.layout.js')
+->appendFile('./js/grid.locale-sp.js')
+->appendFile('./js/jquery/jquery.autocomplete.js')
+//->appendFile('./js/jquery/jquery-ui-1.7.2.custom.min.js')
+->appendFile('./js/jquery/jquery-ui-1.8.14.custom.min.js')
+->appendFile('./js/jquery/jquery.validate.js')
+//->appendFile('./js/js/jNotify.jquery.js')
+//->appendFile('./js/jquery/jquery.cascade.ext.js')
+//->appendFile('./js/jquery/jquery.jqGrid.min.js')
+//->appendFile('./js/jquery/jquery.validate.js')
+//blockUI is t.he evil :P LO USAREMOS SOLO PARA BLOQUEAR DE A ELEMENTOS O TABS!
+->appendFile('./js/jquery/jquery.blockUI.js')
+->appendFile('./js/jquery/jquery.jgrowl.js')
+//->appendFile('./js/funciones.adminPersonas.js')
+->appendFile('./js/jquery/jquery.cookie.js')
+->appendFile('./js/jquery/jquery.contextMenu.js')
+->appendFile('./js/js/date.js')
+->appendFile('./js/js/jquery.tablesorter.js')
+//->appendFile('//cdn.datatables.net/1.10.4/js/jquery.dataTables.js')
+//->appendFile('./js/com.gseguros.poliza.solicitud.alta-automotores.js');
+//->appendFile('./js/com.gseguros.poliza.solicitud.alta-solicitud.js');
+;
+?>
+
+
+<?php echo $this->doctype() ?>
+<html>
+<head>
+
+<SCRIPT type="text/javascript">
+
+//funcion loadPageTab
+var tab_url;
+function loadPage(url, title){
+var existe=false;
+tab_url = url;
+	
+		$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+	   var href = $(this).attr('tab_url');
+	   console.debug(href);
+			   if (href==url)existe=true;
+			})
+			
+			if(!existe)$("#tabs").tabs("add",url,title);
+			
+		return false;  	
+	}
+//EndloadPageTab	
+/*function loadPage(url){
+
+
+  $.ajax({url: url, success:function(result){
+      //console.debug(result);
+      $('#content').html(result);
+    }});
+ 
+}*/
+$(document).ready(function () {
+//Tabs
+
+$('#loading').hide();
+
+			$('#loading')
+		    .ajaxStart(function() {
+		        $(this).show();
+		    })
+		    .ajaxStop(function() {
+		        $(this).hide();
+		    });
+
+
+		var $tabs = $('#tabs').tabs({
+    		add: function(event, ui) {
+    		
+        	$(ui.tab).attr('tab_url',tab_url);
+        	
+    			$(ui.tab).parents('li:first')
+	            .append('<span class="ui-tabs-close ui-icon ui-icon-close" title="Close Tab"></span>')
+	            .find('span.ui-tabs-close')
+	            .click(function() {
+		            var maintab = jQuery('#tabs','#CenterPane');
+	            	$tabs.tabs('remove', $('li',maintab).index($(this).parents('li:first')[0]));
+	            });
+	      
+	       $tabs.tabs('select', '#' + ui.panel.id);
+            	
+    		}
+			,load: function(event, ui) {
+    	        $('a', ui.panel).click(function() {
+    	          //$(ui.panel).load(this.href);
+    	            return false;
+    	        });
+    	    }
+    	    ,select: function(event, ui) {
+                var tabID = "#ui-tabs-" + (ui.index + 1);
+               // $(tabID).html("<b>Fetching Data.... Please wait....</b>");
+                ////console.debug(tabID);
+                return true;
+            }       
+            ,cache:true            
+		});	
+
+
+//endTabs
+
+//	$('body').layout({ applyDefaultStyles: true });
+/*
+ * comienza un monton de cosas que entiendo la mitad
+ */
+
+ var layoutSettings = {
+	name: "outerLayout" // NO FUNCTIONAL USE, but could be used by custom code to 'identify' a layout
+	// options.defaults apply to ALL PANES - but overridden by pane-specific settings
+,	defaults: {
+		size:					"auto"
+	,	minSize:				50
+	,	paneClass:				"pane" 		// default = 'ui-layout-pane'
+	,	resizerClass:			"resizer"	// default = 'ui-layout-resizer'
+	,	togglerClass:			"toggler"	// default = 'ui-layout-toggler'
+	,	buttonClass:			"button"	// default = 'ui-layout-button'
+	,	contentSelector:		".content"	// inner div to auto-size so only it scrolls, not the entire pane!
+	,	contentIgnoreSelector:	"span"		// 'paneSelector' for content to 'ignore' when measuring room for content
+	,	togglerLength_open:		35			// WIDTH of toggler on north/south edges - HEIGHT on east/west edges
+	,	togglerLength_closed:	35			// "100%" OR -1 = full height
+	,	hideTogglerOnSlide:		true		// hide the toggler when pane is 'slid open'
+	,	togglerTip_open:		"Close This Pane"
+	,	togglerTip_closed:		"Open This Pane"
+	,	resizerTip:				"Resize This Pane"
+	//	effect defaults - overridden on some panes
+	,	fxName:					"slide"		// none, slide, drop, scale
+	,	fxSpeed_open:			750
+	,	fxSpeed_close:			1500
+	,	fxSettings_open:		{ easing: "easeInQuint" }
+	,	fxSettings_close:		{ easing: "easeOutQuint" }
+}
+,	north: {
+		spacing_open:			1			// cosmetic spacing
+	,	togglerLength_open:		0			// HIDE the toggler button
+	,	togglerLength_closed:	-1			// "100%" OR -1 = full width of pane
+	,	resizable: 				false
+	,	slidable:				false
+	//	override default effect
+	,	fxName:					"none"
+	}
+,	south: {
+		maxSize:				200
+	,	spacing_closed:			0			// HIDE resizer & toggler when 'closed'
+	,	slidable:				false		// REFERENCE - cannot slide if spacing_closed = 0
+	,	initClosed:				true
+	}
+,	west: {
+		size:					250
+	,	spacing_closed:			21			// wider space when closed
+	,	togglerLength_closed:	21			// make toggler 'square' - 21x21
+	,	togglerAlign_closed:	"top"		// align to top of resizer
+	,	togglerLength_open:		0			// NONE - using custom togglers INSIDE west-pane
+	,	togglerTip_open:		"Close West Pane"
+	,	togglerTip_closed:		"Open West Pane"
+	,	resizerTip_open:		"Resize West Pane"
+	,	slideTrigger_open:		"click" 	// default
+	,	initClosed:				true
+	//	add 'bounce' option to default 'slide' effect
+	,	fxSettings_open:		{ easing: "easeOutBounce" }
+	}
+,	east: {
+		size:					250
+	,	spacing_closed:			21			// wider space when closed
+	,	togglerLength_closed:	21			// make toggler 'square' - 21x21
+	,	togglerAlign_closed:	"top"		// align to top of resizer
+	,	togglerLength_open:		0 			// NONE - using custom togglers INSIDE east-pane
+	,	togglerTip_open:		"Close East Pane"
+	,	togglerTip_closed:		"Open East Pane"
+	,	resizerTip_open:		"Resize East Pane"
+	,	slideTrigger_open:		"mouseover"
+	,	initClosed:				true
+	//	override default effect, speed, and settings
+	,	fxName:					"drop"
+	,	fxSpeed:				"normal"
+	,	fxSettings:				{ easing: "" } // nullify default easing
+	}
+,	center: {
+		paneSelector:			"#CenterPane" 			// sample: use an ID to select pane instead of a class
+	,	onresize:				"innerLayout.resizeAll"	// resize INNER LAYOUT when center pane resizes
+	,	minWidth:				200
+	,	minHeight:				200
+	}
+};
+
+ //var mylayout =  $('body').layout(layoutSettings);
+ 
+ mylayout =  $('body').layout({
+   fxName:                       "slide"
+,  south__fxName:                "none"
+,  spacing_closed:               14
+,  north__spacing_closed:        8
+,  south__spacing_closed:        8
+,  north__togglerLength_closed:  "100%"
+,  south__togglerLength_closed:  "100%"
+,closable:true
+
+});
+
+ //mylayout.addPinBtn( '#pin-button', "west" )
+
+/*
+ * End
+ */
+        $(function() {
+                $( "#acordion" ).accordion();
+        });
+
+        $("a").click(function(){
+            //console.debug(this);
+         var page = $(this).val();
+
+        });
+       
+        $("input").click(function(){
+                //alert('click');
+        //console.debug(this);
+        var page = $(this).val();
+       
+        //alert(page);
+       
+
+        switch(page)
+        {
+        case 'Compania':
+
+                var url="./guestbook/index/";
+                $.ajax({url: url, success:function(result){
+                    //console.debug(result);
+                    $('#content').html(result);
+                  }}); 
+                 
+          break;
+        case 'Guest':
+                var url="./guestbook/sign/";
+                $.ajax({url: url, success:function(result){
+                    //console.debug(result);
+                    $('#content').html(result);
+                  }});
+               
+          break;
+        default:
+         
+        }
+
+       
+       
+        });
+});
+</SCRIPT>
+</HEAD>
+<BODY>
+  
+
+
+	<DIV class="ui-layout-north" id="north">
+	
+	<img src="./images/<?=$logo?>" height=<?=$height?> width=<?=$width?> ></img>  
+	 <i style="text-align:right"><?="Usuario: $username / Rol:$t_usuario"?></i>
+	 <a href="#" onClick="mylayout.toggle('west')" >+</a>
+	 </DIV>
+	
+	<DIV class="ui-layout-west">
+	
+
+		<div id="acordion" style="font-size: small">
+		 
+		<?php foreach ($menu as $key => $item) : ?>
+			<h4>
+				<a href="#"><?php echo $this->escape($key) ?> </a>
+			</h4>
+			<div style="font-size: small">
+				<ul style="margin: 0; padding: 0">
+				<?php foreach ($item as $item_menu) :   ?>
+					<li><a style="text-decoration: none; font-size: small"
+						type="button" href="#"
+						onclick="loadPage('<?=$item_menu['url'] ?>','<?=$item_menu['nombre'] ?>')"><?=$item_menu['nombre'] ?>
+					</a>
+					</li>
+					
+					<?php endforeach ?>
+					
+				</ul>
+
+			</div>
+			<?php endforeach ?>
+			<h4>
+				<a href="#">Sesion</a>
+			</h4>
+			<div>
+				<a href="./default/login/logout">Salir</a>
+			</div>
+
+		</div>
+	</DIV>
+
+	<div id="CenterPane"
+		class="ui-layout-center ui-helper-reset ui-widget-content">
+		<div id="tabs" class="jqgtabs">
+			<ul id="tablist">
+				<li><a href="#tabs-1">Principal</a></li>
+				<!-- <li><a href="#tabs-menu">Menu</a></li> -->
+			</ul>
+			
+	<div style="position:fixed; 
+   _position:absolute;
+   top: 50%;
+   left:47%; 
+   padding:2px 5px;
+   z-index: 5000
+  <!--   background-color:#CF4342;
+   color:#fff;-->
+	" id="loading">
+		<!--  <img src="mozilla_blu.gif"></img>-->
+		<img src="roller.gif"></img>
+		
+	</div>
+			<div id="tabs-1">
+			
+			</div>
+
+		</div>
+	</div>
+<!--  DIV class="ui-layout-south">
+
+</DIV-->
+</html>

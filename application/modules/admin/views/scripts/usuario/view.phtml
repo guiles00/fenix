@@ -1,0 +1,273 @@
+<script type="text/javascript">
+/*function listar(){
+	
+	url="./default/usuario/list";
+			$.ajax({url: url,
+		        success:function(result){
+		        $('#content').html(result);
+		      }});
+		   
+		    return false;
+	}
+/*
+function editForm(f){
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{id: f.id.value 
+            ,tipo_usuario_id: f.tipo_usuario_id.value
+            ,usuario_tipo_id: f.usuario_tipo_id.value
+            ,username: f.username.value
+            ,password: f.password.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+   
+    return false;
+}
+*/
+
+function editUsuario(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+    
+	$.ajax({url: url,
+        data:{id: f.id.value 
+            ,tipo_usuario_id: f.tipo_usuario_id.value
+            ,usuario_tipo_id: f.usuario_tipo_id.value
+            ,username: f.username.value
+            ,usuario_perfil_id: f.usuario_perfil_id.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+
+function usuario(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./admin/usuario/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+$(document).ready(function() { 
+
+	//console.debug( $("#tipo_usuario_id option:selected").value() );
+	 var tipo_usuario_id_selected = $('#tipo_usuario_id option:selected').val();
+	// console.debug(tipo_usuario_id_selected);
+
+	 
+	 switch(tipo_usuario_id_selected)
+	 {
+	 case '3':
+		 $("#usuario_cliente_id").show();
+		 $("#usuario_agente_id").hide();
+	   break;
+	 case '6':
+		 $("#usuario_cliente_id").hide();
+		 $("#usuario_agente_id").show();
+	   break;
+	 default:
+		 $("#usuario_cliente_id").hide();
+ 	 	 $("#usuario_agente_id").hide();
+	 }
+
+	 $("#tipo_usuario_id").change(function() {
+
+		 var id_selected = $('#tipo_usuario_id option:selected').val();
+		//console.debug(id_selected);
+		 switch(id_selected)
+		 {
+		 case '3':
+			 $("#usuario_cliente_id").show();
+			 $("#usuario_agente_id").hide();
+		   break;
+		 case '6':
+			 $("#usuario_cliente_id").hide();
+			 $("#usuario_agente_id").show();
+		   break;
+		 default:
+			 $("#usuario_cliente_id").hide();
+		 	 $("#usuario_agente_id").hide();
+		 } 
+		 //console.debug('change');
+		 
+	 });
+
+
+	 $("#save_usuario").click(function() {
+
+		  //alert("Valid: " + $("#alta_usuario").valid());
+		  
+		var data = $('#view_usuario').serializeArray();
+		
+		var url ="./admin/usuario/edit";
+	/*	  var username = $( "#username" ),
+	      password = $( "#password" ),
+	      usuario_id = $( "#usuario_id" ),
+	      add_usuario = $("#add_usuario"),
+	      tipo_usuario_id = $("#tipo_usuario_id"),
+	      usuario_tipo_id = $("#usuario_tipo_id"),
+	      usuario_perfil_id =$("#usuario_perfil_id");
+	  */    
+	//  console.debug(data);
+	  //return false;
+			var tabs_sel = $('#tabs').tabs();
+			var idx = tabs_sel.tabs('option', 'selected');
+
+			//Trae el tab correspondiente
+			var tab = $('#tabs ul li a')[idx];
+			//console.debug($('#tabs ul li a'));
+			var href = $(tab).attr('href') ;                       
+
+			$.ajax({url: url,
+		        data:data
+		        , success:function(result){
+		        $(href).html(result);
+		      }});
+			
+			/*
+			 $.ajax({url: url,
+			        data:{
+				       // add: true
+			           // ,
+			             id: usuario_id.val() 
+			            ,tipo_usuario_id: tipo_usuario_id.val()
+			            ,usuario_tipo_id: usuario_tipo_id.val()
+			            ,username: username.val()
+			            ,password: password.val()
+			            ,usuario_perfil_id: usuario_perfil_id.val()
+			            }
+			        , success:function(result){
+			        $(href).html(result);
+			      }});
+			  */ 
+			   
+			    return false;
+			  
+		});
+	 
+
+});
+</script>
+<form id="view_usuario" action="#" method="GET">
+<!--  form action="./admin/usuario/edit"
+	onSubmit="return editUsuario(this)"-->
+<table>
+	<tr>
+		<td>usuario_id</td>
+		<td><input readonly type="text" name="id" value="<?=$this->row['usuario_id']?>"></input></td>
+	</tr>
+	<tr>
+		<td>username</td>
+		<td><input type="text" name="username"
+			value="<?=$this->row['username']?>"></input></td>
+	</tr>
+	<td>usuario_perfil_id</td>
+		    <td><select name="usuario_perfil_id" ><!--  -->
+								<option value="0">Perfil</option>
+								<? foreach($this->perfiles as $perfil ):?>
+								<?if($this->usuario_perfil_id==$perfil['perfil_id']):?>
+								<option selected value=<?=$perfil['perfil_id']?>>
+								<?=$perfil['nombre']?>
+								<?else:?>
+								<option value=<?=$perfil['perfil_id']?>>
+								<?=$perfil['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+	<tr>
+		<td>tipo_usuario_id</td>
+		<td><select name="tipo_usuario_id" id="tipo_usuario_id">
+			<option  value="0">Tipo Usuario</option>
+								<? foreach($this->tipo_usuarios as $tipo_usuario ):?>
+								<?if($this->row['tipo_usuario_id']==$tipo_usuario['dominio_id']):?>
+								<option selected value=<?=$tipo_usuario['dominio_id']?>>
+								<?=$tipo_usuario['nombre']?>
+								<?else:?>
+								<option value=<?=$tipo_usuario['dominio_id']?>>
+								<?=$tipo_usuario['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+			</select>
+			</td>
+	</tr>
+<!-- En este caso la tabla cliente es asegurado -->
+	<tr id="usuario_cliente_id">
+			<td>Seleccione Cliente</td>
+			<td><select name="usuario_tipo_id" id="usuario_tipo_id">
+					<option value="0">Seleccione Cliente</option>
+					<? foreach($this->clientes as $cliente ):?>
+					<?if($this->row['usuario_tipo_id']==$cliente['asegurado_id']):?>
+					<option selected value=<?=$cliente['asegurado_id']?>>
+					<?=$cliente['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$cliente['asegurado_id']?>>
+					<?=$cliente['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>
+			<tr id="usuario_agente_id">
+			<td>Seleccione Agente</td>
+			<td><select name="usuario_tipo_id" id="usuario_tipo_id">
+					<option value="0">Seleccione Agente</option>
+					<? foreach($this->agentes as $agente ):?>
+					<?if($this->row['usuario_tipo_id']==$agente['agente_id']):?>
+					<option selected value=<?=$agente['agente_id']?>>
+					<?=$agente['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$agente['agente_id']?>>
+					<?=$agente['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>	
+	<tr>
+		<td></td>
+		<td><input type="submit" id="save_usuario" value="Guardar"></input></td>
+		<td><input type="button" name="Cancel" onclick="return usuario()"
+			value="Atras" /></input></td>
+	</tr>
+</table>
+
+</form>
+
+
+

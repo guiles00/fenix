@@ -1,0 +1,220 @@
+<!--
+/* Listado por productor.
+ * Fecha de solicitud / Tomador / Domicilio / Ubicación Riesgo / Compañia 
+ * / Tipo de cobertura / Tipo de seguro (aca tenemos que ver si hace falta agregar algo)
+ *  / Suma asegurada / Vigencia del seguro / Observaciones
+ */
+ -->
+<script type="text/javascript">
+
+$(document).ready(
+		function() {
+
+			// Guardar Solicitud
+			$('#buscar_libro_operaciones').click(function() {
+				
+			// trae id de tab
+			var tabs_sel = $('#tabs').tabs();
+			var idx = tabs_sel.tabs('option',
+					'selected');
+
+			// Trae el tab correspondiente
+			var tab = $('#tabs ul li a')[idx];
+			// //console.debug($('#tabs ul li a'));
+			var href = $(tab).attr('href');
+
+			// suponemos que el form es valido
+	
+			var data = $('#listado_libro_operaciones_form').serializeArray();
+			 console.debug(data);
+			 var data_string = JSON.stringify(data); 
+			 console.debug(data_string);
+			 
+					$.ajax({
+							url : "./informes/listado/listado-libro-operaciones",
+							data :data
+							,success : function(result) {
+								$(href).html(result);
+							}
+							});
+
+				});
+});	
+</script>
+<?php 
+
+?>
+<div id="listado_libro_operaciones">
+	<form id="listado_libro_operaciones_form" action="" onSubmit="return false">
+<input type="hidden" name="buscar" value="true"/>
+		<table id="buscar_libro_operaciones_tabla">
+			<tr>
+				<td><b>Ingrese Nro de Inicio:</b></td>
+				<td><input type="text" name="numero_inicio" id="numero_inicio" /></td>
+				<td>Productor:</td>
+				<td><select name="productor_id">
+						<option value="0">Seleccione Productor</option>
+						<? foreach($this->productores as $row ):?>
+						<?if($this->solicitud->productor_id==$row['productor_id']):?>
+						<option selected value=<?=$row['productor_id']?>>
+						<?=$row['nombre']?>
+						<?else:?>
+						
+						<option value=<?=$row['productor_id']?>>
+						<?=$row['nombre']?>
+						</option>
+						<?endif; ?>
+						<? endforeach; ?>
+				</select>
+				</td>
+				<td>Mes:</td>
+				<td><select name="mes" id="mes_libro_operaciones">
+						<option value="1">Enero</option>
+						<option value="2">Febrero</option>
+						<option value="3">Marzo</option>
+						<option value="4">Abril</option>
+						<option value="5">Mayo</option>
+						<option value="6">Junio</option>
+						<option value="7">Julio</option>
+						<option value="8">Agosto</option>
+						<option value="9">Septiembre</option>
+						<option value="10">Octubre</option>
+						<option value="11">Noviembre</option>
+						<option value="11">Diciembre</option>
+				</select>
+				</td>
+				<td>A&ntilde;o:</td>
+				<td><select name="anio" id="anio_libro_operaciones">
+						<option value="11">2011</option>
+						<option selected value="12">2012</option>
+						<option value="13">2013</option>
+						<option value="14">2014</option>
+						<option value="15">2015</option>
+						<option value="16">2016</option>
+						<option value="17">2017</option>
+						<option value="18">2018</option>
+				</select>
+				</td>
+				<td><input type="button" name="buscar_libro_operaciones" id="buscar_libro_operaciones" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+
+
+
+<?if($this->buscar):?>
+<!-- 
+ Fecha de solicitud / Tomador / Domicilio / Ubicación Riesgo / Compañia 
+ * / Tipo de cobertura / Tipo de seguro (aca tenemos que ver si hace falta agregar algo)
+ *  / Suma asegurada / Vigencia del seguro / Observaciones
+ -->
+  <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-listado-libro-operaciones/productor_id/<?=$this->productor_id?>/numero_orden/<?=$this->numero_orden?>/mes/<?=$this->mes?>/anio/<?=$this->anio?>')">
+Impresi&oacute;n Libro</A>
+<table class="ui-widget" id="informe_diario_list">
+	<thead class="ui-widget-header">
+		<th>N&uacute;mero de Orden</th>
+		<th>Fecha de Registro</th>
+		<th>Tomador</th>
+		<th>Domicilio</th>
+		<th>Ubicacion Riesgo</th>
+		<th>Compania</th>
+		<th>Tipo Cobertura</th>
+		<th>Tipo de Seguro</th>
+		<th>Suma Asegurada</th>
+		<th>Vigencia</th>
+		<th>Observaciones</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?
+	
+	foreach ($this->listado_libro_operaciones as $row):
+
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	$asegurado_nombre = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+	$asegurado_domicilio = Domain_Asegurado::getDomicilioById($m_poliza->asegurado_id);
+	$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+	
+		
+	
+	//No me salio por refelction, no me traia los atributos.. no se por que
+	if( $row['tipo_poliza_id'] <> 7 ){
+	
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+	}
+	
+	if( $row['tipo_poliza_id'] ==2 || $row['tipo_poliza_id'] ==5 ||
+	$row['tipo_poliza_id'] ==4 || $row['tipo_poliza_id'] ==6 	){
+	
+	$localidad_riesgo = $m_poliza_detalle->localidad_riesgo;
+	$provincia_riesgo = $m_poliza_detalle->provincia_riesgo;
+	$ubicacion_riesgo = $localidad_riesgo."-".$provincia_riesgo; 
+	}
+	
+	
+	$tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']);
+	
+	/*VIGENTE, AFECTADA y RENOVADA = 2, 4 y 18 
+	- En emisiones y renovaciones colocar la fecha de Inicio de Vigencia. 
+	Observaciones:En observaciones aparecen las siguientes leyendas: 
+	- Cuando es una EMISION se coloca "Solicitud de un seguro" 
+	- Cuando es una RENOVACION se coloca "Renovaciónde Póliza 0000" 
+	(colocandose el nº que corresponda). 
+	ANULADA = 7
+	- Cuando es una anulación se coloca "Solicitud de Anulación póliza 000000 (colocandose el nº que corresponda). 
+		*/
+	if( $m_poliza->estado_id == 2 || $m_poliza->estado_id == 4 || $m_poliza->estado_id == 18){
+	$fecha_registro = $row['fecha_vigencia'];
+	}else{	
+	$fecha_registro = $row['fecha_pedido'];
+	}	
+	$vigencia = $row['fecha_vigencia']." a ".$row['fecha_vigencia_hasta'];
+	
+	
+	if( $m_poliza->estado_id == 2 || $m_poliza->estado_id == 4 ){
+	$observaciones = "Solicitud de un Seguro";
+	}elseif($m_poliza->estado_id == 18){	
+	$observaciones = "Renovacion Póliza".$m_poliza->numero_poliza;
+	}elseif($m_poliza->estado_id == 7){
+	$observaciones = "Solicitud de Anulación Póliza".$m_poliza->numero_poliza;
+	}
+	
+	?>
+	
+		<tr>
+		<td><?=$this->numero_orden?></td>
+		<td><?=$fecha_registro?></td>
+		<td><?=$asegurado_nombre?></td>
+		<td><?=$asegurado_domicilio?></td>
+		<td><?=$ubicacion_riesgo?></td>
+		<td><?=$compania_nombre?></td>
+		<td><?=$riesgo?></td>
+		<td><?=$tipo_poliza?></td>
+		<td><?=$m_poliza_valores->monto_asegurado?></td>
+		<td><?=$vigencia?></td>
+		<td><?=$observaciones?></td>
+
+		</tr>
+	
+
+<? $this->numero_orden++;?>
+		<?endforeach;?>
+	</tbody>
+</table>
+<?endif;?>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,128 @@
+<head>
+<script type="text/javascript">
+
+function checkAll(source) {
+   checkboxes = document.getElementsByName('menu_id');
+
+ $(':checkbox').each(function(index,value) {
+
+
+$(this).attr('checked', true);
+
+    });     
+
+
+  //for each(var checkbox in checkboxes)
+  //  checkbox.checked = source.checked;
+
+/*	for (i=0;i<=checkboxes.length;i++)
+  	{
+	if (checkboxes[i].type=="checkbox") {
+		if(checkboxes[i].checked = false )
+		    checkboxes[i].checked;
+
+		}
+	}	*/
+}
+
+
+function listarMenuPerfil(){
+	
+	url="./admin/perfil/list";
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+			$.ajax({url: url,
+		        success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		    return false;
+	}
+
+function editMenuPerfil(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	var menu_items=new Array();
+
+//	 checkboxes = document.getElementsByName('menu_id');
+
+//	checkbox = $('#checkbox_id');
+//console.debug(checkbox);
+// $("input[type=checkbox][checked]").each(function(index,value) {
+ $(':checkbox').each(function(index,value) {
+
+if( this.checked ) {
+
+    menu_items.push(this.value);
+
+}
+    });     
+
+//    if(checkbox.checked) 
+//    menu_items.push(checkbox.value);
+//	}
+
+	console.debug(menu_items);	
+	//console.debug(f);
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	var menu_items_list = menu_items.toString();
+    $.ajax({url: url,
+        data:{
+             perfil_id: f.perfil_id.value 
+            ,menu_items_list: menu_items_list
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+</script>
+</head>
+
+<?="Perfil:".$this->perfil?>
+<form action="./admin/perfil/save-menu-perfil"  onSubmit="return editMenuPerfil(this)">
+<input type="hidden" value=<?=$this->perfil_id?> name="perfil_id"></input>
+<table>
+<tr>
+<th>Menu</th>
+<th>Permitir</th>
+</tr>
+<tr>
+<td>Seleccionar todos</td><td>
+<input type="checkbox" onClick="checkAll(this)" /> 
+</td>
+</tr>
+
+<?foreach ($this->menu_items as $items):?>
+<tr>
+<td><?=$items['menu']?></td>
+<div id="checkbox_id">
+<? if( Domain_Perfil::existsMenu($this->perfil_id,$items['menu_id']) ):?>
+<td><input type="checkbox" name="menu_id" value="<?=$items['menu_id']?>"></input></td>
+<?else: ?>
+<td><input checked="yes" type="checkbox" name="menu_id" value="<?=$items['menu_id']?>"></input></td>
+<?endif; ?>
+</div>
+</tr>
+<?endforeach;?>
+
+<tr><td></td>
+<td><input type="submit" value="Aceptar"></input></td>
+<td><input type="button" name="Cancelar" onclick="return listarMenuPerfil()" value="cancel" /></input>
+</td></tr>
+</table>
+</form>

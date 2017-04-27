@@ -1,0 +1,147 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+<h2>Informe Diario</h2><h4>Desde <?=$this->fecha_desde?> hasta	<?=$this->fecha_hasta?> </h4>
+<table class="ui-widget" id="informe_diario_list"> 
+	<thead class="ui-widget-header">
+		<th>Fecha de Pedido</th>
+		<th>Nro de Solicitud</th>
+		<th>Tomador</th>
+		<th>Nro Póliza</th>
+		<th>Endoso</th>
+		<th>Agente</th>
+		<th>Tipo de Cobertura</th>
+		<th>Moneda</th>
+		<th>Suma Asegurada</th>
+		<th>Compañia</th>
+		<th>Operación</th>
+		<th>Premio Cliente</th>
+		<th>Importe Plus</th>
+		<th>Fecha de Pago</th>
+		<th>Cobrador</th>
+		<th>Cuota</th>
+		<th>Importe Cobrado</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?
+
+	
+	//echo"<pre>";
+	//print_r($this->informe_diario);
+	foreach ($this->informe_diario as $row):
+
+	
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	//print_r($m_poliza_detalle->motivo_garantia_id);
+	
+	$asegurado_nombre = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+	$agente_nombre = Domain_Agente::getNameById($m_poliza->agente_id);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+	$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+	$cobrador_nombre = Domain_Cobrador::getNameById($row['cobrador_id']);
+	$compania_nombre = Domain_Compania::getNameById($row['compania_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+	
+	//Traer los distintos tipos de garantia dependiendo del tipo de poliza
+	if($row['tipo_poliza_id']!=7)
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+	
+	
+	$operacion = Domain_Helper::getHelperNameById('operacion', $row['operacion_id']);
+    
+	
+	$rows = Domain_DetallePago::getDetalleCuotas($m_detalle_pago->detalle_pago_id);
+		
+	$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+	
+	
+	?>
+	<?foreach ($rows as $row):?>
+		<tr>
+
+			<td><p><?=$m_poliza->fecha_pedido?></p></td>
+			<td align="center"><p1><?=$m_poliza->numero_solicitud?></p1></td>
+			<td><p><?=$asegurado_nombre?></p></td>
+			<td align="center"><p1><?=$m_poliza->numero_poliza?></p1></td>
+			<td align="center"><p1><?=$m_poliza->endoso?></p1></td>
+			<td align="center"><p><?=$agente_nombre ?></p></td>
+		  	<td><p><?=$riesgo?></p></td>
+			<td align="center"><p><?=$moneda?></p></td>
+		  	<td align="right"><p1><?=$m_poliza_valores->monto_asegurado?></p1></td>
+		  	<td><p><?=$compania_nombre?></p></td>
+			<td align="center"><p><?=$operacion?></p></td>
+		  	<td align="right"><?=$m_poliza_valores->premio_asegurado?></td>
+			<td align="right"><?=$m_poliza_valores->plus?></td>
+			<?php if($row['pago_id']==1):?>
+	    	<td align="center"><?=$row['fecha_pago']?></td>
+		  	<td align="center"><p><?=$cobrador_nombre?></p></td>
+		  	<td align="center"><p><?=$row['cuota_id']?></p></td>
+		  	<td align="right"><?=$row['importe']?></td>
+			<?else:?>
+	    	<td></td>
+			<td><p><?=$cobrador_nombre?></p></td>
+			<td align="center"><p><?=$row['cuota_id']?></p></td>
+			<td></td>
+			
+	<?endif;?>
+		</tr>
+		<?endforeach;?>
+
+
+		<?endforeach;?>
+	</tbody>
+</table>
+
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+
+
+
+
+
+

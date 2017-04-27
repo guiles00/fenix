@@ -1,0 +1,158 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+function listarProductor(){
+	
+	url="./default/productor/list";
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+			$.ajax({url: url,
+		        success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		    return false;
+	}
+
+function productor(f){
+	
+	
+	var url = $(f).attr('url');
+	if(url == null){
+		var url="./default/productor/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+
+
+
+function listProductor(f){
+	var url = f.action;
+	
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url
+		    ,data:{
+			    criterio:f.criterio.value
+			    }
+		    ,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+</script>
+
+
+<form action="./entidad/productor/list" onSubmit="return listProductor(this)">
+
+
+	<table id="buscar_productor">
+		<tr>
+			<td>Buscar:</td>
+			<td><input type="text" name="criterio" /></td>
+		
+		
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+
+</form>
+<hr>
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+  <tr>
+    <th>productor_id</th>
+    <th>Tipo Persona Id</th>
+    <th>Nombre</th>
+    <th>Matricula</th>
+    <th>CUIT</th>
+    <th>Codigo Postal</th>
+    <th>Domicilio</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Telefono</th>
+    <th>Email</th>
+    <th>Ingresos Brutos</th>
+    <th>Jubilacion</th>
+    <th>Situacion IVA</th>
+    <th>Situacion Juridica</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+<tbody class="ui-widget-content">
+<?foreach($this->rows as $row):?>
+  <tr>
+  	<td><?=$row['productor_id'] ?></td>
+  	<td><?=$row['tipo_persona_id'] ?></td>
+    <td><?=$row['nombre'] ?></td>
+    <td><?=$row['matricula'] ?></td>
+    <td><?=$row['cuit'] ?></td>
+    <td><?=$row['codigo_postal'] ?></td>
+    <td><?=$row['domicilio'] ?></td>
+    <td><?=$row['provincia'] ?></td>
+    <td><?=$row['localidad'] ?></td>
+    <td><?=$row['telefono'] ?></td>
+    <td><?=$row['email'] ?></td>
+    <td><?=$row['ingresos_brutos'] ?></td>
+    <td><?=$row['jubilacion'] ?></td>
+    <td><?=$row['situacion_iva'] ?></td>
+    <td><?=$row['situacion_juridica'] ?></td>
+    <td><input type="button" value="Ver" url="./entidad/productor/view/id/<?=$row['productor_id']?>" onClick="return productor(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./entidad/productor/delete/id/<?=$row['productor_id']?>" onClick="return productor(this)"> </input> </td>
+    <td><input type="button" value="Codigos" url="./entidad/productor/ver-codigos/id/<?=$row['productor_id']?>" onClick="return productor(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/productor/add/" onClick="return productor(this)"> </input> </td>
+  </tr>
+  </tbody>
+</table>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

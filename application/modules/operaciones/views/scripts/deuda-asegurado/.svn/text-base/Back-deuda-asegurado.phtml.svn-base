@@ -1,0 +1,495 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.operaciones.deuda-asegurado.js');?>
+
+<?php
+//echo "<pre>";
+//print_r($this->polizas);
+
+/*Por ahora lo que hago es traer las polizas y sus cuotas, sin ocultar ni agregar funcionalidad
+ Aca hay un tema, como la poliza me trae un array en vez de objetos, tengo que instanciar
+ a cada poliza
+ Tambien traigo las polizas del tipo aduaneras, despues tengo que hacer lo mismo para todo tipo
+ de poliza
+ */
+
+?>
+
+<table>
+	<tr>
+		<th>Cliente:</th>
+		<td><?=$this->asegurado?></td>
+	</tr>
+
+	<tr>
+		<th>Moneda:</th>
+		<td>Pesos</td>
+		<td>Dolar</td>
+		<td>Euro</td>
+	</tr>
+	<tr>
+		<th>Debe:</th>
+		<td><?=(empty($this->debe_pesos))?'0':$this->debe_pesos?></td>
+		<td><?=(empty($this->debe_dolar))?'0':$this->debe_dolar?></td>
+		<td><?=(empty($this->debe_euro))?'0':$this->debe_euro?></td>
+	</tr>
+</table>
+
+<hr>
+
+<!--  form id="pago_poliza" name="_poliza" action="#"
+	onSubmit="return realizarPagoAsegurado()">
+	<!--  action="./poliza/solicitud/alta-automotores"-->
+	<form id="pago_poliza" name="pago_poliza"
+			action="./operaciones/deuda-asegurado/pagar-deuda-asegurado"
+			onSubmit="return false">
+
+	<input type="hidden" id="asegurado_id" name="asegurado_id"
+		value="<?=$this->asegurado_id?>"></input>
+		
+	<h4 id="datos_pago_show">Ingrese los datos del
+		Pago</h4>
+		
+	<div id="datos_pago">
+	<table>
+		<tr>
+			<td>Fecha:</td>
+			<td><input id="fecha_pago" value="" name=""></input></td>
+		</tr>
+		<tr>
+			<td>Factura/Recibo:</td>
+			<td><input id="numero_factura" value="" name=""></input></td>
+		</tr>
+		
+		<tr>
+			<td>Moneda:</td>
+			<td><select id="moneda_id" name="moneda_id">
+			<? foreach($this->monedas as $row ):?>
+					<option value=<?=$row['dominio_id']?>>
+					<?=$row['nombre']?>
+					</option>
+					<? endforeach; ?>
+			</select>
+			</td>
+	</table>
+
+	<h4>Efectivo</h4>
+	<table>
+			<td>Importe:</td>
+			<td><input value="" id="importe" name="importe"></input></td>
+		</tr>
+	</table>
+
+	<h4 id="div_form_cheques_show">Datos Cheques</h4>
+	<!--  input type="button" id="add_check" value="+" /> <input type="button"
+			id="del_check" value="-" /> <input type="hidden" id="del_check_val"
+			value="cheque_1" />-->
+
+	<div id="div_form_cheques">
+		<table id="table_form_cheques">
+			<tr>
+				<th></th>
+			</tr>
+			<tr>
+				<td>Banco:</td>
+				<td><input type="text" name="banco_cheque_0" id="banco_cheque_0" value=""> </input></td>
+				<td>Nro:</td>
+				<td><input type="text" name="nro_cheque_0" id="nro_cheque_0" value=""> </input></td>
+				<td>Importe:</td>
+				<td><input type="text" name="importe_cheque_0" id="importe_cheque_0"
+					value="0"> </input></td>
+			</tr>
+			<tr>
+				<td>Banco:</td>
+				<td><input type="text" name="banco_cheque_1" id="banco_cheque_1" value=""> </input></td>
+				<td>Nro:</td>
+				<td><input type="text" name="nro_cheque_1" id="nro_cheque_1" value=""> </input></td>
+				<td>Importe:</td>
+				<td><input type="text" name="importe_cheque_1" id="importe_cheque_1"
+					value="0"> </input></td>
+			</tr>
+			<tr>
+				<td>Banco:</td>
+				<td><input type="text" name="banco_cheque_2" id="banco_cheque_2" value=""> </input></td>
+				<td>Nro:</td>
+				<td><input type="text" name="nro_cheque_2" id="nro_cheque_2" value=""> </input></td>
+				<td>Importe:</td>
+				<td><input type="text" name="importe_cheque_2" id="importe_cheque_2"
+					value="0"> </input></td>
+			</tr>
+		</table>
+	</div>
+</div>
+	<input type="submit" value="Realizar Pago" id="realizar_pago" />
+	<hr>
+
+	<div id="test_inner">
+	<?
+	/*Asi van a mostrar dos tablas, una para las polizas del tipo caucion
+	 * Y otra para las polizas comunes
+	 *
+	 * Fecha / Vigencia / Nº Solicitud / Nº de Póliza / Endoso / Compañia / TOMADOR
+	 *  / ASEGURADO
+	 *  Moneda / Cuota / Importe /
+	 / DNI  / Estado / Fecha de baja /
+	 */
+	?>
+
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+					<th></th>
+					<th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Premio</th>
+					<th>Plus</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Despachante</th>
+					<th>Cuit</th>
+					<th>SIM</th>
+					<th>BL</th>
+					<th>Factura</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<?
+			//1. Primero imprimo las de Aduaneros
+
+			//echo "<pre>";
+			//print_r($this->polizas_aduaneros);
+			foreach ($this->polizas_aduaneros as $row):
+			$d_poliza = new Domain_Poliza($row['poliza_id']);
+			$m_poliza = $d_poliza->getModelPoliza();
+			$m_detalle_pago = $d_poliza->getModelDetallePago();
+			$m_poliza_valores = $d_poliza->getModelPolizaValores();
+			$m_poliza_detalle = $d_poliza->getModelDetalle();
+			//print_r($m_poliza_detalle);
+			$despachante_aduana	=	Domain_DespachanteAduana::getNameById($m_poliza_detalle->despachante_aduana_id)	;
+			$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+			$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+			$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+			?>
+
+
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+
+			//print_r($row);
+
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+			$fecha_desde = $m_poliza->fecha_vigencia;
+			$periodo = $m_poliza->periodo_id;
+			//Helper que calcular la fecha de vigencia
+			$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+			$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+			?>
+
+			<?foreach ($rows as $row):
+
+			?>
+
+				<tr>
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?>
+						moneda=<?="$m_detalle_pago->moneda_id"	?>
+						importe=<?=$row['importe']?>></input>
+					</td>
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td><?=$m_poliza->endoso?></td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$m_poliza_valores->premio_asegurado?></td>
+					<td><?=$m_poliza_valores->plus?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td><?=$despachante_aduana?></td>
+					<td><?//$m_poliza_detalle->cuit?></td>
+					<td><?=$m_poliza_detalle->sim?></td>
+					<td><?=$m_poliza_detalle->bl?></td>
+					<td><?=$m_poliza_detalle->factura?></td>
+					<td><?=$estado_poliza?></td>
+					<td><?=$m_poliza->fecha_baja?></td>
+
+				</tr>
+				<?endforeach;?>
+
+
+				<?endforeach;?>
+			</tbody>
+		</table>
+
+		<!-- Construccion -->
+		<?if(!empty($this->polizas_construccion)):?>
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+					<th></th>
+					<th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<?	foreach ($this->polizas_construccion as $row):
+			$d_poliza = new Domain_Poliza($row['poliza_id']);
+			$m_poliza = $d_poliza->getModelPoliza();
+			$m_detalle_pago = $d_poliza->getModelDetallePago();
+			$m_poliza_valores = $d_poliza->getModelPolizaValores();
+			$m_poliza_detalle = $d_poliza->getModelDetalle();
+			//print_r($m_poliza_detalle);
+
+			$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+			$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+			$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+			?>
+
+
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+
+			//print_r($row);
+
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+			$fecha_desde = $m_poliza->fecha_vigencia;
+			$periodo = $m_poliza->periodo_id;
+			//Helper que calcular la fecha de vigencia
+			$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+			$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+			$rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+
+			?>
+			<?foreach ($rows as $row):?>
+				<tr>
+
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?>
+						moneda=<?="$m_detalle_pago->moneda_id"	?>
+						importe=<?=$row['importe']?>></input>
+					</td>
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td><?=$m_poliza->endoso?></td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td><?=$estado_poliza?></td>
+					<td><?=$m_poliza->fecha_baja?></td>
+
+				</tr>
+				<?endforeach;?>
+				<?endforeach;?>
+			</tbody>
+		</table>
+
+		<?endif;?>
+
+		<!-- End Construccion -->
+
+		<!-- Alquiler -->
+		<?if(!empty($this->polizas_alquiler)):?>
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+					<th></th>
+					<th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<?	foreach ($this->polizas_alquiler as $row):
+			$d_poliza = new Domain_Poliza($row['poliza_id']);
+			$m_poliza = $d_poliza->getModelPoliza();
+			$m_detalle_pago = $d_poliza->getModelDetallePago();
+			$m_poliza_valores = $d_poliza->getModelPolizaValores();
+			$m_poliza_detalle = $d_poliza->getModelDetalle();
+			//print_r($m_poliza_detalle);
+
+			$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+			$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+			$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+			?>
+
+
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+
+			//print_r($row);
+
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+			$fecha_desde = $m_poliza->fecha_vigencia;
+			$periodo = $m_poliza->periodo_id;
+			//Helper que calcular la fecha de vigencia
+			$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+			$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+			$rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+
+			?>
+			<?foreach ($rows as $row):?>
+				<tr>
+
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?>
+						moneda=<?="$m_detalle_pago->moneda_id"	?>
+						importe=<?=$row['importe']?>></input>
+					</td>
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td><?=$m_poliza->endoso?></td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td><?=$estado_poliza?></td>
+					<td><?=$m_poliza->fecha_baja?></td>
+
+				</tr>
+				<?endforeach;?>
+				<?endforeach;?>
+			</tbody>
+		</table>
+
+		<?endif;?>
+		<!-- End Alquiler -->
+
+		<!-- Automotor -->
+		<?if(!empty($this->polizas_automotor)):?>
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+					<th></th>
+					<th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<?	foreach ($this->polizas_automotor as $row):
+			$d_poliza = new Domain_Poliza($row['poliza_id']);
+			$m_poliza = $d_poliza->getModelPoliza();
+			$m_detalle_pago = $d_poliza->getModelDetallePago();
+			$m_poliza_valores = $d_poliza->getModelPolizaValores();
+			$m_poliza_detalle = $d_poliza->getModelDetalle();
+			//print_r($m_poliza_detalle);
+
+			$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+			$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+			$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+			?>
+
+
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+
+			//print_r($row);
+
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+			$fecha_desde = $m_poliza->fecha_vigencia;
+			$periodo = $m_poliza->periodo_id;
+			//Helper que calcular la fecha de vigencia
+			$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+			$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+			$rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+
+			?>
+			<?foreach ($rows as $row):?>
+				<tr>
+
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?> />
+					</td>
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td><?=$m_poliza->endoso?></td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td><?=$estado_poliza?></td>
+					<td><?=$m_poliza->fecha_baja?></td>
+
+				</tr>
+				<?endforeach;?>
+				<?endforeach;?>
+			</tbody>
+		</table>
+		<?endif;?>
+
+
+		<input type="button" value="Realizar Pago" /> <input type="button"
+			value="Atras" onClick="return listarDeudaAsegurado()" />
+
+</form>
+
+</div>
+

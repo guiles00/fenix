@@ -1,0 +1,22 @@
+asdasdasd
+--This line, and those below, will be ignored--
+
+M    modules/admin/controllers/IndexController.php
+M    modules/admin/controllers/UsuarioController.php
+M    modules/admin/views/scripts/paginator.phtml
+M    modules/admin/views/scripts/usuario/edit.phtml
+M    modules/admin/views/scripts/usuario/add.phtml
+M    modules/admin/views/scripts/usuario/view.phtml
+M    modules/admin/views/scripts/usuario/list.phtml
+D    modules/admin/views/scripts/login
+D    modules/admin/views/scripts/temas
+D    modules/admin/views/scripts/menues
+M    modules/poliza/controllers/PolizaController.php
+M    modules/poliza/controllers/SolicitudController.php
+A    modules/poliza/views/scripts/solicitud/alta-solicitud.phtml
+A    modules/poliza/views/scripts/solicitud/alta-aduaneros.phtml
+M    modules/poliza/views/scripts/solicitud/alta-automotores.phtml
+A    modules/poliza/views/scripts/solicitud/alta-accidentes-personales.phtml
+M    modules/poliza/views/scripts/solicitud/list.phtml
+A    modules/poliza/views/scripts/poliza/view-poliza-automotores.phtml
+M    modules/poliza/views/scripts/poliza/list.phtml

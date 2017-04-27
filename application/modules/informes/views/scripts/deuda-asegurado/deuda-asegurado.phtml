@@ -1,0 +1,303 @@
+<script type="text/javascript">
+function listarDeudaAsegurado(){
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	////console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;
+	//console.debug(href);
+	//var href_t = href+" #test_inner";
+	//console.debug(href_t); 
+	//var url = "./poliza/solicitud/confirmar-solicitud";                       
+	var url = "./operaciones/deuda-asegurado/list";
+
+	$.ajax({
+	    url: url,
+    	    success:function(result){
+        //console.debug(result);
+        $(href).html(result);
+      	}
+      });
+	   
+	    return false;
+
+
+}
+$('#fecha_pago').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+					'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+
+function realizarPagoAsegurado(){
+
+//Aca tiene que llamar a otro controlador
+//En el phtml del controlador tiene que tener la data para pagar
+		var importe = $('#importe'),
+		    moneda_id = $('#moneda_id'),
+		    asegurado_id = $('#asegurado_id'),
+		    fecha_pago = $('#fecha_pago');
+		
+		var tabs_sel = $('#tabs').tabs();
+		var idx = tabs_sel.tabs('option', 'selected');
+
+		//Trae el tab correspondiente
+		var tab = $('#tabs ul li a')[idx];
+		////console.debug($('#tabs ul li a'));
+		var href = $(tab).attr('href') ;
+		//console.debug(href);
+		var href_t = href+" #test_inner";
+		console.debug(href_t); 
+		//var url = "./poliza/solicitud/confirmar-solicitud";                       
+		var url = "./operaciones/deuda-asegurado/pagar-deuda-asegurado";
+
+		var array_polizas = new Array();
+		
+		var	 checkboxes = document.getElementsByName('poliza_pago');
+
+			  //Chequear que seleccionen alguna poliza
+			  //control de errores
+					
+			 for each(var checkbox in checkboxes){
+			    //array_polizas.push(checkbox.val());
+			    console.debug(checkbox);
+			  if(typeof checkbox=='undefined'){
+				 // alert("Selecciona alguna poliza");
+				  //return false;
+			  }
+			    if(checkbox.checked){
+			  //console.debug(checkbox.value);
+			  array_polizas.push(checkbox.value);
+			  
+			    }
+			  }
+			    console.debug(array_polizas);
+		
+				
+		
+		$.ajax({
+		    url: url,
+	    	data:{
+		
+		    	 array_polizas: array_polizas.toString()
+		    	 ,importe: importe.val()	
+		    	 ,moneda_id: moneda_id.val()
+		    	 ,fecha_pago: fecha_pago.val()
+		    	 ,asegurado_id: asegurado_id.val()
+	            }
+
+		    ,success:function(result){
+	        //console.debug(result);
+	        $(href_t).html(result);
+	      	}
+	      });
+		   
+		    return false;
+		}
+
+</script>
+<?php
+//echo "<pre>";
+//print_r($this->polizas);
+
+//Por ahora lo que hago es traer las polizas y sus cuotas, sin ocultar ni agregar funcionalidad
+//Aca hay un tema, como la poliza me trae un array en vez de objetos, tengo que instanciar
+//a cada poliza
+?>
+<form id="pago_poliza" name="_poliza" action="#"
+	onSubmit="return realizarPagoAsegurado()">
+	<!--  action="./poliza/solicitud/alta-automotores"-->
+	<input type="hidden" id="asegurado_id" name="asegurado_id"
+		value="<?=$this->asegurado_id?>"></input> <b>Ingrese los datos del
+		Pago</b>
+	<table>
+		<tr>
+			<td>Fecha:</td>
+			<td><input id="fecha_pago" value="" name=""></input></td>
+			<td>Moneda:</td>
+			<td><select id="moneda_id" name="moneda_id">
+			<? foreach($this->monedas as $row ):?>
+					<option value=<?=$row['dominio_id']?>>
+					<?=$row['nombre']?>
+					</option>
+					<? endforeach; ?>
+			</select>
+			</td>
+			<td>Importe a Pagar:</td>
+			<td><input value="" id="importe" name="importe"></input></td>
+		</tr>
+	</table>
+	<hr>
+
+	<div id="test_inner">
+	<?
+	/*Ase van a mostrar dos tablas, una para las polizas del tipo caucion
+	 * Y otra para las polizas comunes
+	 *
+	 * Fecha / Vigencia / Nº Solicitud / Nº de Póliza / Endoso / Compañia / TOMADOR
+	 *  / ASEGURADO
+	 *  Moneda / Cuota / Importe / 
+	 / DNI  / Estado / Fecha de baja /
+	 */
+
+	foreach ($this->polizas as $row):
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+	$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+	if($m_poliza->tipo_poliza_id == 7 ):
+	?>
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+				   <th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+			<th></th>
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id); 
+			   $compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+				
+				$fecha_desde = $m_poliza->fecha_vigencia;
+				$periodo = $m_poliza->periodo_id;
+				//Helper que calcular la fecha de vigencia
+				$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+				
+				$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta); 			
+			?>
+			<?foreach ($rows as $row):?>
+				<tr>
+					
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td>falta</td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td><?=$estado_poliza?></td>
+					<td>falta</td>
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?> />
+					</td>
+				</tr>
+
+				<?endforeach;?>
+			</tbody>
+		</table>
+
+		<?
+		/*
+		 *  Fecha / Vigencia / Nº Solicitud / Nº de Póliza / Endoso / Compañia / TOMADOR / ASEGURADO
+		 * / Premio(*)(**) / Plus
+		 (**) / Moneda / Cuota / Importe / Despachante (**)
+		 / Cuit o DNI (***) / SIM (**) / BL (**) / Factura (**) / Estado / Fecha de baja /
+		 */
+
+		elseif($m_poliza->tipo_poliza_id == 2):?>
+
+		<table class="ui-widget">
+			<thead class="ui-widget-header">
+				<tr>
+					<th>Fecha</th>
+					<th>Vigencia</th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Premio</th>
+					<th>Plus</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th>Despachante</th>
+					<th>Cuit</th>
+					<th>SIM</th>
+					<th>BL</th>
+					<th>Factura</th>
+					<th>Estado</th>
+					<th>Fecha de baja</th>
+
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+			<? $rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+				 $compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+				$fecha_desde = $m_poliza->fecha_vigencia;
+				$periodo = $m_poliza->periodo_id;
+				//Helper que calcular la fecha de vigencia
+				$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+				
+				$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+			?>
+			<?foreach ($rows as $row):?>
+				<tr>
+					<td><?=$m_poliza->fecha_pedido?></td>
+					<td><?=$vigencia?></td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td>falta</td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$m_poliza_valores->premio_asegurado?></td>
+					<td><?=$m_poliza_valores->plus?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+					<td>Despachante</td>
+					<td>Cuit</td>
+					<td>SIM</td>
+					<td>BL</td>
+					<td>Factura</td>
+					<td><?=$estado_poliza?></td>
+					<td>falta</td>
+					<td><input type="checkbox" name="poliza_pago"
+						value=<?=$row['detalle_pago_cuota_id']?> />
+					</td>
+				</tr>
+				<?endforeach;?>
+			</tbody>
+		</table>
+
+		<?endif;?>
+		<?endforeach;?>
+
+
+		<input type="submit" value="Aceptar" /> <input type="button"
+			value="Atras" onClick="return listarDeudaAsegurado()" />
+
+</form>
+
+</div>

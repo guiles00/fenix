@@ -1,0 +1,239 @@
+<script type="text/javascript">
+
+window.print();
+</script>
+<style type="text/css">
+@media print {
+	table {
+		border-collapse: collapse;
+	}
+	th {
+		border-bottom: 1px solid black;
+	}
+	
+	 .noprint { display: none; }
+}
+
+@media screen {
+table {
+		border-collapse: collapse;
+	}
+	th {
+		border-bottom: 1px solid black;
+	}
+}
+</style>
+
+<A HREF="javascript:void(0)"
+onclick="window.open('./test')">
+Impresi&oacute;n Libro XML</A>
+
+<A  class="noprint" HREF="javascript:window.print()">Clic para imprimir</A>
+<table>
+
+	<tr>
+		<th>N&uacute;mero de Orden</th>
+		<th>Fecha de Registro</th>
+		<th>Tomador</th>
+		<th>Domicilio</th>
+		<th>Ubicacion Riesgo</th>
+		<th>Compania</th>
+		<th>Tipo Cobertura</th>
+		<th>Tipo de Seguro</th>
+		<th>Suma Asegurada</th>
+		<th>Vigencia</th>
+		<th>Observaciones</th>
+	</tr>
+	<?
+	$count = 0;
+	foreach ($this->listado_libro_operaciones as $row):
+	$count++;
+	
+	
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+	$compania_nombre = Domain_Compania::getNameById($row['compania_id']);
+	$asegurado_domicilio = Domain_Asegurado::getDomicilioById($row['asegurado_id']);
+
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	//No me salio por refelction, no me traia los atributos.. no se por que
+	if( $row['tipo_poliza_id'] <> 7 ){
+	
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+	}
+	
+	if( $row['tipo_poliza_id'] ==2 ||  $row['tipo_poliza_id'] ==5 ||
+	$row['tipo_poliza_id'] ==4 || $row['tipo_poliza_id'] ==6 	){
+	
+	$localidad_riesgo = $m_poliza_detalle->localidad_riesgo;
+	$provincia_riesgo = $m_poliza_detalle->provincia_riesgo;
+	$ubicacion_riesgo = $localidad_riesgo."-".$provincia_riesgo; 
+	}
+	
+	$tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']);
+
+	if( $m_poliza->estado_id == 2 || $m_poliza->estado_id == 4 || $m_poliza->estado_id == 18){
+	$fecha_registro = $row['fecha_vigencia'];
+	}else{	
+	$fecha_registro = $row['fecha_pedido'];
+	}	
+	$vigencia = $row['fecha_vigencia']." a ".$row['fecha_vigencia_hasta'];
+	
+	
+		if( $m_poliza->estado_id == 2 || $m_poliza->estado_id == 4 ){
+	$observaciones = "Solicitud de un Seguro";
+	}elseif($m_poliza->estado_id == 18){	
+	$observaciones = "Renovacion Póliza".$m_poliza->numero_poliza;
+	}elseif($m_poliza->estado_id == 7){
+	$observaciones = "Solicitud de Anulación Póliza".$m_poliza->numero_poliza;
+	}elseif($m_poliza->estado_id == 14){
+	$observaciones = "Solicitud de Refacturación Póliza ".$m_poliza->numero_poliza;
+	}
+	
+	?>
+	
+		<tr>
+		<td><?=$this->numero_orden?></td>
+		<td><?=$fecha_registro?></td>
+		<td><?=$asegurado_nombre?></td>
+		<td><?=$asegurado_domicilio?></td>
+		<td><?=$ubicacion_riesgo?></td>
+		<td><?=$compania_nombre?></td>
+		<td><?=$riesgo?></td>
+		<td><?=$tipo_poliza?></td>
+		<td><?=$m_poliza_valores->monto_asegurado?></td>
+		<td><?=$vigencia?></td>
+		<td><?=$observaciones?></td>
+
+		</tr>
+	
+	<?$this->numero_orden++;?>
+		<?if($count==31):
+		$count = 0;?>
+
+		  <div style="page-break-after: always"></div>
+		  
+
+</table>
+<table>
+	<tr>
+		<th>N&uacute;mero de Orden</th>
+		<th>Fecha de Registro</th>
+		<th>Tomador</th>
+		<th>Domicilio</th>
+		<th>Ubicacion Riesgo</th>
+		<th>Compania</th>
+		<th>Tipo Cobertura</th>
+		<th>Tipo de Seguro</th>
+		<th>Suma Asegurada</th>
+		<th>Vigencia</th>
+		<th>Observaciones</th>
+	</tr>
+
+	<?endif;?>
+
+
+
+	<?endforeach;?>
+</table>
+
+
+
+	<?php
+	/*
+	 * <?
+	 //header("Content-Disposition: inline; filename=result.pdf");
+	 // header("Content-type: application/x-pdf");
+
+	 //require_once("dompdf_config.inc.php");
+
+	 //require_once('dompdf/dompdf_config.inc.php');
+	 //$this->getApplication()->getAutoloader()->pushAutoloader('DOMPDF_autoload', '');
+	 //spl_autoload_register('DOMPDF_autoload');
+
+	 //	$dompdf->load_html(ob_get_contents());
+	 //$html = ob_get_contents();
+	 //ob_end_clean();
+
+	 //print_r($html);
+	 /*
+	 * Genero el HTML
+
+	 $html = "<html>
+		<body>";
+		<table frame='border'>";
+		<tr ><td>Fecha de Registro</td>
+		<td>Tomador</td>
+		<td>Domicilio</td>
+		<td>Ubicacion Riesgo</td>
+		<td>Compania</td>
+		<td>Tipo Cobertura</td>
+		<td>Tipo de Seguro</td>
+		<td>Suma Asegurada</td>
+		<td>Vigencia</td>
+		<td>Observaciones</td></tr>";
+		$count = 0;
+		foreach ($this->listado_libro_operaciones as $row) {
+		$count++;
+
+		<tr><td>".$row['fecha_pedido']."</td>";
+		<td>".$row['fecha_pedido']."</td>";
+		<td>".$row['fecha_pedido']."</td>";
+		<td>".$row['fecha_pedido']."</td>";
+		<td>".$row['fecha_pedido']."</td>";
+		<td>".$row['fecha_pedido']."</td>";
+		<td>-</td>";
+		<td>-</td>";
+		<td>-</td>";
+		<td>-</td>";
+		if($count==15){
+		$count = 0;
+		$html=$html."<h1 style='page-break-before: always;'></h1> </table><table frame='border'>";
+		<tr><td>Fecha de Registro</td>
+		<td>Tomador</td>
+		<td>Domicilio</td>
+		<td>Ubicacion Riesgo</td>
+		<td>Compania</td>
+		<td>Tipo Cobertura</td>
+		<td>Tipo de Seguro</td>
+		<td>Suma Asegurada</td>
+		<td>Vigencia</td>
+		<td>Observaciones</td></tr>";
+			
+		}
+
+		}
+		$html=$html."</table></html>";
+
+		//$html=ob_get_contents();
+		//ob_end_clean();
+		echo $html;
+		//$html="<html><table border=1><tr><td>hola</td></tr></table></html>";
+
+		$dompdf = new DOMPDF();
+		$dompdf->set_paper("a4","portrait");
+		$dompdf->load_html($html);
+		$dompdf->render();
+		$dompdf->stream("listado_libro_operaciones.pdf");
+
+		//$pdf = $dompdf->output();
+
+		$dompdf = new DOMPDF();
+		$dompdf->load_html(ob_get_clean());
+		$dompdf->render();
+		$dompdf->stream("sample.pdf");
+
+
+
+		spl_autoload_unregister('DOMPDF_autoload');
+
+
+
+
+		*/
+
+	?>

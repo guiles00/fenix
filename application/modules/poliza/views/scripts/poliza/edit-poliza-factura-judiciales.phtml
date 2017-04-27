@@ -1,0 +1,78 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.edit-poliza-factura-judiciales.js');?>
+<div id="content">
+
+	<fieldset>
+		<legend>Poliza Aduaneros</legend>
+
+		<!--  form action="./entidad/compania/add"  onSubmit="return editForm(this)">-->
+		<form id="poliza_poliza_factura" name="poliza_poliza"
+			action="./poliza/poliza/edit-poliza-factura-judiciales"
+			onSubmit="return false">
+			<input type="hidden" name="save" value=1> <input type="hidden"
+				name="poliza_id"
+				value="<?=$this->escape($this->poliza->poliza_id)?>" />
+
+			<h3 id="datos_poliza_poliza_show">Datos de la Poliza</h3>
+			<div id="datos_poliza_poliza">
+				<table>
+					<tr>
+						<td>Número de Solicitud:</td>
+						<td><?=$this->escape($this->poliza->numero_solicitud)?></td>
+						<?if($this->renovada):?>
+					<td>Renueva Poliza Nro:</td>
+					<td>
+					<?=$this->poliza_renovada_numero_poliza?>
+					</td>
+					<?endif;?>
+
+					</tr>
+					<tr>
+						<td>Número de poliza:</td>
+						<td><?=$this->escape($this->poliza->numero_poliza)?></td>
+						<td>Endoso:</td>
+						<td><?=$this->escape($this->poliza->endoso)?></td>	
+						<td>Tipo:</td>
+						<td><?=$this->escape($this->tipo_endoso_text)?></td>	
+					</tr>
+					<tr>
+						<td>Número de factura:</td>
+						<td><input type="text" name="numero_factura"
+							value="<?=$this->escape($this->poliza->numero_factura)?>" /></td>
+					</tr>
+					<tr>
+						<td>Cliente:</td>
+						<td><?=$this->escape($this->asegurado)?></td>
+					</tr>
+					<tr>
+						<td>Ejecutivo de Cuentas:</td>
+
+						<td><?=$this->escape($this->agente)?>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><?=$this->compania?>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><?=$this->productor?>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><?=$this->cobrador?>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>		
+
+			<input type="button" name="save_poliza" value="Guardar Cambios" id="save_factura_judiciales"></input>
+
+			<input type="button" name="Cancel" onclick="" value="Volver" />
+
+		</form>
+	</fieldset>
+</div>

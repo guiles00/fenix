@@ -1,0 +1,130 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+	
+function beneficiario(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./entidad/beneficiario/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+function listBeneficiario(f){
+	var url = f.action;
+	
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url
+		    ,data:{
+			    criterio:f.criterio.value
+			    }
+		    ,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+</script>
+<form action="./entidad/beneficiario/list" onSubmit="return listBeneficiario(this)">
+
+	<table id="buscar_beneficiario">
+		<tr>
+			<td>Buscar:</td>
+			<td><input type="text" name="criterio" /></td>
+		
+		
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+
+</form>
+<hr>
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+  <tr>
+    <th>beneficiario_id</th>
+    <th>Nombre</th>
+    <th>CUIT</th>
+    <th>Posicion IVA</th>
+    <th>Domicilio</th>
+    <th>Codigo Postal</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Telefono</th>
+    <th>Telefono Movil</th>
+    <th>Radio</th>
+    <th>Email</th>
+    <th>Fecha Nacimiento</th>
+    <th>Domicilio Cobranza</th>
+    <th>Tipo Documento</th>
+    <th>Numero Documento</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+<tbody class="ui-widget-content">
+<?foreach($this->rows as $row):?>
+  <tr>
+  <td><?=$row['beneficiario_id'] ?></td>
+    <td><?=$row['nombre'] ?></td>
+    <td><?=$row['cuit'] ?></td>
+    <td><?=$row['posicion_iva_id'] ?></td>
+    <td><?=$row['domicilio'] ?></td>
+    <td><?=$row['codigo_postal'] ?></td>
+    <td><?=$row['provincia'] ?></td>
+    <td><?=$row['localidad'] ?></td>
+    <td><?=$row['telefono'] ?></td>
+    <td><?=$row['telefono_movil'] ?></td>
+    <td><?=$row['radio'] ?></td>
+    <td><?=$row['email'] ?></td>
+    <td><?=$row['fecha_nacimiento'] ?></td>
+    <td><?=$row['domicilio_cobranza'] ?></td>
+    <td><?=$row['tipo_documento_id'] ?></td>
+    <td><?=$row['numero_documento'] ?></td>
+    <td><input type="button" value="Ver" url="./entidad/beneficiario/view/id/<?=$row['beneficiario_id']?>" onClick="return beneficiario(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./entidad/beneficiario/delete/id/<?=$row['beneficiario_id']?>" onClick="return beneficiario(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/beneficiario/add/" onClick="return beneficiario(this)"> </input> </td>
+  </tr>
+  </tbody>
+</table>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

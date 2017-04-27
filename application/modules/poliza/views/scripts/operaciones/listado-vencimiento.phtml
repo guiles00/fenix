@@ -1,0 +1,538 @@
+<!-- Fecha de Pedido
+Tomador
+Nº de Póliza
+Endoso
+Agente
+Riesgo
+Moneda
+Suma Asegurada
+Compañia
+Operación
+Premio Compañia
+Premio
+Plus
+Importe
+Fecha de Pago
+Cobrador
+Importe Cobrado -->
+<script type="text/javascript">
+//Hacer todo en JQuery
+$('#fecha_desde').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+$('#fecha_hasta').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+function confirmar(){
+	return confirm('Desea realizar la operacion?');
+	}
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+	
+function listadoVencimiento(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,fecha_desde: f.fecha_desde.value
+            ,fecha_hasta: f.fecha_hasta.value
+            ,asegurado_id : f.vencimiento_asegurado_id.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function refacturarPoliza(url){
+
+	if(!confirmar()) return false;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+	
+	
+}
+
+function bajaPoliza(url){
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        ,data:{from:'vencimiento'}
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+	
+	
+}
+
+function lvbajaOficioPoliza(url){
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+    	,data:{from:'poliza'}
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+	
+}
+function lvbajaLiberacionPoliza(url){
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+    	,data:{from:'poliza'}
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+	
+}
+
+$(document).ready(function() 
+	    { 
+	        $("#poliza_vencimiento_list").tablesorter();
+	   
+	    } 
+	); 
+
+
+/*
+ * RENOVAR POLIZA: va a una solapa de solicitud nueva
+ */
+
+ function renovarPoliza(url, title,tipo_poliza) {
+		//Para que le paso la URL???
+		var existe = false;
+
+		/*Esto es una cagada*/
+		/* if ... tipo poliza */
+		if (tipo_poliza == 'ALQUILER') {
+			tab_url = './poliza/solicitud/renovacion-alquiler';
+			temp_url = './poliza/solicitud/renovacion-alquiler';
+		}else if (tipo_poliza == 'RESPONSABILIDAD_CIVIL') {
+			tab_url = './poliza/solicitud/renovacion-responsabilidad-civil';
+			temp_url = './poliza/solicitud/renovacion-responsabilidad-civil';
+		}else if (tipo_poliza == 'ADUANEROS') {
+			tab_url = './poliza/solicitud/renovacion-aduaneros';
+			temp_url = './poliza/solicitud/renovacion-aduaneros';
+		}
+		$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+
+			var href = $(this).attr('tab_url');
+			// console.debug(href);
+			if (href == temp_url)
+				existe = true;
+		});
+
+		if (!existe)
+			$("#tabs").tabs("add", url, title);
+		if (existe)
+			alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+
+		return false;
+	}
+/*
+ function loadPageSolicitud(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-automotores';
+	temp_url = './poliza/solicitud/alta-automotores';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+function viewPoliza(url, title){
+	var existe=false;
+	tab_url = url;
+		
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+		   var href = $(this).attr('tab_url');
+				   if (href==url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				
+			return false;  	
+}
+  
+ 
+function loadPagoPoliza(url){
+	//var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	/*data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+*/
+</script>
+
+
+<div id="buscar_polizas">
+	<form action="./poliza/operaciones/listado-vencimiento"
+		onSubmit="return listadoVencimiento(this)">
+
+		<table id="buscar_asegurado">
+			<tr>
+				<td><b>Buscar:</b></td>
+				<td><input type="text" name="fecha_desde" id="fecha_desde" /></td>
+				<td><input type="text" name="fecha_hasta" id="fecha_hasta" /></td>
+				<?php if(!$this->isCliente): ?> 
+				<td>Asegurado:</td>
+				<td><select id="vencimiento_asegurado_id" name="asegurado_id">
+								<option value="">Todos</option>
+								<? foreach($this->asegurados as $row ):?>
+								<?if($this->asegurado_id==$row['asegurado_id']):
+								?>
+								<option selected value=<?=$row['asegurado_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								<option value=<?=$row['asegurado_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+			<?php endif;?>
+				<td><input type="submit" name="buscar" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+<?if($this->buscar):?>
+<!-- 
+Vencimiento
+Vigencia
+Tomador
+Nº de Póliza
+Endoso
+Operación
+Riesgo
+Suma Asegurada
+Prima
+Premio Compañia
+Premio
+Plus
+Documentación (SI / NO) -acordate que esto indicaba si les llegó el documento-
+Botón Baja
+Botón Refacturar (sólo en caución)
+ -->
+<table id="poliza_vencimiento_list" class="ui-widget">
+	<thead class="ui-widget-header">
+		<tr>
+			<th>Vencimiento</th>
+			<th>Vigencia</th>
+			<th>Tomador</th>
+			<th>Nro de Póliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Tipo de Cobertura</th>
+			<th>Moneda</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<th>Premio Compañia</th>
+			<th>Premio</th>
+			<th>Plus</th>
+			<th>Documentacion</th>
+			<th>Estado</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?foreach ($this->rows as $row):?>
+	<?//Aca se instancian muchos objetos, tengo que ver como hacer mas liviano este listado
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	//Solo para Aduaneros
+	if($row['tipo_poliza_id']!=7)
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+
+	$documentacion = ($row['tipo_poliza_id']==2)?Domain_Helper::getHelperNameById('documentacion', $m_poliza_detalle->documentacion_id):null;
+
+
+
+	$cantidad_cuotas = (int)Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float)Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	$fecha_desde = $d_poliza->getModelPoliza()->fecha_vigencia;
+	$periodo = $d_poliza->getModelPoliza()->periodo_id;
+	//Helper que calcular la fecha de vigencia
+	$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+	$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+	$operacion = Domain_Helper::getHelperNameById('operacion', $row['operacion_id']);
+	$estado = Domain_EstadoPoliza::getNameById($row['estado_id']);
+
+
+	?>
+		<tr>
+			<td><?=$fecha_hasta?></td>
+			<td><?=$vigencia?></td>
+			<td><?=$asegurado_nombre?></td>	
+			<td><?=$row['numero_poliza']?></td>
+			<td><?=$row['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$riesgo?></td>
+			<td><?=$moneda?></td>
+			<td><?=$m_poliza_valores->monto_asegurado?></td>
+			<td><?=$m_poliza_valores->prima_comision?></td>
+			<td><?=$m_poliza_valores->premio_compania?></td>
+			<td><?=$m_poliza_valores->premio_asegurado?></td>
+			<td><?=$m_poliza_valores->plus?></td>
+			<td><?=$documentacion?></td>
+			<td><?=$estado?></td>
+
+			<?php /*
+			@TODO: REFACTOR !!! acomoda el if y switch, esta bastante para el orto
+			*/
+			?>
+<?  $tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']) ;?>
+			<?php switch ($tipo_poliza){
+				case 1:?>
+			<!--  td><input type='button' value='Ver' onClick="return false;"> </input>
+			</td>-->
+				<?break;
+case 'ADUANEROS':?>
+<!-- La unica aduanera que es vigente es solvencia economica -->
+<?if($estado=='VIGENTE'):?>
+<?//Ademas dependiendo el motivo de garantia es renovar o refacturar (por ahora solvencia economica) 
+$motivo_garantia_id = $m_poliza_detalle->motivo_garantia_id;
+$solvencia_economica_aduaneros = Domain_Helper::getHelperIdByDominioAndName('constante','solvencia_economica_aduaneros');
+
+if($motivo_garantia_id == $solvencia_economica_aduaneros):?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-aduaneros/poliza_id/<?=$row['poliza_id']?>','RENOVACION ADUANEROS','ADUANEROS')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return bajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+	<?endif;?>
+<?endif;?>
+
+<?if($estado=='AFECTADA'):?>
+			<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			
+
+			<td><input type='button' value='BAJA LIBERACION'
+				onClick="return lvbajaLiberacionPoliza('./poliza/operaciones/baja-liberacion-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			</td>
+			<?elseif ($estado=='ACEPTADA'):?>
+
+
+			<td><input type='button' value='BAJA OFICIO'
+				onClick="return lvbajaOficioPoliza('./poliza/operaciones/baja-oficio-poliza/poliza_id/<?=$poliza['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;
+			break;
+			
+case 'CONSTRUCCION':?>
+			<!-- Pregunto si tiene el estado afectada, por ahora lo hardcodeo -->
+<?if($estado=='VIGENTE'): ?>
+
+	<td><input type='button' value='REFACTURAR'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+
+
+			<td><input type='button' value='BAJA'
+				onClick="return bajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif; ?>
+			<?break;
+case 'RESPONSABILIDAD_CIVIL':?>
+			<!-- Pregunto si tiene el estado afectada, por ahora lo hardcodeo -->
+<?if($estado=='VIGENTE'): ?>
+<!--  Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico-->
+	<td><input type='button' value='RENOVAR' 
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-responsabilidad-civil/poliza_id/<?=$row['poliza_id']?>','RENOVACION R. CIVIL','RESPONSABILIDAD_CIVIL')">
+				
+				</input>
+			</td>
+
+
+			<td><input type='button' value='baja'
+				onClick="return bajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif; ?>
+			<?break;
+case 'IGJ':?>
+
+			<td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-igj/poliza_id/<?=$row['poliza_id']?>','IGJ','IGJ')">
+			</td>
+			
+			<?if($estado == 'VIGENTE'):?>
+			<?//Refacturar en este caso es renovar, @TODO: cambiar el nombre del metodo a uno mas generico?>
+			<td><input type='button' value='RENOVAR'
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-igj/poliza_id/<?=$row['poliza_id']?>','RENOVACION IGJ','IGJ')">
+				</input>
+			</td>
+			<td><input type='button' value='BAJA'
+				onClick="return lbajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif;
+break;			
+			
+case 'ALQUILER':?>
+			
+<?if($estado=='VIGENTE'): ?>
+			<td><input type='button' value='Refacturar'
+				onClick="return refacturarPoliza('./poliza/poliza/refacturar-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+		<td><input type='button' value='RENOVAR' 
+				onClick="return renovarPoliza('./poliza/solicitud/renovacion-alquiler/poliza_id/<?=$row['poliza_id']?>','RENOVACION ALQUILER','ALQUILER')">
+				
+				</input>
+			</td>
+
+
+			<td><input type='button' value='baja'
+				onClick="return bajaPoliza('./poliza/poliza/baja-poliza/poliza_id/<?=$row['poliza_id']?>')">
+				</input>
+			</td>
+			<?endif; ?>
+			<?break;
+
+case 3:?>
+			<!--  td><input type='button' value='Ver' onClick="return false;"> </input>
+			</td>-->
+<?break;?>
+
+<?case 'AUTOMOTORES':?>
+			<!-- <td><input type='button' value='Ver'
+				onClick="return loadTabPoliza('./poliza/poliza/view-poliza-automotores/poliza_id/<?=$poliza['poliza_id']?>','Automotores','AUTOMOTORES')">
+				</input>
+			</td>-->
+<?break;
+default:
+
+	break;
+			}			?>
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+		<?endif;?>
+
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+

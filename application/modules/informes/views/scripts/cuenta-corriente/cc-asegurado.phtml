@@ -1,0 +1,41 @@
+
+<p><b>ACA muestra el saldo, etc..Para ver si los movimientos estan ok</b></p>
+
+<p><b>Cliente:</b> Nombre del cliente</p>
+<p><b>Sumatoria de las polizas que figuran id "pago":</b><?=$this->pago?></p> 	
+<p><b>Sumatoria de las polizas/cuotas que figuran con id "no pago":</b><?=$this->debe?></p>
+<p><b>Sumatoria de las movimientos 
+(deberia ser igual o mayor a lo que pago):</b><?=$this->suma_movimientos?></p>
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+	<tr>
+		<th>Nro. Movimiento</th>	
+		<th>Fecha</th>
+		<th>Moneda</th>
+		<th>Importe</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody class="ui-widget-content">
+	
+	<?
+foreach ($this->rows as $row):
+$moneda = Domain_Helper::getHelperNameById('moneda', $row['moneda_id']);
+?>
+
+	<tr>
+		<td><?=$row['movimiento_id']?></td>
+		<td><?=$row['fecha_pago']?></td>
+		<td><?=$moneda?></td>
+		<td><?=$row['importe']?></td>
+		<td><input type="button" value="Ver detalle"></input></td>
+	</tr>
+
+	<?endforeach;?>
+</tbody>
+</table>
+<input type="submit" value="Aceptar" />
+<input type="button" value="Atras" />
+</form>
+
+</div>

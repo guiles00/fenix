@@ -1,0 +1,382 @@
+<script type="text/javascript">
+function view(entidad){
+//console.debug($(entidad).val());
+var url = $(entidad).attr('url')
+
+    $.ajax({url: url,success:function(result){
+        console.debug(result);
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+
+function confirmar(){
+	return confirm('Desea agregar el registro?');
+	}
+
+
+	 $(document).ready(function() {
+	 	
+	 	
+	 	  $('#north').html('GSeguros - Solicitud Poliza');
+	 	  
+	         $('#fecha_pedido').datepicker(
+	            {   dateFormat: 'yy-mm-dd',
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre']
+	            });         
+
+	         $('#fecha_vigencia_desde').datepicker(
+	            {   dateFormat: 'yy-mm-dd',
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre']
+	            });
+	         
+	         
+	         $('#fecha_vigencia_hasta').datepicker(
+	            {   dateFormat: 'yy-mm-dd',
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre']
+	            });     
+
+
+	      
+	        
+	       /*
+	        * Oculta campos dar de alta solicitud o buscar
+	        */
+	        
+	  
+	        $('#datos_seguro_automotor').toggle();
+	        $('#detalle_riesgo_automotor').toggle();
+	        $('#valores_seguro_automotor').toggle();
+	        $('#datos_solicitud').toggle();
+	        
+	        $('#datos_seguro_automotor_show').click(function(){
+	        	$('#datos_seguro_automotor').toggle();
+	        });
+	        $('#detalle_riesgo_automotor_show').click(function(){
+	        	$('#detalle_riesgo_automotor').toggle();
+	        });
+	        $('#datos_solicitud_automotor_show').click(function(){
+	        	$('#datos_solicitud_automotor').toggle();
+	        });
+	        $('#valores_seguro_automotor_show').click(function(){
+	        	$('#valores_seguro_automotor').toggle();
+	        });
+
+	        $('#datos_solicitud_show').click(function(){
+	        	$('#datos_solicitud').toggle();
+	        });
+	              
+	        
+	        
+	       
+	       
+	  //traigo la fecha actual con el formato yyyy-mm-dd
+	  //sumo un mes, tres meses, etc.. y cambio el formato
+	  //le asigno los valores
+	        var today = new Date();
+	        var dd = today.getDate();
+	        var mm = today.getMonth()+1;//January is 0!
+	        var yyyy = today.getFullYear();
+	        if(dd<10){dd='0'+dd}
+	        if(mm<10){mm='0'+mm}
+	        var date_today = yyyy+'-'+mm+'-'+dd;
+	        //alert(date_today);
+	        
+	        
+	      
+	      
+		$("#select_periodo").change(function () {
+	                
+	                var select = $("#select_periodo option:selected").val();
+			
+	                switch(select){
+			  case '1':
+	                var date_periodo = Date.today().add({  months: 1 })
+	                var dd = date_periodo.getDate();
+	                var mm = date_periodo.getMonth()+1;//January is 0!
+	                var yyyy = date_periodo.getFullYear();
+	                if(dd<10){dd='0'+dd}
+	                if(mm<10){mm='0'+mm}
+	                var date_format = yyyy+'-'+mm+'-'+dd;
+
+	                $('#fecha_vigencia_desde').val(date_today);
+	                $('#fecha_vigencia_hasta').val(date_format);                	
+			
+	                  break;
+			case '2':
+	                        var date_periodo = Date.today().add({  months: 3 })
+	                        var dd = date_periodo.getDate();
+	                        var mm = date_periodo.getMonth()+1;//January is 0!
+	                        var yyyy = date_periodo.getFullYear();
+	                        if(dd<10){dd='0'+dd}
+	                        if(mm<10){mm='0'+mm}
+	                        var date_format = yyyy+'-'+mm+'-'+dd;
+
+	                        $('#fecha_vigencia_desde').val(date_today);
+	                        $('#fecha_vigencia_hasta').val(date_format);
+	        
+	                  break;
+			case '3':
+			  
+	                        var date_periodo = Date.today().add({  months: 4 })
+	                        var dd = date_periodo.getDate();
+	                        var mm = date_periodo.getMonth()+1;//January is 0!
+	                        var yyyy = date_periodo.getFullYear();
+	                        if(dd<10){dd='0'+dd}
+	                        if(mm<10){mm='0'+mm}
+	                        var date_format = yyyy+'-'+mm+'-'+dd;
+	                        
+	                        $('#fecha_vigencia_desde').val(date_today);
+	                        $('#fecha_vigencia_hasta').val(date_format);
+	        
+	        	
+	                  break;
+		
+	        	case '4':
+	                        var date_periodo = Date.today().add({  months: 6 })
+	                        var dd = date_periodo.getDate();
+	                        var mm = date_periodo.getMonth()+1;//January is 0!
+	                        var yyyy = date_periodo.getFullYear();
+	                        if(dd<10){dd='0'+dd}
+	                        if(mm<10){mm='0'+mm}
+	                        var date_format = yyyy+'-'+mm+'-'+dd;
+	                
+	                        $('#fecha_vigencia_desde').val(date_today);
+	                        $('#fecha_vigencia_hasta').val(date_format);
+	                        
+	                  break;
+			case '5':
+	                        var date_periodo = Date.today().add({  year: 1 })
+	                        var dd = date_periodo.getDate();
+	                        var mm = date_periodo.getMonth()+1;//January is 0!
+	                        var yyyy = date_periodo.getFullYear();
+	                        if(dd<10){dd='0'+dd}
+	                        if(mm<10){mm='0'+mm}
+	                        var date_format = yyyy+'-'+mm+'-'+dd;
+	                        
+	                        $('#fecha_vigencia_desde').val(date_today);
+	                        $('#fecha_vigencia_hasta').val(date_format);
+	                  break;
+	                default:
+		          break;
+			}
+	        
+		});	
+
+
+	}); 
+	  
+
+
+</script>
+
+
+<div id="content">
+
+	<fieldset>
+		<legend>Solicitud Transportes</legend>
+		<form id="solicitud_poliza" name="solicitud_poliza" method="POST"
+			action="#">
+
+			<h3 id="datos_solicitud_show">Datos de la Solicitud</h3>
+			<div id="datos_solicitud">
+				<table>
+					<tr>
+						<td>Número de solicitud:</td>
+						<td><input readonly type="text" name="numero_poliza"
+							value="<?=$solicitud_poliza->numero_poliza?>" /></td>
+					</tr>
+					<tr>
+						<td>Asegurado:</td>
+						<td><input readonly type="text" name="cliente"
+							value="<?=$cliente->nombre?>" /> <input type="hidden"
+							name="cliente_id" value="<?=$cliente->cliente_id?>" /></td>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+						<td><select name="ejecutivo_cuenta_id">
+								<option value="0">Seleccione Agente</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><select name="compania_id">
+								<option value="0">Seleccione Compania</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><select name="productor_id">
+								<option value="0">Seleccione Productor</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><select name="cobrador_id">
+								<option value="0">Seleccione Cobrador</option>
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_automotor_show">Datos del Seguro</h3>
+			<div id="datos_seguro_automotor">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<td><input type="text" id="fecha_pedido" name="fecha_pedido"
+							value="<?=$solicitud_poliza->fecha_pedido?>" /></td>
+					</tr>
+					<tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="select_periodo" name="periodo">
+								<option value="0">Seleccione periodo</option>
+						</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Vigencia desde:</td>
+						<td><input type="text" id="fecha_vigencia_desde"
+							name="vigencia_desde"
+							value="<?=$solicitud_poliza->vigencia_desde?>" /></td>
+						<td>Vigencia hasta:</td>
+						<td><input type="text" id="fecha_vigencia_hasta"
+							name="vigencia_hasta"
+							value="<?=$solicitud_poliza->vigencia_hasta?>" /></td>
+					</tr>
+
+					<tr>
+						<td>Plan Comision:</td>
+						<td><select name="plan_comision">
+								<option value="0">Seleccione Plan</option>
+						</select>
+						</td>
+					
+					
+					<tr>
+						<td>Forma de Pago:</td>
+						<td><select name="forma_pago">
+								<option value="0">Cuotas</option>
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<hr>
+			<h3 id="detalle_riesgo_automotor_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_automotor">
+			<p> ACA VAN DETALLES DE OTRO TIPO</p>
+			
+			
+			
+			</div>
+
+
+			<hr>
+			<h3 id="valores_seguro_automotor_show">Valores del seguro</h3>
+			<div id="valores_seguro_automotor">
+				<table>
+					<tr>
+						<td>Suma Asegurada:</td>
+						<td><input type="text" name="suma_asegurada"
+							value="<?=$solicitud_poliza->suma_asegurada?>" /></td>
+					</tr>
+					<tr>
+						<td>Moneda:</td>
+						<td><select name="moneda">
+								<option value="0">Seleccione Moneda</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Iva:</td>
+						<td><input type="text" name="iva"
+							value="<?=$solicitud_poliza->iva?>" /></td>
+					</tr>
+					<tr>
+						<td>Prima Comision:</td>
+						<td><input type="text" name="prima_comision"
+							value="<?=$solicitud_poliza->prima_comision?>" /></td>
+					</tr>
+					<tr>
+						<td>Prima tarifa:</td>
+						<td><input type="text" name="prima_tarifa"
+							value="<?=$solicitud_poliza->prima_tarifa?>" /></td>
+					</tr>
+					<tr>
+						<td>Premio compañia:</td>
+						<td><input type="text" name="premio_compania"
+							value="<?=$solicitud_poliza->premio_compania?> " /></td>
+					</tr>
+
+
+					<tr>
+						<td>Premio Asegurado:</td>
+						<td><input type="text" name="premio_cliente"
+							value="<?=$solicitud_poliza->premio_cliente?>" /></td>
+					</tr>
+					<tr>
+						<td>Plus:</td>
+						<td><input type="text" name="plus"
+							value="<?=$solicitud_poliza->plus?>" /></td>
+					</tr>
+					<tr>
+						<td>Observaciones:</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea rows="4" name="observaciones_cliente">
+						<?=$solicitud_poliza->observaciones_cliente?>
+								</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea rows="4" name="observaciones_compania">
+						<?=$solicitud_poliza->observaciones_compania?>
+								</textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+
+			<hr>
+			<input type="button" name="Cancel"
+				onclick="window.location='?page=compania&action=list'"
+				value="cancel" /> <input type="submit" name="save_solicitud"
+				value="Guardar"></input> <input type='submit'
+				name='confirmar_solicitud' value='Confirmar Solicitud'></input>
+
+		</form>
+		<div id="show_result">
+			
+			</div>
+	</fieldset>
+</div>
+

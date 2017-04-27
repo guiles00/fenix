@@ -1,0 +1,491 @@
+<?php //echo $this->headScript()->appendFile('./js/gseguros.operaciones.deuda-asegurado.js');?>
+<script type="text/javascript">
+
+
+function printContent(div_id)
+{
+var DocumentContainer = document.getElementById(div_id);
+
+//console.debug(div_id);
+var id_div = '#'+div_id;
+//console.debug($(id_div).html());
+
+//$(id_div).each(function (index) {
+//	console.debug(this);
+    /* $(this).removeClass();
+
+	              $(this).addClass("parrafo");
+	              $(this).text('Parrafo ' + index);
+*/
+	       //   });
+//console.debug(DocumentContainer.innerHTML);
+var total_pagar = 0;
+
+$('#pago_tabla_polizas_compania input:checkbox').each(function (index) {
+
+	//console.debug($(this).attr('importe'));
+	var importe = parseFloat($(this).attr('importe'));
+	if( $(this).attr('importe') != null){
+	total_pagar =  parseFloat(total_pagar) + importe;
+	}
+});
+$(id_div).append('<p>Total:'+total_pagar+'</p>');
+//console.debug(total_pagar);
+
+var html = '<html><head>'+
+               '<link href="css/template.css" rel="stylesheet" type="text/css" />'+
+               '</head><body style="background:#ffffff;">'+
+               DocumentContainer.innerHTML+
+               '</body></html>';
+
+    var WindowObject = window.open("", "PrintWindow",
+    	    "width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes");
+    WindowObject.document.writeln(html);
+    WindowObject.document.close();
+    WindowObject.focus();
+    WindowObject.print();
+    WindowObject.close();
+    document.getElementById('print_link').style.display='block';
+}
+
+
+$(document).ready(
+		function(){
+
+	var id_check = 0;
+	var moneda_distinta = false;		
+	var importe_total_a_pagar = 0;		
+	var array_polizas_compania = new Array(); 
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	
+	var href = $(tab).attr('href') ;
+	
+	var table = href+' #div_resultado_busqueda_compania'
+
+
+	//cheque_companias_compania
+	$("#div_form_cheque_compania_show,#datos_pago_compania_show").hover(
+		  function () {
+		    $(this).append($("<span> (Clic para mostrar u ocultar)</span>"));
+		  }, 
+		  function () {
+		    $(this).find("span:last").remove();
+		  }
+		);
+
+
+	$('#div_form_cheque_compania').hide();
+
+	$('#datos_pago_compania_show').click(function() {
+		$('#datos_pago_compania').toggle();
+	});
+
+	$('#div_form_cheque_compania_show').click(function() {
+		$('#div_form_cheque_compania').toggle();
+	});
+	
+	//FIN cheque_companias_compania
+	
+	$('#fecha_pago_compania').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+					'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+	//Oculto formulario de pago
+	
+	$('#realizar_pago_compania_show').hide();
+
+	
+	$('#buscar_poliza_compania').click(function(){
+
+		var nro_poliza_compania = $('#nro_poliza_compania').val();
+		var compania_id = $('#compania_id').val();
+		//var data = $('#form_busqueda_poliza_compania').serializeArray();
+		//var url = $('#').val();
+		//alert(nro_poliza_compania);
+
+		$.ajax({
+		    url: './operaciones/pago-compania/buscar-poliza-pago-compania/'
+			,data:{nro_poliza_compania:nro_poliza_compania,compania_id:compania_id}
+			,success:function(result){
+	        ////console.debug(result);
+	        $(table).html(result);
+	      	}
+	      });
+		
+		});
+	
+
+	//Realizar Pago
+$('#realizar_pago_compania').click(function() {
+	$('#realizar_pago_compania_show').toggle();
+
+	//Recorro la tabla para completar el campo importe en efectivo
+
+	$('#div_tabla_polizas_compania input').each(function(){
+
+		if(!( $(this).hasClass('eliminar_poliza_compania') )){
+			
+		  importe_total_a_pagar = importe_total_a_pagar + parseFloat($(this).attr('importe'));
+		}
+	});
+
+	$('#importe_compania').val(importe_total_a_pagar);
+
+	//console.debug('importe_total_a_pagar:'+importe_total_a_pagar);
+	
+	
+});
+	
+// Guardar Solicitud
+$('#confirmar_pago_compania').click(function() {
+//alert('realiza el pago de las poliza_companias seleccionadas');
+	
+	
+	var importe = $('#importe_compania'),
+    moneda_compania_id = $('#moneda_compania_id'),
+    compania_id = $('#compania_id'),
+    fecha_pago_compania = $('#fecha_pago_compania');
+	importe_cheque_compania_0 = $('#importe_cheque_compania_0'),
+	importe_cheque_compania_1 = $('#importe_cheque_compania_1'),
+	importe_cheque_compania_2 = $('#importe_cheque_compania_2'),
+	importe_cheque_compania_3 = $('#importe_cheque_compania_3'),
+	importe_cheque_compania_4 = $('#importe_cheque_compania_4'),
+	importe_cheque_compania_5 = $('#importe_cheque_compania_5'),
+	nro_cheque_compania_0 = $('#nro_cheque_compania_0'),
+	nro_cheque_compania_1 = $('#nro_cheque_compania_1'),
+	nro_cheque_compania_2 = $('#nro_cheque_compania_2'),
+	nro_cheque_compania_3 = $('#nro_cheque_compania_3'),
+	nro_cheque_compania_4 = $('#nro_cheque_compania_4'),
+	nro_cheque_compania_5 = $('#nro_cheque_compania_5'),
+	banco_cheque_compania_0 = $('#banco_cheque_compania_0'),
+	banco_cheque_compania_1 = $('#banco_cheque_compania_1'),
+	banco_cheque_compania_2 = $('#banco_cheque_compania_2'),
+	banco_cheque_compania_3 = $('#banco_cheque_compania_3'),
+	banco_cheque_compania_4 = $('#banco_cheque_compania_4'),
+	banco_cheque_compania_5 = $('#banco_cheque_compania_5'),
+	cotizacion_divisa = $('#cotizacion_divisa'),
+	numero_factura_compania = $('#numero_factura_compania');
+
+	//var importe_total_a_pagar = 0;
+	//alert(importe_cheque_compania_4.val());
+	// alert(moneda_compania_id.val());
+	var moneda_distinta = false;
+		 	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+		
+	// Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	// ////console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;
+	// //console.debug(href);
+	//var href_result = href+" #resultado_pago";
+	////console.debug(href_t); 
+		// var url = "./poliza_compania/solicitud/confirmar-solicitud";
+	var url = "./operaciones/pago-compania/pagar-pago-compania";
+		
+	var array_polizas_compania = new Array();
+
+		$('#div_tabla_polizas_compania input').each(function(){
+
+
+			//alert($(this).attr('moneda'));
+			//chequea que sean de la misma moneda, si no lo es sale		
+			if(!( $(this).hasClass('eliminar_poliza_compania') )){
+				
+			if(moneda_compania_id.val() != $(this).attr('moneda')){
+				alert("Debe seleccionar el mismo tipo de moneda");
+				moneda_distinta = true;
+				return false;
+			}
+			}
+			if(!( $(this).hasClass('eliminar_poliza_compania') )){
+				
+			  //Agrego los id de las poliza_companias a modificar	
+			  array_polizas_compania.push($(this).val());
+			}
+		});
+
+
+		if(moneda_distinta){
+			//alert('moneda distinta');
+			return false;
+		}//return false;
+		
+
+	var data = $('#pago_poliza_compania').serializeArray();
+
+	var data_cheque_compania = $('#div_form_cheque_compania').serializeArray();
+	var array_cheque_compania = new Array();
+
+	//Importe total que ingresa el usuario(Efectivo+cheque_companias_compania)
+	var importe_total = 0;
+	importe_total = parseFloat(importe.val()) +	parseFloat(importe_cheque_compania_0.val()) + 
+	parseFloat(importe_cheque_compania_1.val()) + parseFloat(importe_cheque_compania_2.val())
+	+ parseFloat(importe_cheque_compania_3.val()) + parseFloat(importe_cheque_compania_4.val())
+	+ parseFloat(importe_cheque_compania_5.val())	;
+
+	// alert(importe_total);
+	if(importe_total != importe_total_a_pagar){
+	
+	var resp = confirm("El importe a pagar es diferente, desea continuar?");
+
+	if(!resp)return false;
+
+	}
+
+	$('#realizar_pago_compania_show').hide();
+	
+$.ajax({
+	
+    url: url,
+	data:{
+    	 array_polizas_compania: array_polizas_compania.toString()
+    	 ,importe: importe_total
+    	 ,importe_efectivo: parseFloat(importe.val())
+    	 ,moneda_id: moneda_compania_id.val()
+    	 ,fecha_pago: fecha_pago_compania.val()
+    	 ,compania_id: compania_id.val()
+    	 // por ahora los paso separados porque no funciona el JSON cuando paso mas de un parametro
+		// pasa el array*/
+  		,importe_cheque_compania_0 : importe_cheque_compania_0.val()
+		,importe_cheque_compania_1 : importe_cheque_compania_1.val()
+		,importe_cheque_compania_2 : importe_cheque_compania_2.val()
+    	,importe_cheque_compania_3 :importe_cheque_compania_3.val()
+		,importe_cheque_compania_4 : importe_cheque_compania_4.val()
+		,importe_cheque_compania_5 : importe_cheque_compania_5.val()
+		,nro_cheque_compania_0 : nro_cheque_compania_0.val()
+		,nro_cheque_compania_1 : nro_cheque_compania_1.val()
+		,nro_cheque_compania_2 : nro_cheque_compania_2.val()
+		,nro_cheque_compania_3 : nro_cheque_compania_3.val()
+		,nro_cheque_compania_4 : nro_cheque_compania_4.val()
+		,nro_cheque_compania_5 : nro_cheque_compania_5.val()
+		,banco_cheque_compania_0 : banco_cheque_compania_0.val()
+		,banco_cheque_compania_1 : banco_cheque_compania_1.val()
+		,banco_cheque_compania_2 : banco_cheque_compania_2.val()
+		,banco_cheque_compania_3 : banco_cheque_compania_3.val()
+		,banco_cheque_compania_4 : banco_cheque_compania_4.val()
+		,banco_cheque_compania_5 : banco_cheque_compania_5.val()
+		,cotizacion_divisa : cotizacion_divisa.val()
+		,numero_factura : numero_factura_compania.val()    	
+        }
+
+	    ,success:function(result){
+    	$(href).html(result);
+  		}
+  });
+
+});
+//FIN Realizar pago
+	});
+</script>
+
+
+<?php
+/*1- Lista la compania
+ 2- busca la poliza_compania a pagar
+ 3- la agrega a otro listado
+ 4- una vez que tiene todas las poliza_companias en ese listado realiza el pago como estaba antes.
+ *
+ */
+?>
+
+<table>
+	<tr>
+		<th>Compania:</th>
+		<td><?=$this->compania?></td>
+	</tr>
+
+	<tr>
+		<th>Moneda:</th>
+		<td>Pesos</td>
+		<td>Dolar</td>
+		<td>Euro</td>
+	</tr>
+	<tr>
+		<th>Debe:</th>
+		<td><?=(empty($this->debe_pesos))?'0':$this->debe_pesos?></td>
+		<td><?=(empty($this->debe_dolar))?'0':$this->debe_dolar?></td>
+		<td><?=(empty($this->debe_euro))?'0':$this->debe_euro?></td>
+	</tr>
+</table>
+
+<hr>
+
+<form id="form_busqueda_poliza_compania_compania" name="form_busqueda_poliza_compania"
+	
+	onSubmit="return false"><input type="hidden" id="compania_id"
+	name="compania_id" value="<?=$this->compania_id?>"></input>
+
+<div id="div_busqueda_poliza_compania">
+<table>
+	<tr>
+		<td>Nro poliza_compania:</td>
+		<td><input id="nro_poliza_compania" value="" name=""></input></td>
+		<td><input type="button" id="buscar_poliza_compania" value="Buscar" name=""></input></td>
+	</tr>
+</table>
+</div>
+</form>
+<div id="div_resultado_busqueda_compania"></div>
+
+
+<div id="div_tabla_polizas_compania">
+<hr>
+<table class="ui-widget" id="pago_tabla_polizas_compania">
+	<thead class="ui-widget-header">
+		<tr>
+			<th></th>
+			<th>Nro Solicitud</th>
+			<th>Nro de Póliza</th>
+			<th>Endoso</th>
+			<th>Compañia</th>
+			<th>Tomador</th>
+			<th>Asegurado</th>
+			<th>Premio</th>
+			<th>Plus</th>
+			<th>Fecha Pago</th>
+			<th>Moneda</th>
+			<th>Importe</th>
+		</tr>
+	</thead>
+	<tbody class="ui-widget-content">
+	</tbody>
+</table>
+</div>
+<input type="button" id="realizar_pago_compania" value="Realizar Pago"></input>
+<a href='javascript:printContent("div_tabla_polizas_compania")' id='print_link'>Imprimir Listado</a>	
+<div id="realizar_pago_compania_show">
+<form id="pago_poliza_compania" name="pago_poliza_compania"
+	onSubmit="return false">
+	<input type="hidden" id="compania_id"
+	name="compania_id" value="<?=$this->compania_id?>"></input>
+
+<h4 id="datos_pago_compania_show">Ingrese los datos del Pago</h4>
+
+<div id="datos_pago_compania">
+<table>
+	<tr>
+		<td>Fecha:</td>
+		<td><input id="fecha_pago_compania" value="" name=""></input></td>
+	</tr>
+	<tr>
+		<td>Factura/Recibo:</td>
+		<td><input id="numero_factura_compania" value="" name=""></input></td>
+	</tr>
+
+	<tr>
+		<td>Moneda:</td>
+		<td><select id="moneda_compania_id" name="moneda_id">
+		<? foreach($this->monedas as $row ):?>
+			<option value=<?=$row['dominio_id']?>><?=$row['nombre']?></option>
+			<? endforeach; ?>
+		</select></td>
+
+</table>
+
+<h4>Efectivo</h4>
+<table>
+	<td>Importe:</td>
+	<td><input value="" id="importe_compania" name="importe"></input></td>
+	</tr>
+	<tr>
+	<td>Cotizaci&oacute;n Divisa:</td>
+	<td><input value="" id="cotizacion_divisa" name="cotizacion_divisa"></input></td>
+	</tr>
+</table>
+</div>
+<h4 id="div_form_cheque_compania_show">Datos cheque_companias_compania</h4>
+<!--  input type="button" id="add_check" value="+" /> <input type="button"
+			id="del_check" value="-" /> <input type="hidden" id="del_check_val"
+			value="cheque_compania_1" />-->
+
+<div id="div_form_cheque_compania">
+<table id="table_form_cheque_compania">
+	<tr>
+		<th></th>
+	</tr>
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_0" id="banco_cheque_compania_0"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_0" id="nro_cheque_compania_0" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_0" id="importe_cheque_compania_0"
+			value="0"> </input></td>
+	</tr>
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_1" id="banco_cheque_compania_1"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_1" id="nro_cheque_compania_1" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_1" id="importe_cheque_compania_1"
+			value="0"> </input></td>
+	</tr>
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_2" id="banco_cheque_compania_2"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_2" id="nro_cheque_compania_2" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_2" id="importe_cheque_compania_2"
+			value="0"> </input></td>
+	</tr>
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_3" id="banco_cheque_compania_3"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_3" id="nro_cheque_compania_3" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_3" id="importe_cheque_compania_3"
+			value="0"> </input></td>
+	</tr>
+
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_4" id="banco_cheque_compania_4"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_4" id="nro_cheque_compania_4" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_4" id="importe_cheque_compania_4"
+			value="0"> </input></td>
+	</tr>
+
+	<tr>
+		<td>Banco:</td>
+		<td><input type="text" name="banco_cheque_compania_5" id="banco_cheque_compania_5"
+			value=""> </input></td>
+		<td>Nro:</td>
+		<td><input type="text" name="nro_cheque_compania_5" id="nro_cheque_compania_5" value="">
+		</input></td>
+		<td>Importe:</td>
+		<td><input type="text" name="importe_cheque_compania_5" id="importe_cheque_compania_5"
+			value="0"> </input></td>
+	</tr>
+</table>
+</div>
+<input type="submit" value="Confirmar Pago" id="confirmar_pago_compania" />
+</div>
+
+<hr>
+<div id="resultado_pago_compania">
+</div>	
+

@@ -1,0 +1,228 @@
+<!-- Fecha de Pedido
+Tomador
+Nº de Póliza
+Endoso
+Agente
+Riesgo
+Moneda
+Suma Asegurada
+Compañia
+Operación
+Premio Compañia
+Premio
+Plus
+Importe
+Fecha de Pago
+Cobrador
+Importe Cobrado -->
+<script type="text/javascript">
+//Hacer todo en JQuery
+$('#fecha_desde').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+$('#fecha_hasta').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+
+function listInformeDiario(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,fecha_desde: f.fecha_desde.value
+            ,fecha_hasta: f.fecha_hasta.value
+            ,operacion_id: f.operacion_id.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+//$(document).ready(function() 
+	//    { 
+	        $("#informe_diario_list").tablesorter();
+	   
+	  //  } 
+	//); 
+	
+</script>
+
+
+<div id="buscar_polizas">
+	<form action="./informes/listado/informe-diario"
+		onSubmit="return listInformeDiario(this)">
+
+		<table id="buscar_asegurado">
+			<tr>
+				<td><b>Buscar:</b></td>
+				<td><input type="text" name="fecha_desde" id="fecha_desde" /></td>
+				<td><input type="text" name="fecha_hasta" id="fecha_hasta" /></td>
+				<td><select name="operacion" id="operacion_id">
+						<option value="">Todos</option>
+						<option value="1">Emision</option>
+						<option value="3">Renovacion</option>
+						<option value="2">Refacturacion</option>
+				</select>
+				</td>
+				<td><input type="submit" name="buscar" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+ <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-informe-diario/fecha_desde/<?=$this->fecha_desde?>/fecha_hasta/<?=$this->fecha_hasta?>/operacion/<?=$this->operacion?>')">
+Imprimir Informe</A>
+<?if($this->buscar):?>
+
+<table class="ui-widget" id="informe_diario_list"> 
+	<thead class="ui-widget-header">
+		<th>Fecha de Pedido</th>
+		<th>Nro de Solicitud</th>
+		<th>Tomador</th>
+		<th>Nro de Póliza</th>
+		<th>Endoso</th>
+		<th>Agente</th>
+		<th>Tipo de Cobertura</th>
+		<th>Moneda</th>
+		<th>Suma Asegurada</th>
+		<th>Compañia</th>
+		<th>Operación</th>
+		<th>Premio</th>
+		<th>Plus</th>
+		<th>Fecha de Pago</th>
+		<th>Cobrador</th>
+		<th>Cuota</th>
+		<th>Importe Cobrado</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?
+
+	
+	//echo"<pre>";
+	//print_r($this->informe_diario);
+	foreach ($this->informe_diario as $row):
+
+	
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	//print_r($m_poliza_detalle->motivo_garantia_id);
+	
+	$asegurado_nombre = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+	$agente_nombre = Domain_Agente::getNameById($m_poliza->agente_id);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+	$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+	$cobrador_nombre = Domain_Cobrador::getNameById($row['cobrador_id']);
+	$compania_nombre = Domain_Compania::getNameById($row['compania_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+	
+	//Traer los distintos tipos de garantia dependiendo del tipo de poliza
+	if($row['tipo_poliza_id']!=7)
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+	
+	
+	$operacion = Domain_Helper::getHelperNameById('operacion', $row['operacion_id']);
+    
+	
+	$rows = Domain_DetallePago::getDetalleCuotas($m_detalle_pago->detalle_pago_id);
+		
+	$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+	
+	
+	?>
+	<?foreach ($rows as $row):?>
+		<tr>
+
+			<td><?=$m_poliza->fecha_pedido?></td>
+			<td ><?=$m_poliza->numero_solicitud?></td>
+			<td><?=$asegurado_nombre?></td>
+			<td><?=$m_poliza->numero_poliza?></td>
+			<td><?=$m_poliza->endoso?></td>
+			<td><?=$agente_nombre ?></td>
+			<td><?=$riesgo?></td>
+			<td><?=$moneda?></td>
+			<td><?=$m_poliza_valores->monto_asegurado?></td>
+			<td><?=$compania_nombre?></td>
+			<td><?=$operacion?></td>
+			<td><?=$m_poliza_valores->premio_asegurado?></td>
+			<td><?=$m_poliza_valores->plus?></td>
+			<?php if($row['pago_id']==1):?>
+			<td><?=$row['fecha_pago']?></td>
+			<td><?=$cobrador_nombre?></td>
+			<td><?=$row['cuota_id']?></td>
+			<td><?=$row['importe']?></td>
+			<?else:?>
+			<td></td>
+			<td><?=$cobrador_nombre?></td>
+			<td><?=$row['cuota_id']?></td>
+			<td></td>
+			
+	<?endif;?>
+		</tr>
+		<?endforeach;?>
+
+
+		<?endforeach;?>
+	</tbody>
+</table>
+	<?endif;?>
+ <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-informe-diario/fecha_desde/<?=$this->fecha_desde?>/fecha_hasta/<?=$this->fecha_hasta?>/operacion/<?=$this->operacion?>')">
+Imprimir Informe</A>
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+
+
+
+
+
+

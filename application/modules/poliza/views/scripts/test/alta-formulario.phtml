@@ -1,0 +1,98 @@
+<html>
+<head>
+<script type="text/javascript">
+$(document).ready(
+
+		
+				
+		function() {
+
+			$('#lloading').hide();
+
+			$('#lloading')
+		    .ajaxStart(function() {
+		        $(this).show();
+		    })
+		    .ajaxStop(function() {
+		        $(this).hide();
+		    });
+		
+
+			
+			// Guardar Solicitud
+			$('#save_formulario').click(function() {
+				
+								// trae id de tab
+								var tabs_sel = $('#tabs').tabs();
+								var idx = tabs_sel.tabs('option',
+										'selected');
+
+								// Trae el tab correspondiente
+								var tab = $('#tabs ul li a')[idx];
+								// //console.debug($('#tabs ul li a'));
+								var href = $(tab).attr('href');
+
+								// suponemos que el form es valido
+
+								var data = $('#formulario').serializeArray();
+								 console.debug(data);
+								 var data_string = JSON.stringify(data); 
+								 console.debug(data_string);
+
+
+								
+								 
+								$.ajax({
+											url : "./poliza/test/alta-formulario",
+											data : 
+												data_string
+												
+											,beforeSend: function () {
+														//alert('antes de enviar');
+
+										//				$('#loading').show();
+
+														}
+											,
+											success : function(result) {
+												$(href).html(result);
+												$('#loading').hide();
+											}
+										});
+
+							});
+			});
+
+
+</script>
+</head>
+
+
+<body>
+	<div style="position:fixed; 
+   _position:absolute;
+   top: 50%;
+   left:47%; 
+   padding:2px 5px;
+   z-index: 5000
+  <!--   background-color:#CF4342;
+   color:#fff;-->
+	" id="lloading">
+		<img src="mozilla_blu.gif">Cargando...</img>
+		
+	</div>
+
+	<form id="formulario" name="formulario" action=""
+		onSubmit="return false">
+
+		valor 1<input type="text" name="valor_1" id="valor_1" value=""> valor
+		2<input type="text" name="valor_2" id="valor_2" value=""> valor 3<input
+			type="text" name="valor_3" id="valor_3" value=""> <input
+			type="button" id="save_formulario" value="aceptar" />
+
+	</form>
+
+</body>
+
+
+</html>

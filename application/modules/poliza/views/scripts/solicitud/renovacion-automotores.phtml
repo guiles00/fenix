@@ -1,0 +1,892 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.solicitud.renovacion-automotores.js');?>
+<div id="content">
+
+	<fieldset>
+		<legend>Renovacion Solicitud Automotores</legend>
+
+		<!--  form action="./entidad/compania/add"  onSubmit="return editForm(this)">-->
+		<!-- <form id="solicitud_poliza" name="solicitud_poliza"
+			action="./poliza/solicitud/alta-automotores"
+			onSubmit="return addSolicitudAutomotores(this)"> -->
+		<form id="solicitud_poliza_automotor"
+			name="solicitud_poliza_automotor" onSubmit="return false">
+
+			<input type="hidden" name="save" value=1>
+
+			<h3 id="datos_solicitud_show">Datos de la Solicitud</h3>
+			<div id="datos_solicitud">
+			<table>
+				<tr>
+				<td>P&oacute;liza a Renovar:</td><td><?=$this->numero_poliza?> / <?=$this->endoso?></td>
+				</tr>
+					<tr>
+						<td>Número de solicitud:</td>
+						<td><input readonly type="text" name="numero_solicitud"
+						id="numero_solicitud"
+							value="<?=$this->numero_solicitud?>" />
+							<input type="hidden" name="solicitud_id"
+						id="solicitud_id"
+							value="<?=$this->poliza_id?>" />
+						<input
+							type="hidden" name="poliza_renovada_id"
+							id="solicitud_renovada_automotores_id"
+							value="<?=$this->solicitud_renovada?>" />	
+						</td>
+					</tr>
+
+					<!-- Autocomplente para Asegurados -->
+					<tr>
+						<td>Asegurado:</td>
+						<?if( empty($this->solicitud->poliza_id) ):?>
+						<td><input id="asegurado" type="text" name="asegurado"
+							value="<?=$this->solicitud->asegurado_id?>"></input> <input
+							type="hidden" id="asegurado_id" name="asegurado_id" value=""></input>
+						</td>
+						<?else:?>
+						<td><input readonly id="asegurado" type="text" name="asegurado"
+							value="<?=$this->asegurado_nombre?>"></input> <input
+							type="hidden" id="asegurado_id" name="asegurado_id"
+							value="<?=$this->solicitud->asegurado_id?>"></input></td>
+							<?endif;?>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+						<?if($this->isAgente):?>
+						<td><?=$this->agente_nombre?> <input name="agente_id"
+							value=<?=$this->agente_id?> type="hidden"></input>
+						</td>
+						<?else:?>
+						<td><select name="agente_id">
+								<option value="0">Seleccione Agente</option>
+								<? foreach($this->agentes as $row ):?>
+								<?if($this->solicitud->agente_id==$row['agente_id']):?>
+								<option selected value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select> <?endif;?>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><select name="compania_id">
+								<option value="0">Seleccione Compania</option>
+								<? foreach($this->companias as $row ):?>
+								<?if($this->solicitud->compania_id==$row['compania_id']):?>
+								<option selected value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><select name="productor_id">
+								<option value="0">Seleccione Productor</option>
+								<? foreach($this->productores as $row ):?>
+								<?if($this->solicitud->productor_id==$row['productor_id']):?>
+								<option selected value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><select name="cobrador_id">
+								<option value="0">Seleccione Cobrador</option>
+								<? foreach($this->cobradores as $row ):?>
+								<?if($this->solicitud->cobrador_id==$row['cobrador_id']):?>
+								<option selected value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_automotor_show">Datos del Seguro</h3>
+			<div id="datos_seguro_automotor">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<td><?if($this->isAgente):?> <input readonly type="text"
+							id="fecha_pedido_agente" name="fecha_pedido"
+							value="<?=Domain_Util::today()?>" />
+						</td>
+						<?else:?>
+						<input type="text" id="fecha_pedido" name="fecha_pedido"
+							value="<?=Domain_Util::today()?>" />
+						</td>
+						<?endif;?>
+					</tr>
+
+					<!--  tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>-->
+					<tr>
+						<td>Fecha Vigencia:</td>
+						<?if($this->isAgente): ?>
+						<td><input readonly type="text" id="fecha_vigencia_agente"
+							name="fecha_vigencia"
+							value="<?=Domain_Util::today()?>" />
+						</td>
+						<?else:?>
+						<td><input type="text" id="fecha_vigencia" name="fecha_vigencia"
+							value="<?=Domain_Util::today()?>" />
+						</td>
+						<?endif; ?>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="periodo_id" name="periodo_id">
+								<option value="0">Seleccione periodo</option>
+								<? foreach($this->periodos as $row ):?>
+								<?if($this->solicitud->periodo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+
+
+
+					<!--  tr>
+						<td>Plan Comision:</td>
+						<td><select name="plan_comision">
+								<option value="0">Seleccione Plan</option>
+						</select>
+						</td>
+					<tr>-->
+				</table>
+			</div>
+
+			<hr>
+			<h3 id="detalle_riesgo_automotor_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_automotor">
+				<table>
+
+					<tr>
+						<td>Tipo de Vehiculo:</td>
+						<td><select name="tipo_vehiculo_id" id="tipo_vehiculo_id">
+								<option value="0">Seleccione Tipo de Vehiculo</option>
+								<? foreach($this->tipo_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->tipo_vehiculo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Tipo de Cobertura:</td>
+						<td><select name="tipo_cobertura_id" id="tipo_cobertura_id">
+								<option value="0">Seleccione Tipo de Cobertura</option>
+								<? foreach($this->tipo_cobertura_automotores as $row ):?>
+								<?if($this->poliza_detalle->tipo_cobertura_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><b>Datos del vehículo</b></td>
+					</tr>
+					<tr>
+						<td>Año:</td>
+						<td><input id="anio_automotor" name="anio_automotor"
+							value="<?=$this->poliza_detalle->anio?>"></input>
+						</td>
+						<td>Marca:</td>
+						<td><input id="marca_automotor" name="marca_automotor"
+							value="<?=$this->poliza_detalle->marca?>"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>Tipo:</td>
+						<td><input id="tipo_automotor" name="tipo_automotor"
+							value="<?=$this->poliza_detalle->tipo?>"></input>
+						</td>
+						<td>Modelo:</td>
+						<td><input id="modelo_automotor" name="modelo_automotor"
+							value="<?=$this->poliza_detalle->modelo?>"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>Color:</td>
+						<td><input id="color_automotor" name="color_automotor"
+							value="<?=$this->poliza_detalle->color?>"></input>
+						</td>
+						<td>Nro Patente:</td>
+						<td><input id="patente_automotor" name="patente_automotor"
+							value="<?=$this->poliza_detalle->patente?>"></input></td>
+						<td>Cilindrada:</td>
+						<td><input id="cilindrada_automotor" name="cilindrada_automotor"
+							value="<?=$this->poliza_detalle->cilindrada_id?>"></input></td>
+					</tr>
+					<tr>
+						<td>Serial Chasis:</td>
+						<td><input id="serial_c_automotor" name="serial_c_automotor"
+							value="<?=$this->poliza_detalle->serial_carroceria?>"></input></td>
+						<td>Serial Motor:</td>
+						<td><input id="serial_automotor" name="serial_automotor"
+							value="<?=$this->poliza_detalle->serial_motor?>"></input>
+						</td>
+						<td>Accesorios:</td>
+						<td><input id="accesorios_automotor" name="accesorios_automotor"
+							value="<?=$this->poliza_detalle->accesorios?>"></input>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Uso Vehiculo:</td>
+						<td><input id="uso_automotor" name="uso_automotor"
+							value="<?=$this->poliza_detalle->uso_vehiculo?>"></input>
+						</td>
+						<td>Capacidad:</td>
+						<td><select id="capacidad_automotor" name="capacidad_automotor">
+								<option value="0">Seleccione Capacidad</option>
+								<? foreach($this->capacidad_automotores as $row ):?>
+								<?if($this->poliza_detalle->capacidad_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+						<td>Pasajeros:</td>
+						<td><select id="pasajeros_automotor" name="pasajeros_automotor">
+								<option value="0">Seleccione Pasajeros</option>
+								<? foreach($this->pasajeros_automotores as $row ):?>
+								<?if($this->poliza_detalle->pasajeros_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select></td>
+					</tr>
+					<tr>
+						<td>Flota Nro Vehiculos:</td>
+						<td><select id="flota_automotor" name="flota_automotor">
+								<option value="0">Seleccione Flota</option>
+								<? foreach($this->capacidad_automotores as $row ):?>
+								<?if($this->poliza_detalle->flota_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><b>Titulo de Propiedad</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Fecha Titulo:</td>
+						<td><input id="fecha_titulo_automotor"
+							name="fecha_titulo_automotor"
+							value="<?=$this->poliza_detalle->fecha_titulo?>"></input></td>
+						<td>Titular:</td>
+						<td><input id="titular_automotor" name="titular_automotor"
+							value="<?=$this->poliza_detalle->titular?>"></input></td>
+						<td>Nro Certificado:</td>
+						<td><input id="numero_certificado_automotor"
+							name="numero_certificado_automotor"
+							value="<?=$this->poliza_detalle->numero_certificado?>"></input></td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><b>Otros Datos</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Estado Vehiculo:</td>
+						<td><select id="estado_vehiculo_automotor"
+							name="estado_vehiculo_automotor">
+								<option value="0">Seleccione Estado</option>
+								<? foreach($this->estado_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->estado_vehiculo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+						<td>Estado Luces:</td>
+						<td><select id="estado_luces_automotor"
+							name="estado_luces_automotor">
+								<option value="0">Seleccione Estado</option>
+								<? foreach($this->estado_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->estado_luces_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+
+						<td>Estado Motor:</td>
+						<td><select id="estado_motor_automotor"
+							name="estado_motor_automotor">
+								<option value="0">Seleccione Estado</option>
+								<? foreach($this->estado_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->estado_motor_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Estado Carroceria:</td>
+						<td><select id="estado_carroceria_automotor"
+							name="estado_carroceria_automotor">
+								<option value="0">Seleccione Estado</option>
+								<? foreach($this->estado_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->estado_vehiculo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+
+						<td>Estado de Cubiertas:</td>
+						<td><select id="estado_cubiertas_automotor"
+							name="estado_cubiertas_automotor">
+								<option value="0">Seleccione Estado</option>
+								<? foreach($this->estado_vehiculo_automotores as $row ):?>
+								<?if($this->poliza_detalle->estado_cubiertas_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+
+
+						<td>Tipo Combustion:</td>
+						<td><select id="tipo_combustion_automotor"
+							name="tipo_combustion_automotor">
+								<option value="0">Seleccione Tipo Combustion</option>
+								<? foreach($this->tipo_combustion_automotores as $row ):?>
+								<?if($this->poliza_detalle->tipo_combustion_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Sistema de Seguridad:</td>
+						<td><select id="sistema_seguridad_automotor"
+							name="sistema_seguridad_automotor">
+								<option value="0">Seleccione Sistema de Seguridad</option>
+								<? foreach($this->sistema_seguridad_automotores as $row ):?>
+								<?if($this->poliza_detalle->sistema_seguridad_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Acreedor Prendario:</td>
+						<td><input id="acreedor_prendario_automotor"
+							name="acreedor_prendario_automotor"
+							value="<?=$this->poliza_detalle->acreedor_prendario?>"></input></td>
+						<td>Otros:</td>
+						<td><input id="otros_automotor" name="otros"
+							value="<?=$this->poliza_detalle->otros?>"></input>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+			<hr>
+			<h3 id="valores_seguro_automotor_show">Valores del seguro</h3>
+			<div id="valores_seguro_automotor">
+				<table>
+					<tr>
+						<td>Moneda:</td>
+						<td><select name="moneda_id">
+						<? foreach($this->monedas as $row ):?>
+						<?if($this->poliza_valores->moneda_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><input type="text" name="monto_asegurado" id="monto_asegurado"
+							value="<?=$this->escape($this->poliza_valores->monto_asegurado)?>" />
+						</td>
+					</tr>
+					<tr id="forma_pago">
+						<td>Forma de Pago:</td>
+						<td><select name="forma_pago_id" id="forma_pago_id">
+						<? foreach($this->forma_pagos as $row ):?>
+						<?if($this->detalle_pago->forma_pago_id==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					
+					
+					<tr id="datos_tarjeta_show">
+						<td>Tipo:</td>
+						<td><select>
+								<option>VISA</option>
+								<option>MASTERCARD</option>
+								<option>AMERICAN EXPRESS</option>
+								<option>GUILES CARD PREMIUM</option>
+						</select>
+						</td>
+						<td>Numero:</td>
+						<td><input value=""></input></td>
+						<td>Otros:</td>
+						<td><input value=""></input></td>
+					</tr>
+					<tr>
+						<td>Cuotas:</td>
+						<td><select id="cuotas" name="cuotas">
+								<option value="0">Cuotas</option>
+								<? foreach($this->cuotas as $row ):?>
+
+								<?if($this->cantidad_cuotas==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><input id="valor_cuota" name="valor_cuota"
+							value=<?=$this->escape($this->valor_cuotas)?>></td>
+					</tr>
+
+					<tr>
+						<td>Importe total a cobrar:</td>
+						<td><input readonly type="text" name="importe" id="importe"
+							value=<?=$this->importe?>></input>
+						</td>
+					</tr>
+
+					<!--  tr>
+						<td>Premio Asegurado:</td>
+						<td><input type="text" name="premio_asegurado"
+							value="<?php //$this->escape($this->poliza_valores->premio_asegurado)?>" /></td>
+					</tr>
+					<tr>
+						<td>Plus:</td>
+						<td><input type="text" name="plus"
+							value="<?php //$this->escape($this->poliza_valores->plus)?>" /></td>
+					</tr>-->
+				</table>
+			</div>
+			<hr>
+			<h3 id="observaciones_seguro_automotor_show">Observaciones</h3>
+			<div id="observaciones_seguro_automotor">
+				<table>
+
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea name="observaciones_asegurado">
+						<?=$this->escape($this->solicitud->observaciones_asegurado)?>
+						</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea name="observaciones_compania">
+						<?=$this->escape($this->solicitud->observaciones_compania)?>
+						</textarea>
+						</td>
+					</tr>
+				</table>
+
+
+			</div>
+
+
+			<hr>
+			<!-- Mejorar esto!!! jajaa -->
+			<?if(empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_automotor"
+				id="save_solicitud_automotor" value="Solicitar"></input>
+
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_automotor"
+				id="save_solicitud_automotor" value="Guardar Cambios"></input>
+				<?
+				$codigo_estado = Domain_EstadoPoliza::getCodigoById($this->solicitud->estado_id);
+
+				switch ($codigo_estado) {
+					case 'SOLICITUD_PENDIENTE':
+						if(!$this->isAgente):
+						?>
+			<input type='submit' name='aprobar_solicitud_automotor'
+				id='aprobar_solicitud_automotor' value='Aprobar Solicitud'
+				onClick="return false" /> 
+				
+				<input type='submit'
+				name='anular_solicitud_automotor' id='anular_solicitud_automotor'
+				value='Anular Solicitud' onClick="return false" />
+
+			<input type='submit' name='confirmar_solicitud_automotor'
+				id='confirmar_solicitud_automotor' value='Aprobar Solicitud y Crear Poliza'
+				onClick="return false"> </input> 
+			
+				<?endif;
+				break;
+				case 'SOLICITUD_CONFIRMADA':
+				if(!$this->isAgente):
+				?>
+			<input type='submit' name='confirmar_solicitud_automotor'
+				id='confirmar_solicitud_automotor' value='Crear Poliza'
+				onClick="return false"> </input> 
+				
+				<input type='submit'
+				name='anular_solicitud_automotor' id='anular_solicitud_automotor'
+				value='Anular Solicitud' onClick="return false" />
+
+				<?endif;
+				break;
+			default:
+
+				break;
+				}?>
+
+
+				<?endif;?>
+			
+				
+			<input type="button" name="Cancel" onclick="" value="Cancelar" />
+		</form>
+		<hr>
+		<FORM action='./poliza/solicitud/file-upload' method=post
+			enctype='multipart/form-data' target=hidden_upload>
+			<DIV>
+				Adjuntos:<input type="file" name="upload_scn" class="file_upload">
+			</DIV>
+			<INPUT type="submit" name="submit" value="Subir Archivo" />
+			<IFRAME id=hidden_upload name=hidden_upload src=''
+				onLoad='uploadDone("hidden_upload")'
+				style='width: 0; height: 0; border: 0px solid #fff'></IFRAME>
+		</FORM>
+
+	</fieldset>
+</div>
+
+<form id="upload" action="./poliza/solicitud/upload" method="POST" enctype="multipart/form-data">
+
+<fieldset>
+<legend>Subir archivo</legend>
+
+<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+<div>
+        <label for="fileselect">Imagenes:</label>
+        <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+</div>
+<div id="submitbutton">
+        <button type="submit" value="UPLOAD">Upload Files</button>
+</div>
+</fieldset>
+<input type="submit" value="aceptar"/>
+</form>
+
+<div id="progress"></div>
+
+<div id="messages">
+<p>Status Messages</p>
+</div>
+<script type="text/javascript">
+(function() {
+
+	// getElementById
+	function $id(id) {
+		return document.getElementById(id);
+	}
+
+
+	// output information
+	function Output(msg) {
+		var m = $id("messages");
+		m.innerHTML = msg + m.innerHTML;
+	}
+
+
+	// file drag hover
+	function FileDragHover(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		e.target.className = (e.type == "dragover" ? "hover" : "");
+	}
+
+
+	// file selection
+	function FileSelectHandler(e) {
+
+		// cancel event and hover styling
+		FileDragHover(e);
+
+		// fetch FileList object
+		var files = e.target.files || e.dataTransfer.files;
+
+		// process all File objects
+		for (var i = 0, f; f = files[i]; i++) {
+			ParseFile(f);
+			UploadFile(f);
+		}
+
+	}
+
+
+	// output file information
+	function ParseFile(file) {
+
+		Output(
+			"<p>File information: <strong>" + file.name +
+			"</strong> type: <strong>" + file.type +
+			"</strong> size: <strong>" + file.size +
+			"</strong> bytes</p>"
+		);
+
+		// display an image
+		if (file.type.indexOf("image") == 0) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				Output(
+					"<p><strong>" + file.name + ":</strong><br />" +
+					'<img src="' + e.target.result + '" /></p>'
+				);
+			}
+			reader.readAsDataURL(file);
+		}
+
+		// display text
+		if (file.type.indexOf("text") == 0) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				Output(
+					"<p><strong>" + file.name + ":</strong></p><pre>" +
+					e.target.result.replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+					"</pre>"
+				);
+			}
+			reader.readAsText(file);
+		}
+
+	}
+
+
+	// upload JPEG files
+	function UploadFile(file) {
+
+		// following line is not necessary: prevents running on SitePoint servers
+		if (location.host.indexOf("sitepointstatic") >= 0) return
+
+		var xhr = new XMLHttpRequest();
+		if (xhr.upload && file.type == "image/jpeg" && file.size <= $id("MAX_FILE_SIZE").value) {
+
+			// create progress bar
+			var o = $id("progress");
+			var progress = o.appendChild(document.createElement("p"));
+			progress.appendChild(document.createTextNode("upload " + file.name));
+
+
+			// progress bar
+			xhr.upload.addEventListener("progress", function(e) {
+				var pc = parseInt(100 - (e.loaded / e.total * 100));
+				progress.style.backgroundPosition = pc + "% 0";
+			}, false);
+
+			// file received/failed
+			xhr.onreadystatechange = function(e) {
+				if (xhr.readyState == 4) {
+					progress.className = (xhr.status == 200 ? "success" : "failure");
+				}
+			};
+
+			// start upload
+			xhr.open("POST", $id("upload").action, true);
+			xhr.setRequestHeader("X_FILENAME", file.name);
+			xhr.send(file);
+
+		}
+
+	}
+
+
+	// initialize
+	function Init() {
+
+		var fileselect = $id("fileselect"),
+			filedrag = $id("filedrag"),
+			submitbutton = $id("submitbutton");
+
+		// file select
+		fileselect.addEventListener("change", FileSelectHandler, false);
+
+		// is XHR2 available?
+		var xhr = new XMLHttpRequest();
+		if (xhr.upload) {
+
+			// file drop
+			filedrag.addEventListener("dragover", FileDragHover, false);
+			filedrag.addEventListener("dragleave", FileDragHover, false);
+			filedrag.addEventListener("drop", FileSelectHandler, false);
+			filedrag.style.display = "block";
+
+			// remove submit button
+			submitbutton.style.display = "none";
+		}
+
+	}
+
+	// call initialization file
+	if (window.File && window.FileList && window.FileReader) {
+		Init();
+	}
+
+
+})();
+
+</script>
+
+
+
+</script>

@@ -1,0 +1,489 @@
+<script type="text/javascript">
+
+function downloadFile(url){
+
+    $.ajax({url: url,success:function(result){
+        
+      }});
+
+}
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+function loadPageSolicitud(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-solicitud';
+	temp_url = './poliza/solicitud/alta-solicitud';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+		
+function loadPageSolicitudAutomotores(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-automotores';
+	temp_url = './poliza/solicitud/alta-automotores';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+function loadPageSolicitudAduaneros(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-aduaneros';
+	temp_url = './poliza/solicitud/alta-aduaneros';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+
+
+function loadPageSolicitudTransporteMercaderia(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-transporte-mercaderia';
+	temp_url = './poliza/solicitud/alta-transporte-mercaderia';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+
+
+function loadPageSolicitudConstruccion(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-construccion';
+	temp_url = './poliza/solicitud/alta-construccion';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+
+function loadPageSolicitudAlquiler(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-alquiler';
+	temp_url = './poliza/solicitud/alta-alquiler';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+function loadPageSolicitudResponsabilidadCivil(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-responsabilidad-civil';
+	temp_url = './poliza/solicitud/alta-responsabilidad-civil';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+	}
+
+function loadPageSolicitudAccidentesPersonales(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-accidentes-personales';
+	temp_url = './poliza/solicitud/alta-accidentes-personales';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+	}
+
+
+function loadPageSolicitudIgj(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-igj';
+	temp_url = './poliza/solicitud/alta-igj';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+
+
+
+
+function loadTabPage(url, title,tipo){
+	var existe=false;
+//switch
+if(tipo == "accidentes_personales"){
+	tab_url = './poliza/solicitud/alta-accidentes-personales';
+	temp_url = './poliza/solicitud/alta-accidentes-personales';
+}
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+
+
+function process(s){
+
+
+	var url = $(s).attr('url')
+
+	    $.ajax({url: url,
+	    	//data:{
+	          //  buscar:f.buscar.value
+	            //,id: f.id.value
+	           // }
+		    success:function(result){
+	        console.debug(result);
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+	}
+function viewPolizass(f){
+	var url = $(f).attr('url');
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	
+}
+
+function viewPoliza(url, title){
+	var existe=false;
+	tab_url = url;
+		
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+		   var href = $(this).attr('tab_url');
+				   if (href==url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				
+			return false;  	
+}
+function listSolicitud(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+$(document).ready(function() 
+	    { 
+	        $("#solicitud_list").tablesorter();
+	   
+	    } 
+	); 
+
+</script>
+
+
+
+<form action="./poliza/solicitud/list"
+	onSubmit="return listSolicitud(this)">
+
+	<table id="buscar_solicitud">
+		<tr>
+			<td>Buscar Solicitud:</td>
+			<td><input type="text" name="criterio" /></td>
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+
+</form>
+<!--  h4 style="color: red">Nota: Confirmar que campos se muestran en el
+	listado inicial de la solicitud. Tienen que ser genericos, luego se adapta para cada uno.</h4>
+	Fecha pedido / Agente / Nº Solicitud / Tomador 
+	/ Sección / Tipo de Cobertura / Moneda / Suma asegurada 
+	-->
+<table id="solicitud_list" class="ui-widget">
+	<thead class="ui-widget-header">
+		<tr>
+			<th>Fecha Pedido</th>
+			<th>Agente</th>
+			<th>Numero Solicitud</th>
+			<th>Tomador</th>
+			<th>Secci&oacute;n</th>
+			<th>Tipo de Cobertura</th>
+			<th>Moneda</th>
+			<th>Suma Asegurada</th>
+			<th>Estado</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?foreach ($this->rows as $solicitud):?>
+	<?
+	//Esto lo puedo hacer con metodos estaticos
+	//Ya hay un metodo para traer el modelo asociado a la poliza, MODIFICARLO
+	$asegurado = new Domain_Asegurado($solicitud['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$o_poliza_valores = new Model_PolizaValores();
+	$m_poliza_valores = $o_poliza_valores->getTable()->find($solicitud['poliza_valores_id']);
+
+	//Busco el tipo de poliza para mostrar el detalle correspondiente
+	$tipo_poliza = Domain_TipoPoliza::getNameById($solicitud['tipo_poliza_id']);
+
+	//Aca podria traer el objeto correspondiente en vez de instanciarlo por separado
+	switch ($tipo_poliza) {
+		case 'AUTOMOTORES':
+			$o_poliza_detalle = new Model_DetalleAutomotor();
+			$m_poliza_detalle = $o_poliza_detalle->getTable()->find($solicitud['poliza_detalle_id']);
+
+			$tipo_cobertura = Domain_Helper::getHelperNameById('tipo_cobertura_automotores', $m_poliza_detalle->tipo_cobertura_id);
+			break;
+
+		case 'ADUANEROS':
+			$o_poliza_detalle = new Model_DetalleAduaneros();
+			$m_poliza_detalle = $o_poliza_detalle->getTable()->find($solicitud['poliza_detalle_id']);
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id, $solicitud['tipo_poliza_id']);
+			
+			break;
+		case 'ACCIDENTES_PERSONALES':
+			$o_poliza_detalle = new Model_DetalleAccidentesPersonales();
+			$m_poliza_detalle = $o_poliza_detalle->getTable()->find($solicitud['poliza_detalle_id']);
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id, $solicitud['tipo_poliza_id']);
+			break;
+			
+			
+	   case 'CONSTRUCCION':
+			$o_poliza_detalle = new Model_DetalleConstruccion();
+			$m_poliza_detalle = $o_poliza_detalle->getTable()->find($solicitud['poliza_detalle_id']);
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id, $solicitud['tipo_poliza_id']);
+			break;
+			
+			
+		default:
+			$tipo_cobertura = null;
+			break;
+	
+	}
+
+	//echo "Esto es el tpo de cobertura:".$tipo_cobertura;
+	
+	//Aca tiene que haber alguna manera de identificiar el tipo de poliza
+	//1. Puede ser por factory y le paso el tipo de poliza que esta en el modelo principal
+	//2. Puedo no mostrar nada aca y no tengo ese problema ( por ahora porque hay que ver la
+	//manera de mostrar el detalle de la poliza y que sea trasnparente el tipo ).
+
+	$m_poliza_valores = $o_poliza_valores->getTable()->find($solicitud['poliza_valores_id']);
+
+
+	$estado = Domain_EstadoPoliza::getNameById($solicitud['estado_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($solicitud['tipo_poliza_id']);
+
+	/*
+	 * Mostrar:
+	 /Fecha pedido / Agente / Nº Solicitud / Tomador
+	 / Sección / Tipo de Cobertura / Moneda / Suma asegurada
+	 */
+
+	?>
+		<tr>
+			<td><?=$solicitud['fecha_pedido']?></td>
+			<td><?=$agente->nombre?></td>
+			<td><?=$solicitud['numero_solicitud']?></td>
+			<td><?=$m_asegurado->nombre?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=$tipo_cobertura?></td>
+			<td><?=$moneda?></td>
+			<td><?=$m_poliza_valores->monto_asegurado?></td>
+			<td><?=$estado?></td>
+			<?php //Esto no tiene que estar hardcodeado?>
+			<?php switch ($solicitud['tipo_poliza_id']){
+				case 1:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitud('./poliza/solicitud/alta-solicitud/solicitud_id/<?=$solicitud['poliza_id']?>','Solicitud')">
+				</input>
+			</td>
+			<?break;
+case 2:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudAduaneros('./poliza/solicitud/alta-aduaneros/solicitud_id/<?=$solicitud['poliza_id']?>','Aduaneros')">
+				</input>
+			</td>
+			<?break;
+case 3:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudAccidentesPersonales('./poliza/solicitud/alta-accidentes-personales/solicitud_id/<?=$solicitud['poliza_id']?>','Accidentes Personales','Accidentes Personales')">
+				</input>	
+				
+			</td>
+			<?break;
+
+case 4:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudConstruccion('./poliza/solicitud/alta-construccion/solicitud_id/<?=$solicitud['poliza_id']?>','Construccion','Construccion')">
+				</input>
+			</td>
+			<?break;
+
+case 5:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudAlquiler('./poliza/solicitud/alta-alquiler/solicitud_id/<?=$solicitud['poliza_id']?>','Alquiler','Alquiler')">
+				</input>
+			</td>
+			<?break;
+
+case 6:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudResponsabilidadCivil('./poliza/solicitud/alta-responsabilidad-civil/solicitud_id/<?=$solicitud['poliza_id']?>','Responsabilidad Civil','Responsabilidad Civil')">
+				</input>
+			</td>
+			<?break;?>
+
+			<?case 7:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudAutomotores('./poliza/solicitud/alta-automotores/solicitud_id/<?=$solicitud['poliza_id']?>','Automotores')">
+				</input>
+			</td>
+			<?break;
+case 8:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudTransporteMercaderia('./poliza/solicitud/alta-transporte-mercaderia/solicitud_id/<?=$solicitud['poliza_id']?>','Transporte Mercaderia','Transporte Mercaderia')">
+				</input>
+			</td>
+			<?break;
+case 9:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudIgj('./poliza/solicitud/alta-igj/solicitud_id/<?=$solicitud['poliza_id']?>','IGJ','IGJ')">
+				</input>
+			</td>
+			<?break;?>
+
+
+<?case 7:?>
+			<td><input type='button' value='Ver'
+				onClick="return loadPageSolicitudAutomotores('./poliza/solicitud/alta-automotores/solicitud_id/<?=$solicitud['poliza_id']?>','Automotores')">
+				</input>
+			</td>
+			<?break;
+			
+default:
+	break;
+			}?>
+			<td><a href="#"
+				onClick="return downloadFile('./poliza/solicitud/file-download/')">File</a>
+			</td>
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+
+		<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>
+

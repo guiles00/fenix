@@ -1,0 +1,146 @@
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+function loadPageSolicitud(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-automotores';
+	temp_url = './poliza/solicitud/alta-automotores';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+function viewPoliza(url, title){
+	var existe=false;
+	tab_url = url;
+		
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+		   var href = $(this).attr('tab_url');
+				   if (href==url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				
+			return false;  	
+}
+function listDeuda(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function loadPagePoliza(url, title){
+	var existe=false;
+	tab_url = './operaciones/deuda-asegurado/deuda-asegurado';
+	temp_url = './operaciones/deuda-asegurado/deuda-asegurado';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala :)	');
+				
+			return false;  	
+	
+}
+
+
+function loadPagoPoliza(url){
+	//var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	/*data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }*/
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+
+</script>
+
+
+<div id="buscar_asegurado">
+<form action="./operaciones/deuda-asegurado/list" onSubmit="return listDeuda(this)">
+
+	<table id="buscar_asegurado">
+		<tr>
+			<td><b>Buscar Asegurado:</b></td>
+			<td><input type="text" name="criterio" /></td>
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+</form>
+<hr>
+</div>
+<?if($this->buscar):?>
+<table>
+  <tr>
+    <th>asegurado_id</th>
+    <th>Nombre</th>
+    <th></th>
+  </tr>
+
+<?foreach ($this->rows as $asegurado):?> 
+  <tr>
+    <td><?=$asegurado['asegurado_id'] ?></td>
+    <td><?=$asegurado['nombre']?></td>
+    <td><input type="button" value="Ver Polizas" onClick="return loadPagoPoliza('./operaciones/deuda-asegurado/deuda-asegurado/asegurado_id/<?=$asegurado['asegurado_id'] ?>')"> </input> </td>
+  </tr>
+	<?php //onClick="return loadPagePoliza('./operaciones/deuda-asegurado/deuda-asegurado/asegurado_id/<?=$asegurado['asegurado_id'] ?><?//','Deuda-Asegurado')?>
+<?endforeach; ?>
+</table>
+<?endif;?>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

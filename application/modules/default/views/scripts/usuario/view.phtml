@@ -1,0 +1,93 @@
+<script type="text/javascript">
+/*function listar(){
+	
+	url="./default/usuario/list";
+			$.ajax({url: url,
+		        success:function(result){
+		        $('#content').html(result);
+		      }});
+		   
+		    return false;
+	}
+/*
+function editForm(f){
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{id: f.id.value 
+            ,tipo_usuario_id: f.tipo_usuario_id.value
+            ,usuario_tipo_id: f.usuario_tipo_id.value
+            ,username: f.username.value
+            ,password: f.password.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+   
+    return false;
+}
+*/
+
+function editUsuario(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+    
+	$.ajax({url: url,
+        data:{id: f.id.value 
+            ,tipo_usuario_id: f.tipo_usuario_id.value
+            ,usuario_tipo_id: f.usuario_tipo_id.value
+            ,username: f.username.value
+            ,password: f.password.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+
+function usuario(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./default/usuario/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+
+</script>
+<form action="./default/usuario/edit" onSubmit="return editUsuario(this)">
+<table>
+<tr><td>usuario_id</td><td><input type="text" name="id" value="<?=$this->row['usuario_id']?>"></input></td></tr>
+<tr><td>tipo_usuario_id</td><td><input type="text" name="tipo_usuario_id" value="<?=$this->row['tipo_usuario_id']?>"></input></td></tr>
+<tr><td>usuario_tipo_id</td><td><input type="text" name="usuario_tipo_id" value="<?=$this->row['usuario_tipo_id']?>"></input></td></tr>
+<tr><td>username</td><td><input type="text" name="username" value="<?=$this->row['username']?>"></input></td></tr>
+<tr><td>password</td><td><input type="text" name="password" value="<?=$this->row['password']?>"></input></td></tr>
+<tr><td></td><td><input type="submit" value="guardar"></input></td><td><input type="button" name="Cancel" onclick="return usuario()" value="cancel" /></input></td></tr>
+</table>	
+
+</form>

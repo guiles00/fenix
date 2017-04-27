@@ -1,0 +1,360 @@
+
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.view-poliza-automotores.js');?>
+
+<!-- 
+//Si es agente no puede modificar fechas y siempre va su nombre como agente
+//Nº de Poliza / Premio Compañia / Prima /. Y además tendría que visualizar como se cargaron los valores:
+//importe = (cantidad de cuotas x valor cuotas) = Plus + Premio asegurado
+
+		- Nº de poliza
+		 * - Fecha Vigencia
+		 * - Prima
+		 * - Premio Compañia
+		 * - Premio
+		 * - Plus
+
+-->
+<div id="content">
+
+	<fieldset>
+		<legend>Poliza Automotores</legend>
+
+		<!--  form action="./entidad/compania/add"  onSubmit="return editForm(this)">-->
+		<form id="poliza_poliza" name="poliza_poliza"
+			action="./poliza/poliza/view-poliza-automotores"
+			onSubmit="return savePolizaAutomotores(this)">
+			<input type="hidden" name="save" value=1> <input type="hidden"
+				name="poliza_id"
+				value="<?=$this->escape($this->poliza->poliza_id)?>" />
+			<h3 id="datos_poliza_poliza_show">Datos de la Poliza</h3>
+			<div id="datos_poliza_poliza">
+				<table>
+					<tr>
+						<td>Número de Solicitud:</td>
+						<td><?=$this->escape($this->poliza->numero_solicitud)?></td>
+					</tr>
+					<tr>
+						<td>Número de poliza:</td>
+						<td><input type="text" name="numero_poliza"
+							value="<?=$this->escape($this->poliza->numero_poliza)?>" /></td>
+							<?if($this->renovada):?>
+<td>Renueva Poliza Nro:</td>
+<td>
+	<?=$this->poliza_renovada_numero_poliza?>
+</td>
+<?endif;?>
+					</tr>
+
+					<!-- Autocomplente para Asegurados -->
+					<tr>
+						<td>Asegurado:</td>
+						<td><?=$this->escape($this->asegurado)?></td>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+
+						<td><?=$this->escape($this->agente)?>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><?=$this->compania?>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><?=$this->productor?>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><?=$this->cobrador?>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_automotor_poliza_show">Datos del Seguro</h3>
+			<div id="datos_seguro_automotor_poliza">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<td><?if($this->isAgente):?> <input readonly type="text"
+							id="fecha_pedido_agente_poliza" name="fecha_pedido"
+							value="<?=$this->escape($this->poliza->fecha_pedido)?>" />
+						</td>
+						<?else:?>
+						<input readonly type="text" id="fecha_pedido_poliza"
+							name="fecha_pedido"
+							value="<?=$this->escape($this->poliza->fecha_pedido)?>" />
+						</td>
+						<?endif;?>
+					</tr>
+
+					<!--  tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>-->
+
+					<tr>
+						<td>Fecha Vigencia:</td>
+						<?if($this->isAgente): ?>
+						<td><input readonly type="text" id="fecha_vigencia_agente_poliza"
+							name="fecha_vigencia"
+							value="<?=$this->escape($this->poliza->fecha_vigencia)?>" />
+						</td>
+						<?else:?>
+						<td><input readonly type="text" id="fecha_vigencia_poliza"
+							name="fecha_vigencia"
+							value="<?=$this->escape($this->poliza->fecha_vigencia)?>" />
+						</td>
+						<?endif; ?>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><?=$this->periodo?>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+			<hr>
+			<h3 id="detalle_riesgo_automotor_poliza_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_automotor_poliza">
+				<table>
+
+					<tr>
+						<td>Tipo de Vehiculo:</td>
+						<td><?=$this->tipo_vehiculo_automotor?>
+						</td>
+					</tr>
+					<tr>
+						<td>Tipo de Cobertura:</td>
+						<td><?=$this->tipo_cobertura_automotor?> </select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><b>Datos del vehículo</b></td>
+					</tr>
+					<tr>
+						<td>Año:</td>
+						<td><?=$this->escape($this->poliza_detalle->anio)?>
+						</td>
+						<td>Marca:</td>
+						<td><?=$this->escape($this->poliza_detalle->marca)?>
+						</td>
+					</tr>
+					<tr>
+						<td>Tipo:</td>
+						<td><?=$this->escape($this->poliza_detalle->tipo)?>
+						</td>
+						<td>Modelo:</td>
+						<td><?=$this->escape($this->poliza_detalle->modelo)?>
+						</td>
+					</tr>
+					<tr>
+						<td>Color:</td>
+						<td><?=$this->escape($this->poliza_detalle->color)?>
+						</td>
+						<td>Nro Patente:</td>
+						<td><?=$this->escape($this->poliza_detalle->patente)?>
+						</td>
+						<td>Cilindrada:</td>
+						<td><?=$this->escape($this->poliza_detalle->cilindrada_id)?>
+						</td>
+					</tr>
+					<tr>
+						<td>Serial Chasis:</td>
+						<td><?=$this->escape($this->poliza_detalle->serial_carroceria)?>
+						</td>
+						<td>Serial Automotor:</td>
+						<td><?=$this->escape($this->poliza_detalle->serial_motor)?>
+						</td>
+						<td>Accesorios:</td>
+						<td><?=$this->escape($this->poliza_detalle->accesorios)?>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Uso Vehiculo:</td>
+						<td><?=$this->escape($this->poliza_detalle->uso_vehiculo)?>
+						</td>
+						<td>Capacidad:</td>
+						<td><?=$this->capacidad_automotor?>
+						</td>
+						<td>Pasajeros:</td>
+						<td><?=$this->pasajeros_automotor?></td>
+					</tr>
+					<tr>
+						<td>Flota Nro Vehiculos:</td>
+						<td><?=$this->flota_automotor?></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><b>Titulo de Propiedad</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Fecha Titulo:</td>
+						<td><?=$this->poliza_detalle->fecha_titulo?></td>
+						<td>Titular:</td>
+						<td><?=$this->poliza_detalle->titular?></td>
+						<td>Nro Certificado:</td>
+						<td><?=$this->poliza_detalle->numero_certificado?></td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><b>Otros Datos</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Estado Vehiculo:</td>
+						<td><?=$this->estado_vehiculo_automotor?>
+						</td>
+						<td>Estado Luces:</td>
+						<td><?=$this->estado_luces_automotor?>
+						</td>
+
+						<td>Estado Motor:</td>
+						<td><?=$this->estado_motor_automotor?></td>
+					</tr>
+					<tr>
+						<td>Estado Carroceria:</td>
+						<td><?=$this->estado_carroceria_automotor?></td>
+
+						<td>Estado de Cubiertas:</td>
+						<td><?=$this->estado_cubiertas_automotor?>
+						</td>
+
+
+						<td>Tipo Combustion:</td>
+						<td><?=$this->tipo_combustion_automotor?></td>
+						<td>Sistema de Seguridad:</td>
+						<td><?=$this->sistema_seguridad_automotor?>
+						</td>
+					</tr>
+					<tr>
+						<td>Acreedor Prendario:</td>
+						<td><?=$this->poliza_detalle->acreedor_prendario?></td>
+						<td>Otros:</td>
+						<td><?=$this->poliza_detalle->otros?></input>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+
+			<hr>
+			<h3 id="valores_seguro_automotor_poliza_show">Valores del seguro</h3>
+			<div id="valores_seguro_automotor_poliza">
+				<table>
+					<tr>
+						<td>Forma de Pago:</td>
+					</tr>
+					<tr id="forma_pago">
+						<td>Pago:</td>
+						<td><?=$this->forma_pago?>
+						</td>
+					</tr>
+					<tr id="cuotas">
+						<td>Cuotas:</td>
+						<td><?=$this->cantidad_cuotas?>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><?=$this->valor_cuotas ?></td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><?=$this->escape($this->poliza_valores->monto_asegurado)?>
+						</td>
+					</tr>
+					<tr>
+						<td>Moneda:</td>
+						<td><?=$this->moneda?>
+						</td>
+					</tr>
+					<tr>
+						<td>Iva:</td>
+						<td><input type="text" name="iva"
+							value="<?=$this->escape($this->poliza_valores->iva)?>" /></td>
+					</tr>
+					<tr>
+						<td>Prima:</td>
+						<td><input type="text" name="prima_comision"
+							value="<?=$this->escape($this->poliza_valores->prima_comision)?>" />
+						</td>
+					</tr>
+					
+
+					<tr>
+						<td>Premio Compania:</td>
+						<td><input type="text" name="premio_compania" id="premio_compania"
+							value="<?=$this->escape($this->poliza_valores->premio_compania)?>" />
+						</td>
+
+					</tr>
+
+					<tr>
+						<td>Premio Asegurado:</td>
+						<td><input type="text" name="premio_asegurado"
+							id="premio_asegurado"
+							value="<?=$this->escape($this->poliza_valores->premio_asegurado)?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Plus:</td>
+						<td><input type="text" name="plus" id="plus"
+							value="<?=$this->escape($this->poliza_valores->plus)?>" /></td>
+					</tr>
+					<tr>
+						<td>Importe:</td>
+						<td><input readonly type="text" id="importe"
+							value=<?=$this->importe?> /></td>
+					</tr>
+					</table>
+			</div>
+			<hr>
+			<h3 id="observaciones_seguro_automotor_show">Observaciones</h3>
+			<div id="observaciones_seguro_automotor">
+				<table>
+
+					<tr>
+						<td>Asegurado:</td>
+						<td>
+						<?=$this->escape($this->poliza->observaciones_asegurado)?>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td>
+						<?=$this->escape($this->poliza->observaciones_compania)?>
+						</td>
+					</tr>
+				</table>
+
+
+			</div>
+
+
+			<hr>
+			<!-- `moneda_id`, `monto_asegurado`, `iva`, `prima_comision`, `prima_tarifa`, 
+		 * `premio_compania`, `premio_asegurado`, `plus` -->
+
+			<hr>
+
+
+			<!--  chequear los estados de la poliza -->
+			<input type="submit" name="save_poliza" value="Guardar Cambios"></input>
+
+			<input type="button" name="Cancel" onclick="" value="Cancelar" />
+		</form>
+	</fieldset>
+</div>

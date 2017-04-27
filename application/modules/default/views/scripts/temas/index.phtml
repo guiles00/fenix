@@ -1,0 +1,134 @@
+<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon','href' => '/images/favicon.ico'),'PREPEND')
+/*
+ *  Todo lo que esta en /css/ *.css lo uno para hacer un solo request
+ */
+//->appendStylesheet('/min/b=css&f=layout.css,html-elements.css,ui.jqgrid.css,sexy-combo.css,jquery.autocomplete.css,redmond/jquery-ui-1.7.1.custom.css,sexy/sexy.css,jquery.contextMenu.css')
+->appendStylesheet('../../css/layout.css')
+->appendStylesheet('../../css/html-elements.css')
+->appendStylesheet("../../css/ui.jqgrid.css")
+->appendStylesheet("../../css/sexy-combo.css")
+->appendStylesheet("../../css/jquery.autocomplete.css")
+->appendStylesheet('../../css/redmond/jquery-ui-1.7.1.custom.css','','',array('id' => 'linc'))
+->appendStylesheet("../../css/sexy/sexy.css")
+->appendStylesheet("../../css/validationEngine.jquery.css")
+->appendStylesheet("../../css/template.css")
+->appendStylesheet("../../css/jquery.contextMenu.css")
+->appendStylesheet("../../css/jquery.jgrowl.css");
+?>
+<script>
+		window.estoy_en_pantalla_login=false;
+	</script>
+<?php echo $this->headScript()
+/*
+ *  Todo lo que esta en /js/ *.js lo uno hacer un solo request
+ */
+//->prependFile('/min/b=js&f=jquery/jquery.js,jquery/jquery.timer.js,jquery/jquery.autocomplete.js,jquery/jquery.bgiframe.min.js,jquery/jquery.sexy-combo.js,jquery/jquery.layout.js,grid.locale-sp.js,jquery/jquery-ui-1.7.2.custom.min.js,jquery/jquery.cascade.js,jquery/jquery.cascade.ext.js,jquery/jquery.jqGrid.min.js,jquery/jquery.validate.js,jquery/jquery.blockUI.js,activateUI.js,funciones.adminPersonas.js,jquery/jquery.cookie.js,jquery/jquery.contextMenu.js')
+->appendFile('../../js/jquery/jquery.js')
+->appendFile('../../js/jquery/jquery.timer.js')
+->appendFile('../../js/jquery/jquery.autocomplete.js')
+->appendFile('../../js/jquery/jquery.bgiframe.min.js')
+->appendFile('../../js/jquery/jquery.sexy-combo.js')
+->appendFile('../../js/jquery/jquery.layout.js')
+->appendFile('../../js/grid.locale-sp.js')
+->appendFile('../../js/jquery/jquery-ui-1.7.2.custom.min.js')
+->appendFile('../../js/jquery/jquery.cascade.js')
+->appendFile('../../js/jquery/jquery.cascade.ext.js')
+->appendFile('../../js/jquery/jquery.jqGrid.min.js')
+->appendFile('../../js/jquery/jquery.validate.js')
+//blockUI is t.he evil :P LO USAREMOS SOLO PARA BLOQUEAR DE A ELEMENTOS O TABS!
+->appendFile('../../js/jquery/jquery.blockUI.js')
+->appendFile('../../js/jquery/jquery.jgrowl.js')
+->appendFile('../../js/funciones.adminPersonas.js')
+->appendFile('../../js/jquery/jquery.cookie.js')
+->appendFile('../../js/jquery/jquery.contextMenu.js')
+//ESTOY QUITANDO EL AJILE
+//->appendFile('/js/com.iskitz.ajile.js?mvcoff')
+->appendFile('/js/funciones.adminDomicilioPersonas.js')
+->appendFile('/js/funciones.adminPersonas.js')
+->appendFile('/js/funciones.adminExpedientes.js')
+->appendFile('/js/ckeditor/ckeditor.js')
+->appendFile('/js/ckeditor/adapters/jquery.js')
+->appendFile('/js/jquery/jquery.validationEngine-en.js')
+->appendFile('/js/jquery/jquery.validationEngine.js')
+;
+?>
+
+
+<script type="text/javascript">
+function listar(){
+	
+url="../../entidad/entidad/list";
+		$.ajax({url: url,
+	        success:function(result){
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+}
+
+function editForm(f){
+
+    //console.debug(f.nombre.value);
+    //console.debug(f.apellido.value);
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{guardar:f.guardar.value,entidad_id:f.entidad_id.value ,nombre: f.nombre.value,apellido: f.apellido.value}
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+
+$(document).ready(function () {
+
+	function formatItem(row) {
+		console.debug(row);
+		return row[0]+' '+row[1] ;//+ "(<strong>id: " + row[1] + "</strong>)";
+	}
+	function formatResult(row) {
+		console.debug(row);
+		return row[0]+' '+row[1];
+		//return row[0].replace(/(<.+?>)/gi, '');
+	}
+	
+	$("#compania").autocomplete('./listar-companias', {
+		width: 300,
+		multiple: true,
+		matchContains: true,
+		formatItem: formatItem,
+		formatResult: formatResult
+	});
+
+	/*
+	$('input#suggest').result(function(event, data, formatted) {
+ $("#result").html( !data ? "No match!" : "Selected: " + formatted);
+});
+	
+	*/
+$("#compania").result(function(event, data, formatted) {
+		var hidden = $(this).parent().next().find(">:input");
+		hidden.val( (hidden.val() ? hidden.val() + ";" : hidden.val()) + data[1]);
+		console.debug(data[1]);
+		$("#compania_id").val(data[1]);
+	});
+});
+
+
+</script>
+
+<form action="./add"  method="POST">
+<input type="hidden" name="guardar" value=1></input>
+<input type="text" name="entidad_id" value=""></input>
+
+<label>Companias:</label>
+<input id='compania'name="compania" value="" ></input>
+<input type="hidden" id='compania_id'name="compania_id" value="" ></input>
+
+
+<input type="text" name="nombre" value=""></input>
+<input type="text" name="apellido" value=""></input>
+<input type="submit" value="guardar"></input>
+<input type="button" name="Cancel" onclick="return listar()" value="cancel" /></input>
+</form>

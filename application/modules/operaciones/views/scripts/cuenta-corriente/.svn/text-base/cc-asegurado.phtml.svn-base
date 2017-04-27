@@ -1,0 +1,113 @@
+<script type="text/javascript">
+    
+function viewDetalleMovimiento(url){
+
+  
+		var tabs_sel = $('#tabs').tabs();
+        var idx = tabs_sel.tabs('option', 'selected');
+    
+        //Trae el tab correspondiente
+        var tab = $('#tabs ul li a')[idx]; 
+        //console.debug($('#tabs ul li a'));
+        var href = $(tab).attr('href') ;
+       // var url = $(g).attr('href')
+    
+            $.ajax({url: url,success:function(result){
+                $(href).html(result);
+              }});
+  
+            return false;
+
+
+}
+
+function onClickAtras(url){
+
+	var tabs_sel = $('#tabs').tabs();
+    var idx = tabs_sel.tabs('option', 'selected');
+
+    //Trae el tab correspondiente
+    var tab = $('#tabs ul li a')[idx]; 
+    //console.debug($('#tabs ul li a'));
+    var href = $(tab).attr('href') ;
+   // var url = $(g).attr('href')
+
+        $.ajax({url: url,
+            success:function(result){
+            $(href).html(result);
+          }});
+
+        return false;
+
+	
+}
+</script>
+
+<b>Cliente:</b> <?=$this->asegurado?>
+<table>
+  <tr>
+    <th>Moneda</th>
+    <th>Polizas Pago</th>
+    <th>Polizas Debe</th>
+    <th>Movimientos</th>
+    <th>Saldo</th>
+  </tr>
+  <tr>
+    <td>Pesos</td>
+    <td><?=(empty($this->pago_pesos))?'0':$this->pago_pesos?></td>
+    <td><?=(empty($this->debe_pesos))?'0':$this->debe_pesos?></td>
+    <td><?=(empty($this->suma_movimientos_pesos))?'0':$this->suma_movimientos_pesos?></td>
+    <td><?= ( ($this->debe_pesos+$this->pago_pesos) - $this->suma_movimientos_pesos )?></td>
+  </tr>
+  <tr>
+    <td>Dolar</td>
+    <td><?=(empty($this->pago_dolar))?'0':$this->pago_dolar?></td>
+    <td><?=(empty($this->debe_dolar))?'0':$this->debe_dolar?></td>
+    <td><?=(empty($this->suma_movimientos_dolar))?'0':$this->suma_movimientos_dolar?></td>
+    <td><?= ( ($this->debe_dolar+$this->pago_dolar) - $this->suma_movimientos_dolar )?></td>
+  </tr>
+  <tr>
+    <td>Euro</td>
+    <td><?=(empty($this->pago_euro))?'0':$this->pago_euro?></td>
+    <td><?=(empty($this->debe_euro))?'0':$this->debe_euro?></td>
+    <td><?=(empty($this->suma_movimientos_euro))?'0':$this->suma_movimientos_euro?></td>
+    <td><?= (($this->debe_euro+$this->pago_euro) - $this->suma_movimientos_euro )?></td>
+  </tr>
+</table>
+
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+	<tr>
+		<th>Nro. Movimiento</th>	
+		<th>Fecha</th>
+		<th>Moneda</th>
+		<th>Importe</th>
+		<th>Descuento</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody class="ui-widget-content">
+	
+	<?
+foreach ($this->rows as $row):
+$moneda = Domain_Helper::getHelperNameById('moneda', $row['moneda_id']);
+?>
+
+	<tr>
+		<td><?=$row['movimiento_id']?></td>
+		<td><?=$row['fecha_pago']?></td>
+		<td><?=$moneda?></td>
+		<td><?=$row['importe']?></td>
+		<td><?=$row['descuento']?></td>
+		<td><input type="button" value="Ver Detalle" onClick="return viewDetalleMovimiento('./operaciones/cuenta-corriente/detalle-movimiento/movimiento_id/<?=$row['movimiento_id']?>')"> </input> </td>
+			
+	</tr>
+
+	<?endforeach;?>
+</tbody>
+</table>
+<input id="atras_cuenta_corriente" type="button" value="Atras" onClick="return onClickAtras('./operaciones/cuenta-corriente/list')"></input>
+</form>
+
+</div>

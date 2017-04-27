@@ -1,0 +1,92 @@
+<script type="text/javascript">
+
+function listarCompania(){
+	
+	url="./entidad/compania/list";
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+			$.ajax({url: url,
+		        success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		    return false;
+	}
+
+function editCompania(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+    	data:{
+            id: f.id.value
+            ,afip_id: f.afip_id.value 
+            ,nombre: f.nombre.value
+            ,cuit: f.cuit.value
+            ,domicilio: f.domicilio.value
+            ,codigo_postal: f.codigo_postal.value
+            ,provincia: f.provincia.value
+            ,localidad: f.localidad.value
+            ,telefono: f.telefono.value
+            ,email: f.email.value
+           }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+function compania(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		var url="./entidad/compania/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+
+</script>
+
+
+<form action="./entidad/compania/edit"  onSubmit="return editCompania(this)">
+<table>
+<tr><td>compania_id</td><td><input type="text" name="id" value="<?=$this->row['compania_id']?>"></input></td></tr>
+<tr><td>afip_id</td><td><input type="text" name="afip_id" value="<?=$this->row['afip_id']?>"></input></td></tr>
+<tr><td>Nombre</td><td><input type="text" name="nombre" value="<?=$this->row['nombre']?>"></input></td></tr>
+<tr><td>CUIT</td><td><input type="text" name="cuit" value="<?=$this->row['cuit']?>"></input></td></tr>
+<tr><td>Domicilio</td><td><input type="text" name="domicilio" value="<?=$this->row['domicilio']?>"></input></td></tr>
+<tr><td>Codigo Postal</td><td><input type="text" name="codigo_postal" value="<?=$this->row['codigo_postal']?>"></input></td></tr>
+<tr><td>Provincia</td><td><input type="text" name="provincia" value="<?=$this->row['provincia']?>"></input></td></tr>
+<tr><td>Localidad</td><td><input type="text" name="localidad" value="<?=$this->row['localidad']?>"></input></td></tr>
+<tr><td>Telefono</td><td><input type="text" name="telefono" value="<?=$this->row['telefono']?>"></input></td></tr>
+<tr><td>Email</td><td><input type="text" name="email" value="<?=$this->row['email']?>"></input></td></tr>
+
+<tr><td></td><td><input type="submit" value="guardar"></input></td><td><input type="button" name="Cancel" onclick="return listarCompania()" value="cancel" /></input></td></tr>
+</table>
+</form>

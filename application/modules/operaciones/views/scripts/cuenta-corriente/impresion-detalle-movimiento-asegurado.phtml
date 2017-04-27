@@ -1,0 +1,161 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+<div id="datos_pago">
+<? 
+$moneda = Domain_Helper::getHelperNameById('moneda', $this->m_movimiento->moneda_id);
+?>
+<div>
+<table class="ui-widget" >
+	<thead class="ui-widget-header">
+	<tr>
+		<th>Nro. Movimiento</th>	
+		<th>Fecha</th>
+		<th>Moneda</th>
+		<th>Importe Total</th>
+    <th>Descuento</th>
+	</tr>
+</thead>
+<tr>
+<td><?=$this->m_movimiento->movimiento_id?></td>
+<td><?=$this->m_movimiento->fecha_pago?></td>
+<td><?=$moneda?></td>
+<td><?=round($this->m_movimiento->importe,2)?></td>
+<td><?=$this->m_movimiento->descuento?></td>
+</table>
+</div>
+<div>
+<fieldset>
+<legend> Detalle pago</legend>
+<table>
+<tr>
+<td class="ui-widget-header">Importe en Efectivo</td>
+<td></td>
+<td><?=round($this->m_movimiento->importe_efectivo,2)?></td>
+</tr>
+<tr>
+<td class="ui-widget-header">Banco</td>
+<td class="ui-widget-header">Numero</td>
+<td class="ui-widget-header">Importe</td>
+</tr>
+<tr>
+<td><?=$this->datos_cheques[0]['banco']?></td><td><?=$this->datos_cheques[0]['numero']?></td><td><?=$this->datos_cheques[0]['importe']?></td>
+</tr>
+<tr>
+<td><?=$this->datos_cheques[1]['banco']?></td><td><?=$this->datos_cheques[1]['numero']?></td><td><?=$this->datos_cheques[1]['importe']?></td></tr>
+<tr><td><?=$this->datos_cheques[2]['banco']?></td><td><?=$this->datos_cheques[2]['numero']?></td><td><?=$this->datos_cheques[2]['importe']?></td>
+</tr>
+<tr>
+<td><?=$this->datos_cheques[3]['banco']?></td><td><?=$this->datos_cheques[3]['numero']?></td><td><?=$this->datos_cheques[3]['importe']?></td>
+</tr>
+<tr>
+<td><?=$this->datos_cheques[4]['banco']?></td><td><?=$this->datos_cheques[4]['numero']?></td><td><?=$this->datos_cheques[4]['importe']?></td></tr>
+<tr><td><?=$this->datos_cheques[5]['banco']?></td><td><?=$this->datos_cheques[5]['numero']?></td><td><?=$this->datos_cheques[5]['importe']?></td>
+</tr>
+</table>
+</fieldset>
+</div>
+</div>
+
+<table id="poliza_search" class="ui-widget" cellspacing="1" cellpadding="0" border="0" >
+
+	<thead  class="ui-widget-header" >
+		<tr>
+		<tr>
+			<th >Tomador</th>
+			<th>Numero Solicitud</th>	
+			<th>Compania</th>
+			<th>Numero Poliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Secci&oacute;n</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<th>Importe</th>
+			<th>Estado</th>
+			<th>Fecha Baja</th>
+			<th></th>
+		</tr>
+		</tr>
+	</thead>
+	<tbody   class="ui-widget-content" >
+
+<?foreach($this->rows as $poliza):?>
+<? 
+
+   //Esto lo puedo hacer con metodos estaticos
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado = new Domain_Asegurado($poliza['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$compania = new Domain_Compania($poliza['compania_id']);
+	$m_compania = $compania->getModel();
+	$estado = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	$estado_codigo = Domain_EstadoPoliza::getCodigoById($poliza['estado_id']);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($poliza['tipo_poliza_id']);
+	$cantidad_cuotas = (float) Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float) Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+	$operacion = Domain_Helper::getHelperNameById('operacion', $poliza['operacion_id']);
+
+	$m_detalle_poliza = $d_poliza->getModelDetalle();
+?>
+		<tr>
+			<td><?=$m_asegurado->nombre ?></td>
+			<td><?=$poliza['numero_solicitud']?></td>	
+			<td><?=$m_compania->nombre ?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->prima_comision,2)?></td>
+			<td><?=$importe?></td>
+			<td><?=$estado?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+			
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Detalle"/>

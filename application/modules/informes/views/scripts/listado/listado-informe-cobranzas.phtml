@@ -1,0 +1,146 @@
+<!-- Fecha de Pedido
+Tomador
+Nº de Póliza
+Endoso
+Agente
+Riesgo
+Moneda
+Suma Asegurada
+Compañia
+Operación
+Premio Compañia
+Premio
+Plus
+Importe
+Fecha de Pago
+Cobrador
+Importe Cobrado -->
+<script type="text/javascript">
+//Hacer todo en JQuery
+$('#fecha_desde_cobranzas').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+$('#fecha_hasta_cobranzas').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+
+function listInformeCobranzas(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,fecha_desde: f.fecha_desde.value
+            ,fecha_hasta: f.fecha_hasta.value
+            ,productor_id: f.productor_id.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+</script>
+
+
+<div id="buscar_polizas">
+	<form action="./informes/listado/listado-informe-cobranzas"
+		onSubmit="return listInformeCobranzas(this)">
+
+		<table id="buscar_asegurado">
+			<tr>
+				<td><b>Buscar:</b></td>
+				<td><input type="text" name="fecha_desde" id="fecha_desde_cobranzas" /></td>
+				<td><input type="text" name="fecha_hasta" id="fecha_hasta_cobranzas" /></td>
+				<td>Productor:</td>
+				<td><select name="productor_id">
+						<option value="">Seleccione Productor</option>
+						<? foreach($this->productores as $row ):?>
+						<?if($this->solicitud->productor_id==$row['productor_id']):?>
+						<option selected value=<?=$row['productor_id']?>>
+						<?=$row['nombre']?>
+						<?else:?>
+						
+						<option value=<?=$row['productor_id']?>>
+						<?=$row['nombre']?>
+						</option>
+						<?endif; ?>
+						<? endforeach; ?>
+				</select>
+				</td>
+				<td><input type="submit" name="buscar" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+<?if($this->buscar):?>
+
+
+  <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-listado-informe-cobranzas/productor_id/<?=$this->productor_id?>/fecha_desde/<?=$this->fecha_desde?>/fecha_hasta/<?=$this->fecha_hasta?>')">
+Impresi&oacute;n Informe Cobranzas</A>
+
+ <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/xml-listado-informe-cobranzas/productor_id/<?=$this->productor_id?>/fecha_desde/<?=$this->fecha_desde?>/fecha_hasta/<?=$this->fecha_hasta?>')">
+Impresi&oacute;n Libro XML</A>
+
+<table class="ui-widget" id="informe_diario_list"> 
+	<thead class="ui-widget-header">
+		<th>FECHA DE REGISTRACION</th>
+		<th>CONCEPTO DEL IMPORTE REGISTRADO</th>
+		<th>NUMERO DE POLIZA/ENDOSO</th>
+		<th>ENTIDAD ASEGURADORA</th>
+		<th>IMPORTE DEL INGRESO</th>
+		<th>IMPORTE DEL EGRESO</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?foreach ($this->informe_cobranzas as $informe_cobranza):?>
+
+		<tr>
+
+			<td><?=$informe_cobranza['fecha_registracion']?></td>
+			<td><?=$informe_cobranza['concepto']?></td>		
+			<td><?=$informe_cobranza['numero_poliza']?></td>
+			<td><?=$informe_cobranza['entidad_aseguradora']?></td>
+			<td><?=$informe_cobranza['importe_ingreso']?></td>
+			<td><?=$informe_cobranza['importe_egreso']?></td>
+		</tr>
+	<?endforeach;?>
+	</tbody>
+</table>
+	<?endif;?>
+ <!--  A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-informe-diario/fecha_desde/<?=$this->fecha_desde?>/fecha_hasta/<?=$this->fecha_hasta?>/operacion/<?=$this->operacion?>')">
+Imprimir Informe</A>-->
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+
+
+
+
+
+

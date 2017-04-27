@@ -1,0 +1,199 @@
+<?php
+class Servicios_PersonasIurix
+{
+	private $_autorizador;
+	
+	function __construct(Servicios_Autorizacion_PersonasIurix $sa)
+	{
+		if ($sa instanceof Servicios_Autorizacion_PersonasIurix)
+		{
+			$this->_autorizador=$sa;	
+		}else{
+			$this->_autorizador=null;//new Servicios_Autorizacion_PersonasIurix($u);	
+		}
+    } 
+    
+    public function setAutorizador(Servicios_Autorizacion_PersonasIurix $sa)
+    {
+    	if ($sa instanceof Servicios_Autorizacion_PersonasIurix)
+		{
+			$this->_autorizador=$sa;	
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("clase Autorizadora invalida!");	
+		}
+    }
+    
+    public function getAutorizador()
+    {
+    	if ($this->_autorizador instanceof Servicios_Autorizacion_PersonasIurix)
+		{
+    		return $this->_autorizador;
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No hay clase Autorizadora!");
+		}
+    }
+    
+    public function ejemploDeMetodo(/*Model_Expediente $e, Model_PasoExpediente $pe,*/ Servicios_Autorizacion_PersonasIurix  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if ($sa->isAllowed('metodo_a_consultar'/*, $e, $pe*/))
+		{
+			return true;
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}
+	
+	 /**
+     * getPersonaIurixByPk
+     *
+     * @param Integer $pdb_codigo
+     * @param Servicios_Autorizacion_PersonasIurix  $sa
+     * @return Model_Pdb
+     */	
+    public function getPersonaIurixByPk(Integer $pdb_codigo, Servicios_Autorizacion_PersonasIurix   $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if (true/*$sa->isAllowed('metodo_a_consultar')*/)
+		{
+			$model = new Model_Pdb();
+			$persona = $model->getTable()->find($pdb_codigo);
+			if ($persona instanceof Model_Pdb){
+				return $persona;
+			}else{
+				throw new Servicios_Exception_PersonasIurix_NotFound("Registro inexistente");				
+			}
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}
+	
+	 /**
+     * getListadoPersonasIurix
+     *
+     * @param MyZend_Doctrine_Record_GridPanelFacade_Config_ListParams $params
+     * @param Servicios_Autorizacion_PersonasIurix  $sa
+     * @return MyZend_Doctrine_Record_GridPanelFacade_Response_List
+     */	
+    public function getListadoPersonasIurix(MyZend_Doctrine_Record_GridPanelFacade_Config_ListParams $params, Servicios_Autorizacion_PersonasIurix  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if (true/*$sa->isAllowed('metodo_a_consultar')*/)
+		{
+			$model= new Model_Pdb();
+			$options=new MyZend_Doctrine_Record_GridPanelFacade_Config_Options(array());
+			$grid_panel_facade=new MyZend_Doctrine_Record_GridPanelFacade_Base($model, $options);
+			return $grid_panel_facade->ajaxGridList($params);
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}
+
+	 /**
+     * addPersonaIurix
+     *
+     * @param Model_Pdb $persona
+     * @param Servicios_Autorizacion_PersonasIurix  $sa
+     * @return Model_Pdb
+     */	
+    public function addPersonaIurix(Model_Pdb $persona, Servicios_Autorizacion_PersonasIurix  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if (true/*$sa->isAllowed('metodo_a_consultar')*/)
+		{
+			if (isset($persona->pdb_codigo) && is_integer($persona->pdb_codigo))
+			{
+				throw new Servicios_Exception_PersonasIurix_ForcedId("error en la operacion: intentando agregar un registro con id forzado"); 
+			}
+			$persona->pdb_codigo=null;
+			try{
+				$persona->save();
+				return $persona;
+			}catch(Exception $e){
+				throw new Servicios_Exception_PersonasIurix_InsertFailure("error al insertar");
+			}			
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}
+	
+	 /**
+     * setPersonaIurix
+     *
+     * @param Model_Pdb $persona
+     * @param Servicios_Autorizacion_PersonasIurix  $sa
+     * @return Model_Pdb
+     */	
+    public function setPersonaIurix(Model_Pdb $persona, Servicios_Autorizacion_PersonasIurix  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if (true/*$sa->isAllowed('metodo_a_consultar')*/)
+		{
+			$model_persona= new Model_Pdb();
+			$persona_base = $model_persona->getTable()->find($persona->pdb_codigo);
+			if ($persona_base instanceof Model_Pdb){
+				$datos_persona=$persona->toArray();
+				unset($datos_persona['pdb_codigo']);
+				$persona_base->fromArray($datos_persona);
+				try{
+					$persona_base->save();
+					return $persona_base;
+				}catch(Exception $e){
+					throw new Servicios_Exception_PersonasIurix_UpdateFailure("error al actualizar");
+				}
+			}else{
+				throw new Servicios_Exception_PersonasIurix_NotFound("Registro inexistente");				
+			}			
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}	
+	
+	 /**
+     * delPersonaIurixByPk
+     *
+     * @param Integer $pdb_codigo
+     * @param Servicios_Autorizacion_PersonasIurix  $sa
+     * @return Boolean
+     */	
+    public function delPersonaIurixByPk(Integer $pdb_codigo, Servicios_Autorizacion_PersonasIurix  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_PersonasIurix) $sa=$this->getAutorizador();
+		//	
+		if (true/*$sa->isAllowed('metodo_a_consultar')*/)
+		{
+			$model_pdb= new Model_Pdb();
+			$persona = $model_pdb->getTable()->find($pdb_codigo);
+			if ($persona instanceof Model_Pdb){
+				try{
+					$persona->delete();
+					return true;
+				}catch(Exception $e){
+					throw new Servicios_Exception_PersonasIurix_DeleteFailure("error al eliminar");
+				}				
+			}else{
+				throw new Servicios_Exception_PersonasIurix_NotFound("Registro inexistente");				
+			}
+		}else{
+			throw new Servicios_Exception_PersonasIurix_Generic("No Autorizado!");
+		}
+	}
+	
+	 /** Revisar, pero tiene que haber metodos analogos a estos para persona iurix!
+	 *   
+	  addDomicilioPersona(Persona, Domicilio)
+
+	  setDomicilioPersona(Persona, Domicilio)
+	
+	  getDomicilioPersonaById(domicilio_id)
+	
+	  delDomicilioPersonaById(domicilio_id)
+	
+	  getListadoDomiciliosPersona(Persona, ListParams)
+	  */
+}

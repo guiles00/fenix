@@ -1,0 +1,41 @@
+<div class="pagination" style="width:100%">
+    <div style="float:left;width:28%">
+    </div>
+    <div style="float:right;width:70%;">
+        <!-- First page link -->
+        <?php if (isset($this->previous)): ?>
+              <a href="<?= $this->url(array('page' => $this->first)); ?>" onClick="return listPaginator(this)">Inicio</a> |
+        <?php else: ?>
+                <span class="disabled">Inicio</span> |
+        <?php endif; ?>
+    
+        <!-- Anterior page link -->
+    
+        <?php if (isset($this->previous)): ?>
+              <a href="<?= $this->url(array('page' => $this->previous)); ?>" onClick="return listPaginator(this)">&lt; Anterior</a> |
+        <?php else: ?>
+            <span class="disabled">&lt; Anterior</span> |
+        <?php endif; ?>
+        <!-- Numbered page links -->
+        <?php foreach ($this->pagesInRange as $page): ?>
+            <?php if ($page != $this->current): ?>
+                <a href="<?= $this->url(array('page' => $page)); ?>" onClick="return listPaginator(this)"><?= $page; ?></a>
+            <?php else: ?>
+                <?= $page; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <!-- Siguiente page link -->
+        <?php if (isset($this->next)): ?>
+              | <a href="<?= $this->url(array('page' => $this->next)); ?>" onClick=" return listPaginator(this)">Siguiente &gt;</a> |
+        <?php else: ?>
+            | <span class="disabled">Siguiente &gt;</span> |
+        <?php endif; ?>
+        <!-- Last page link -->
+        <?php if (isset($this->next)): ?>
+              <a href="<?= $this->url(array('page' => $this->last)); ?>" onClick="return listPaginator(this)">Final</a>
+        <?php else: ?>
+            <span class="disabled">Final</span>
+        <?php endif; ?>
+        &nbsp; Pagina <?= $this->current; ?> of <?= $this->last; ?>
+    </div>
+ </div>

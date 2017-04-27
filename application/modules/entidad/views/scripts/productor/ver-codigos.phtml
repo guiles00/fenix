@@ -1,0 +1,124 @@
+<script type="text/javascript">
+$(document).ready(
+		function() {
+
+			var tabs_sel = $('#tabs').tabs();
+			var idx = tabs_sel.tabs('option','selected');
+			// Trae el tab correspondiente
+			var tab = $('#tabs ul li a')[idx];
+			var href = $(tab).attr('href');
+			//var href_result = href+' #result_codigo_productor'; 
+
+			var href_list = href+' #list_codigo_productor';
+			
+			
+			$('#volver_codigo_productor').click(function(){
+
+					$.ajax({
+						url : "./entidad/productor/index",
+						success : function(result) {
+							$(href).html(result);
+						}
+					});
+						
+
+				});
+
+			
+
+	$('#add_codigo_productor').click(function(){
+			var productor_id = $('#productor_id').val();
+			var codigo_productor = $('#codigo_productor').val();
+			var compania_id = $('#id_companias option:selected').val();
+			console.debug($('#id_companias option:selected'));
+			
+			//var data = $('#form_add_codigo_productor').serializeArray();
+			//console.debug(productor_id);
+				$.ajax({
+					url : "./entidad/productor/ver-codigos",
+					data :{
+					op:'add'
+					,productor_id:productor_id
+					,codigo_productor:codigo_productor
+					,compania_id:compania_id
+					},
+					success : function(result) {
+						$(href_list).html(result);
+					}
+				});
+		});
+
+	$('.eliminar_codigo_productor').click(function(){
+
+		var productor_id = $('#productor_id').val();
+		var codigo_productor_compania_id = $(this).attr('codigo_productor_compania_id');
+		//console.debug(productor_id);
+			$.ajax({
+				url : "./entidad/productor/ver-codigos",
+				data :{
+				codigo_productor_compania_id:codigo_productor_compania_id
+				,productor_id:productor_id
+				,op:'del'
+				},success : function(result) {
+					$(href_list).html(result);
+				}
+			});
+	});
+
+
+	
+});
+</script>
+<?php 
+//echo "<pre>";
+//print_r($this->companias);
+?>
+
+<div id="list_codigo_productor">
+<h2> <?=$this->nombre_productor?></h2>
+<input type="hidden" id="productor_id" value="<?=$this->productor_id?>"/>
+<table>
+  <tr>
+  	<th>Codigo</th>
+    <th>Compania</th>
+    <th></th>
+  </tr>
+<?foreach($this->codigo_productor_companias as $codigo_productor_compania):?>
+  <tr>
+    <td><input type="text" value="<?=$codigo_productor_compania['codigo_productor']?>"/></td>
+	<td><select>
+			<option value="0">Seleccione Compania</option>
+			<? foreach($this->companias as $row ):?>
+			<?if($codigo_productor_compania['compania_id']==$row['compania_id']):?>
+			<option selected value=<?=$row['compania_id']?>>
+			<?=$row['nombre']?>
+			<?else:?>
+			<option value=<?=$row['compania_id']?>>
+			<?=$row['nombre']?>
+			</option>
+			<?endif; ?>
+			<? endforeach; ?>
+	</select>
+	</td>
+    <td><input type="button" class="eliminar_codigo_productor" value="Quitar" codigo_productor_compania_id="<?=$codigo_productor_compania['codigo_productor_compania_id']?>"/> </td>
+  </tr>
+<?endforeach;?>
+<tr>
+<td><input type="text" id="codigo_productor" name="codigo_productor"></input></td>
+<td><select  id="id_companias">
+	<option value="0">Seleccione Compania</option>
+	<? foreach($this->companias as $row ):?>
+	<option value=<?=$row['compania_id']?>>
+	<?=$row['nombre']?>
+	</option>
+	<? endforeach; ?>
+</select>
+</td>
+<td><input type="button" id="add_codigo_productor" value="Agregar"/></td>
+</tr>
+</table>
+<input type="button" id="volver_codigo_productor" value="Volver"/>
+</div>
+
+
+

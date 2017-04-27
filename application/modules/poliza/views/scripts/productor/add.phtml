@@ -1,0 +1,66 @@
+<script type="text/javascript">
+function listar(){
+	
+url="./entidad/entidad/list";
+		$.ajax({url: url,
+	        success:function(result){
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+}
+
+function editForm(f){
+
+    //console.debug(f.nombre.value);
+    //console.debug(f.apellido.value);
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{
+            add:f.add.value
+            ,id: f.id.value 
+            ,nombre: f.nombre.value
+            ,matricula: f.matricula.value
+            ,cuit: f.cuit.value
+            ,domicilio: f.domicilio.value
+            ,codigo_postal: f.codigo_postal.value
+            ,provincia: f.provincia.value
+            ,localidad: f.localidad.value
+            ,telefono: f.telefono.value
+            ,email: f.email.value
+            ,ingresos_brutos: f.ingresos_brutos.value
+            ,jubilacion: f.jubilacion.value
+            ,situacion_iva: f.situacion_iva.value
+            ,situacion_juridica: f.situacion_juridica.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+<form action="./entidad/productor/add"  onSubmit="return editForm(this)">
+<input type="hidden" name="add" value=1></input>
+<table>
+<table>
+<tr><td>productor_id</td><td><input type="text" name="id" value=""></input></td></tr>
+<tr><td>Nombre</td><td><input type="text" name="nombre" value=""></input></td></tr>
+<tr><td>Matricula</td><td><input type="text" name="matricula" value=""></input></td></tr>
+<tr><td>CUIT</td><td><input type="text" name="cuit" value=""></input></td></tr>
+<tr><td>Domicilio</td><td><input type="text" name="domicilio" value=""></input></td></tr>
+<tr><td>Codigo Postal</td><td><input type="text" name="codigo_postal" value=""></input></td></tr>
+<tr><td>Provincia</td><td><input type="text" name="provincia" value=""></input></td></tr>
+<tr><td>Localidad</td><td><input type="text" name="localidad" value=""></input></td></tr>
+<tr><td>Telefono</td><td><input type="text" name="telefono" value=""></input></td></tr>
+<tr><td>Email</td><td><input type="text" name="email" value=""></input></td></tr>
+<tr><td>Ingresos Brutos</td><td><input type="text" name="ingresos_brutos" value=""></input></td></tr>
+<tr><td>Jubilacion</td><td><input type="text" name="jubilacion" value=""></input></td></tr>
+<tr><td>Situacion Iva</td><td><input type="text" name="situacion_iva" value=""></input></td></tr>
+<tr><td>Situacion Juridica</td><td><input type="text" name="situacion_juridica" value=""></input></td></tr>
+<tr><td></td><td><input type="submit" value="Guardar"></input></td><td><input type="button" name="Cancel" onclick="return listar()" value="cancel" /></input></td></tr>
+</table>
+
+</form>

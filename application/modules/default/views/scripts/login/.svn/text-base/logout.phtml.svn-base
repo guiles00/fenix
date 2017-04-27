@@ -1,0 +1,7 @@
+<div id="page">
+<h3>Cerro su Sesión</h3>
+<p>Le recomendamos cerrar por completo su navegador</p>
+</div>
+<script>
+top.location.href="/login/";
+</script>

@@ -1,0 +1,100 @@
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+function buscarProductor(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+
+function loadMovimientosProductor(url){
+	//var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	/*data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }*/
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+
+</script>
+
+
+<div id="buscar_productor">
+<form action="./informes/listado/list-productor" onSubmit="return buscarProductor(this)">
+
+	<table id="buscar_productor">
+		<tr>
+			<td><b>Buscar Productor:</b></td>
+			<td><input type="text" name="criterio" /></td>
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+</form>
+<hr>
+</div>
+<?if($this->buscar):?>
+<table>
+  <tr>
+    <th>productor_id</th>
+    <th>Nombre</th>
+    <th></th>
+  </tr>
+
+<?foreach ($this->rows as $productor):?> 
+  <tr>
+    <td><?=$productor['productor_id'] ?></td>
+    <td><?=$productor['nombre']?></td>
+    <td><input type="button" value="Ver" onClick="return loadMovimientosProductor('./informes/listado/listado-informe-cobranzas/productor_id/<?=$productor['productor_id'] ?>')"> </input> </td>
+  </tr>
+	<?php //onClick="return loadPagePoliza('./operaciones/deuda-productor/deuda-productor/productor_id/<?=$productor['productor_id'] ?><?//','Deuda-Asegurado')?>
+<?endforeach; ?>
+</table>
+<?endif;?>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>
+

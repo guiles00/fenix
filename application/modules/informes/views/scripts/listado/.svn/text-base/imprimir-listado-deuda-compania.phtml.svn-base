@@ -1,0 +1,122 @@
+<!--
+
+/* Listado por agente.
+*Fecha de pedido / Vigencia / Nº Solicitud / Nº Poliza / Endoso / Cliente (en vez de Compañia) / Agente / Prima / Cuota / Importe Cuota (aca iria lo que corresponde a Premio Asegurado) / Estado / Fecha Baja
+*/
+ -->
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+
+	
+<?//if($this->buscar):?>
+<!-- 
+Fecha de pedido / Vigencia / Nº Solicitud / Nº Poliza / Endoso / Cliente (en vez de Compañia) / Agente / Prima / Cuota / Importe Cuota (aca iria lo que corresponde a Premio Asegurado) / Estado / Fecha Baja
+ -->
+
+<h3><b>Compania:</b><?=$this->compania_nombre?></h3>
+<table class="ui-widget" id="informe_diario_list">
+	<thead class="ui-widget-header">
+		<th>Fecha de Pedido</th>
+		<th>Vigencia</th>
+		<th>Nro Solicitud</th>
+		<th>Nro Poliza</th>
+		<th>Endoso</th>
+		<th>Cliente</th>
+		<?if($this->isOperador):?>
+		<th>Agente</th>
+		<th>Prima</th>
+		<th>Plus</th>
+		<?endif;?>
+		<th>Cuota</th>
+		<th>Importe Cuota</th>
+		<th>Estado</th>
+		<th>Fecha Baja</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?
+	//echo"<pre>";
+	//print_r($this->listado_deuda_compania);
+	//exit;
+	
+	foreach ($this->listado_deuda_compania as $poliza):
+	
+	//$compania_nombre = Domain_Compania::getNameById($poliza['compania_id']);
+	
+	$compania_nombre = Domain_Compania::getNameById($poliza['compania_id']);
+	$asegurado_nombre = Domain_Asegurado::getNameById($poliza['asegurado_id']);
+	$agente_nombre = Domain_Agente::getNameById($poliza['agente_id']);
+	
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	$estado_poliza = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	
+	$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+	$rows = Domain_DetallePago::getDetalleCuotas($m_detalle_pago->detalle_pago_id,$estado_debe);
+	//echo "<pre>";
+	
+	$vigencia = $poliza['fecha_vigencia']." a ".$poliza['fecha_vigencia_hasta'];
+?>
+		<tr>
+			<td><?=$poliza['fecha_pedido']?></td>
+			<td><?=$vigencia?></td>
+			<td><?=$poliza['numero_solicitud']?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$asegurado_nombre?></td>
+			<?if($this->isOperador):?> 
+			<td><?=$agente_nombre?></td>
+			<td><?=$m_poliza_valores->prima_comision?></td>
+			<td><?=$m_poliza_valores->plus?></td>
+			<?endif;?>
+			<td></td>
+			<td><?=$m_poliza_valores->premio_asegurado?></td>
+			<td><?=$estado_poliza?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+		</tr>
+		<?endforeach;?>
+	</tbody>
+</table>
+		<?//endif;?>
+
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+
+
+
+
+
+

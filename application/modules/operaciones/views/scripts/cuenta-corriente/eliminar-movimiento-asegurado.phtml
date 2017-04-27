@@ -1,0 +1,29 @@
+<h3> Se ha eliminado el movimiento exitosamente. </h3>
+<script type="text/javascript">
+function confirmar() {
+				return confirm('Desea agregar el registro?');
+			}
+			
+function listCuentaCorriente(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+<input type="button" onclick="return listarCuentaCorriente('./operaciones/cuenta-corriente/cc-asegurado/asegurado_id/<?= $this->asegurado_id?>')" value="Volver">

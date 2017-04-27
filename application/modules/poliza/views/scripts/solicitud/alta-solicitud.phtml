@@ -1,0 +1,286 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.solicitud.alta-solicitud.js');?>
+<div id="content">
+
+	<fieldset>
+		<legend>Solicitud Automotores</legend>
+
+		<!--  form action="./entidad/compania/add"  onSubmit="return editForm(this)">-->
+		<form id="solicitud_poliza" name="solicitud_poliza"
+			action="./poliza/solicitud/alta-solicitud"
+			onSubmit="return false"> <!-- onSubmit="return addSolicitud(this) -->
+			<input type="hidden" name="save" value=1>
+
+			<h3 id="datos_solicitud_show">Datos de la Solicitud</h3>
+			<div id="datos_solicitud">
+				<table>
+					<tr>
+						<td>Número de solicitud:</td>
+						<td><input readonly type="text" name="solicitud_id"
+							value="<?=$this->solicitud->poliza_id?>" /></td>
+					</tr>
+
+					<!-- Autocomplente para Asegurados -->
+					<tr>
+						<td>Asegurado:</td>
+						<?if( empty($this->solicitud->poliza_id) ):?>
+						<td><input id="asegurado" type="text" name="asegurado"
+							value="<?=$this->solicitud->asegurado_id?>"></input> <input
+							type="hidden" id="asegurado_id" name="asegurado_id" value=""></input>
+						</td>
+						<?else:?>
+						<td><input readonly id="asegurado" type="text" name="asegurado"
+							value="<?=$this->asegurado_nombre?>"></input> <input
+							type="hidden" id="asegurado_id" name="asegurado_id"
+							value="<?=$this->solicitud->asegurado_id?>"></input></td>
+							<?endif;?>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+						<td><select name="agente_id">
+								<option value="0">Seleccione Agente</option>
+								<? foreach($this->agentes as $row ):?>
+								<?if($this->solicitud->agente_id==$row['agente_id']):?>
+								<option selected value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><select name="compania_id">
+								<option value="0">Seleccione Compania</option>
+								<? foreach($this->companias as $row ):?>
+								<?if($this->solicitud->compania_id==$row['compania_id']):?>
+								<option selected value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><select name="productor_id">
+								<option value="0">Seleccione Productor</option>
+								<? foreach($this->productores as $row ):?>
+								<?if($this->solicitud->productor_id==$row['productor_id']):?>
+								<option selected value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><select name="cobrador_id">
+								<option value="0">Seleccione Cobrador</option>
+								<? foreach($this->cobradores as $row ):?>
+								<?if($this->solicitud->cobrador_id==$row['cobrador_id']):?>
+								<option selected value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_show">Datos del Seguro</h3>
+			<div id="datos_seguro">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<td><input type="text" id="fecha_pedido" name="fecha_pedido"
+							value="<?=$this->solicitud->fecha_pedido?>" /></td>
+					</tr>
+					<!--  tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>-->
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="periodo_id" name="periodo_id">
+								<option value="0">Seleccione periodo</option>
+								<? foreach($this->periodos as $row ):?>
+								<?if($this->solicitud->periodo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Vigencia desde:</td>
+						<td><input type="text" id="fecha_vigencia_desde"
+							name="fecha_vigencia_desde"
+							value="" /></td>
+						<td>Vigencia hasta:</td>
+						<td><input type="text" id="fecha_vigencia_hasta"
+							name="fecha_vigencia_hasta" value="" /></td>
+					</tr>
+
+					<!--  tr>
+						<td>Plan Comision:</td>
+						<td><select name="plan_comision">
+								<option value="0">Seleccione Plan</option>
+						</select>
+						</td>
+					<tr>-->
+				</table>
+			</div>			
+
+			<hr>
+			<h3 id="valores_seguro_show">Valores del seguro</h3>
+			<div id="valores_seguro">
+				<table>
+					<tr>
+						<td>Forma de Pago:</td>
+					</tr>
+					<tr  id="forma_pago">
+					<td>Pago:</td>
+						<td><select name="forma_pago_id" id="forma_pago_id">
+						<!-- Forma de pago por defecto es Efectivo -->
+								<option value="1">forma de pago</option>
+								<? foreach($this->forma_pagos as $row ):?>
+								<?if($this->detalle_pago->forma_pago_id==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr id="cuotas">
+						<td>Cuotas:</td>
+						<td><select name="cuotas">
+								<option value="0">Cuotas</option>
+								<? foreach($this->cuotas as $row ):?>
+								
+							<?if($this->cantidad_cuotas==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><input id="valor_cuota" name="valor_cuota" value=""></td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><input type="text" name="monto_asegurado"
+							value="<?=$this->escape($this->poliza_valores->monto_asegurado)?>" /></td>
+					</tr>
+					<tr>
+						<td>Moneda:</td>
+						<td><select name="moneda_id">
+								<option value="0">Seleccione Moneda</option>
+								<? foreach($this->monedas as $row ):?>
+								<?if($this->poliza_valores->moneda_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Premio Asegurado:</td>
+						<td><input type="text" name="premio_asegurado"
+							value="<?=$this->escape($this->poliza_valores->premio_asegurado)?>" /></td>
+					</tr>
+					<tr>
+						<td>Plus:</td>
+						<td><input type="text" name="plus"
+							value="<?=$this->escape($this->poliza_valores->plus)?>" /></td>
+					</tr>
+					<tr>
+						<td>Observaciones:</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea name="observaciones_asegurado">
+						<?=$this->escape($this->solicitud->observaciones_asegurado)?>
+						</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea name="observaciones_compania">
+						<?=$this->escape($this->solicitud->observaciones_compania)?>
+						</textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+
+			<hr>
+			
+			   	
+				<?if(empty($this->solicitud->poliza_id)):?>
+				<input
+				type="submit" name="save_solicitud" id="save_solicitud" value="Solicitar"></input>
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+				<input
+				type="submit" name="save_solicitud" value="Guardar Cambios"></input>
+				<input
+				type='submit' name='confirmar_solicitud' value='Confirmar Solicitud'
+				onClick="return confirmarSolicitud(<?=$this->solicitud->poliza_id?>)">
+				</input>
+				<?endif;?>
+				<input type="button" name="Cancel" onclick="" value="Cancelar" />
+		</form>
+	</fieldset>
+</div>

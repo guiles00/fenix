@@ -1,0 +1,143 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+	
+function cobrador(f){
+	//var url = $(f).attr('./poliza/solicitud/alta-automotores/');
+	/*if(url == null){
+		url="./entidad/cobrador/add";
+	}*/
+
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./entidad/cobrador/list";
+	}
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+function editCobrador(f){
+	//var url = $(f).attr('./poliza/solicitud/alta-automotores/');
+	if(url == null){
+		url="./entidad/cobrador/edit";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+function listCobrador(f){
+	var url = f.action;
+	
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url
+		    ,data:{
+			    criterio:f.criterio.value
+			    }
+		    ,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+</script>
+<form action="./entidad/cobrador/list" onSubmit="return listCobrador(this)">
+
+	<table id="buscar_cobrador">
+		<tr>
+			<td>Buscar:</td>
+			<td><input type="text" name="criterio" /></td>
+		
+		
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+
+</form>
+<hr>
+
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+  <tr>
+    <th>cobrador_id</th>
+    <th>Nombre</th>
+    <th>CUIT</th>
+    <th>Domicilio</th>
+    <th>Codigo Postal</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Telefono</th>
+    <th>Email</th>
+    <th>Fecha Nacimiento</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+<tbody class="ui-widget-content">
+<?foreach($this->rows as $row):?>
+  <tr>
+  <td><?=$row['cobrador_id'] ?></td>
+    <td><?=$row['nombre'] ?></td>
+    <td><?=$row['cuit'] ?></td>
+    <td><?=$row['domicilio'] ?></td>
+    <td><?=$row['codigo_postal'] ?></td>
+    <td><?=$row['provincia'] ?></td>
+    <td><?=$row['localidad'] ?></td>
+    <td><?=$row['telefono'] ?></td>
+    <td><?=$row['email'] ?></td>
+    <td><?=$row['fecha_nacimiento'] ?></td>
+    <td><input type="button" value="Ver" url="./entidad/cobrador/view/id/<?=$row['cobrador_id']?>" onClick="return cobrador(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./entidad/cobrador/delete/id/<?=$row['cobrador_id']?>" onClick="return cobrador(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/cobrador/add/" onClick="return cobrador(this)"> </input> </td>
+  </tr>
+  </tbody>
+</table>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

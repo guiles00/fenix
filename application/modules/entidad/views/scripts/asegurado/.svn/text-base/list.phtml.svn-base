@@ -1,0 +1,135 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+	
+function asegurado(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./entidad/asegurado/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+function listAsegurado(f){
+	var url = f.action;
+	
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url
+		    ,data:{
+			    criterio:f.criterio.value
+			    }
+		    ,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+</script>
+<form action="./entidad/asegurado/list" onSubmit="return listAsegurado(this)">
+
+	<table id="buscar_asegurado">
+		<tr>
+			<td>Buscar:</td>
+			<td><input type="text" name="criterio" /></td>
+		
+		
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+
+</form>
+<hr>
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+  <tr>
+    <th>asegurado_id</th>
+    <th>Nombre</th>
+    <th>Tipo Documento</th>
+    <th>Numero Documento</th>
+    <?if(!$this->isAgente):?>
+    <th>CUIT</th>
+    <th>Posicion IVA</th>
+    <th>Domicilio</th>
+    <th>Codigo Postal</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Telefono</th>
+    <th>Telefono Movil</th>
+    <th>Radio</th>
+    <th>Email</th>
+    <th>Fecha Nacimiento</th>
+    <th>Domicilio Cobranza</th>
+    <th></th>
+    <th></th>
+    <?endif;?>
+  </tr>
+  </thead>
+<tbody class="ui-widget-content">
+<?foreach($this->rows as $row):?>
+  <tr>
+  <td><?=$row['asegurado_id'] ?></td>
+    <td><?=$row['nombre'] ?></td>
+    <td><?=$row['tipo_documento_id'] ?></td>
+    <td><?=$row['numero_documento'] ?></td>
+    <?if(!$this->isAgente):?>
+    <td><?=$row['cuit'] ?></td>
+    <td><?=$row['posicion_iva_id'] ?></td>
+    <td><?=$row['domicilio'] ?></td>
+    <td><?=$row['codigo_postal'] ?></td>
+    <td><?=$row['provincia'] ?></td>
+    <td><?=$row['localidad'] ?></td>
+    <td><?=$row['telefono'] ?></td>
+    <td><?=$row['telefono_movil'] ?></td>
+    <td><?=$row['radio'] ?></td>
+    <td><?=$row['email'] ?></td>
+    <td><?=$row['fecha_nacimiento'] ?></td>
+    <td><?=$row['domicilio_cobranza'] ?></td>
+    <?endif;?>
+    <td><input type="button" value="Ver" url="./entidad/asegurado/view/id/<?=$row['asegurado_id']?>" onClick="return asegurado(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./entidad/asegurado/delete/id/<?=$row['asegurado_id']?>" onClick="return asegurado(this)"> </input> </td>
+    
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/asegurado/add/" onClick="return asegurado(this)"> </input> </td>
+  </tr>
+  </tbody>
+</table>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

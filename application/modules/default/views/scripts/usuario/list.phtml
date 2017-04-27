@@ -1,0 +1,71 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	//alert("clic");
+	//console.debug(g);
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+function usuario(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		url="./default/usuario/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+</script>
+
+<table>
+  <tr>
+    <th>usuario_id</th>
+    <th>tipo_usuario_id</th>
+    <th>usuario_tipo_id</th>
+    <th>username</th>
+    <th>password</th>
+    <th></th>
+    <th></th>
+  </tr>
+<?php 
+foreach ($this->rows as $usuario):?>
+  <tr>
+    <td><?=$usuario['usuario_id'] ?></td>
+    <td><?=$usuario['tipo_usuario_id'] ?></td>
+    <td><?=$usuario['usuario_tipo_id'] ?></td>
+    <td><?=$usuario['username'] ?></td>
+    <td><?=$usuario['password'] ?></td>
+    <td><input type="button" value="Ver" url="./default/usuario/view/id/<?=$usuario['usuario_id']?>" onClick="return usuario(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./default/usuario/delete/id/<?=$usuario['usuario_id']?>" onClick="return usuario(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./default/usuario/add/" onClick="return usuario(this)"> </input> </td>
+  </tr>
+</table>
+<?=$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml'); ?>

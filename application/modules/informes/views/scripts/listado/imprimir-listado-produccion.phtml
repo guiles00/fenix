@@ -1,0 +1,149 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}	
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+
+<h2>Listado de Producción</h2><h3>Polizas desde: <?=$this->mes_pasado?> hasta: <?=$this->mes_actual?></h3>
+<table  class="ui-widget">
+<thead class="ui-widget-header">
+	<tr>
+
+		<th>Tomador</th>
+		<th>Nro de Solicitud</th>
+		<th>Nº Póliza</th>
+		<th>Sección</th>
+		<th>Moneda</th>
+		<th>Suma Asegurda</th>
+		<th>Vigencia</th>
+		<th>Prima</th>
+		<th>Premio</th>
+		<th>Plus</th>
+
+	</tr>
+</thead>
+<tbody class="ui-widget-content">
+	<?$total_pesos = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0); 
+	  $total_dolar = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0);
+	  $total_euros = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0);
+	?>
+	<?foreach ($this->rows as $row):?>
+	<?
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+
+	$tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']);
+
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	$fecha_desde = $d_poliza->getModelPoliza()->fecha_vigencia;
+	$periodo = $d_poliza->getModelPoliza()->periodo_id;
+				//Helper que calcular la fecha de vigencia
+	$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+				
+	$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta); 
+	$tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']);
+	$tipo_moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+	
+	switch ($tipo_moneda) {
+		case 'PESOS':
+		$total_pesos['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_pesos['premio_asegurado'] = $total_pesos['premio_asegurado'] + $m_poliza_valores->premio_asegurado;
+		$total_pesos['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		
+		case 'DOLAR':
+			
+		$total_dolar['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_dolar['premio_asegurado'] = $total_pesos['premio'] + $m_poliza_valores->premio_asegurado;
+		$total_dolar['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		
+		case 'EURO':
+		
+		$total_euros['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_euros['premio_asegurado'] = $total_pesos['premio'] + $m_poliza_valores->premio_asegurado;
+		$total_euros['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		default:
+			;
+		break;
+	}
+	?>
+	<tr>
+		<td><p><?=$asegurado_nombre?></p></td>
+		<td align="center"><?=$row['numero_solicitud']?></td>
+		<td align="center"><?=$row['numero_poliza']?></td>
+	  <td align="center"><p><?=$tipo_poliza?></p></td>
+	  <td align="center"><p><?=$moneda?></p></td>
+	  <td align="right"><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+	  <td><p><?=$vigencia?></p></td>
+		<td align="right"><p><?=round($m_poliza_valores->prima_comision,2)?></p></td>
+	  <td align="right"><?=round($m_poliza_valores->premio_asegurado,2)?></td>
+		<td align="right"><?=round($m_poliza_valores->plus,2)?></td>
+	</tr>
+	
+	<?endforeach; ?>
+	</tbody>
+</table>
+<hr>
+<table>
+<tr><td></td><td>Prima</td><td>Premio</td><td>Plus</td></tr>
+<tr>
+<td>Pesos</td>
+<td><?=round($total_pesos['prima_comision'],2)?></td>
+<td><?=round($total_pesos['premio_asegurado'],2)?></td>
+<td><?=round($total_pesos['plus'],2)?></td>
+</tr>
+<tr><td>Dolar</td>
+<td><?=round($total_dolar['prima_comision'],2)?></td>
+<td><?=round($total_dolar['premio_asegurado'],2)?></td>
+<td><?=round($total_dolar['plus'],2)?></td>
+
+</tr>
+<tr><td>Euro</td>
+<td><?=$total_euros['prima_comision']?></td>
+<td><?=$total_euros['premio_asegurado']?></td>
+<td><?=$total_euros['plus']?></td>
+
+</tr>
+</table>
+<hr>
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>

@@ -1,0 +1,124 @@
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+function buscarAsegurado(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function loadPageDeudaPoliza(url, title){
+	var existe=false;
+	tab_url = './informes/listado/listado-deuda-cliente';
+	temp_url = './informes/listado/listado-deuda-cliente';
+
+	//alert(temp_url);
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala :)	');
+				
+			return false;  	
+	
+}
+
+$(document).ready(function() 
+	    { 
+	        $("#deuda_asegurado_monto_id").tablesorter();
+	   
+	    } 
+	); 
+
+
+</script>
+
+
+<div id="buscar_asegurado">
+<form action="./informes/listado/buscar-asegurado" onSubmit="return buscarAsegurado(this)">
+
+	<table id="buscar_asegurado">
+		<tr>
+			<td><b>Buscar Asegurado:</b></td>
+			<td><input type="text" name="criterio" /></td>
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+</form>
+<hr>
+</div>
+<?if($this->buscar):?>
+<table id="deuda_asegurado_monto_id" class="ui-widget">
+	<thead class="ui-widget-header">
+  <tr>
+    <th>asegurado_id</th>
+    <th>Nombre</th>
+    <th>Pesos</th>
+    <th>Dolar</th>
+    <th>Euro</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody class="ui-widget-content">
+<?foreach ($this->rows as $asegurado):?>
+<?php
+ //Trae la sumatoria de todo lo que pago
+ $moneda_pesos = Domain_Helper::getHelperIdByDominioAndName('moneda', 'PESOS');
+ $moneda_dolar = Domain_Helper::getHelperIdByDominioAndName('moneda', 'DOLAR');
+ $moneda_euro = Domain_Helper::getHelperIdByDominioAndName('moneda', 'EURO');
+		
+ $debe_pesos = Domain_Asegurado::getDebeByAseguradoIdAndMoneda($asegurado['asegurado_id'],$moneda_pesos);
+ $debe_dolar = Domain_Asegurado::getDebeByAseguradoIdAndMoneda($asegurado['asegurado_id'],$moneda_dolar);
+ $debe_euro = Domain_Asegurado::getDebeByAseguradoIdAndMoneda($asegurado['asegurado_id'],$moneda_euro);
+		
+?> 
+  <tr>
+    <td><?=$asegurado['asegurado_id'] ?></td>
+    <td><?=$asegurado['nombre']?></td>
+    <td><?=$debe_pesos?></td>
+    <td><?=$debe_dolar?></td>
+    <td><?=$debe_euro?></td>
+    <td><input type="button" value="Ver Detalle Deuda" onClick="return loadPageDeudaPoliza('./informes/listado/listado-deuda-cliente/asegurado_id/<?=$asegurado['asegurado_id'] ?>','Deuda Cliente')"> </input> </td>
+  </tr>
+	<?php //onClick="return loadPagePoliza('./operaciones/deuda-asegurado/deuda-asegurado/asegurado_id/<?=$asegurado['asegurado_id'] ?><?//','Deuda-Asegurado')?>
+<?endforeach; ?>
+</tbody>
+</table>
+<?endif;?>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

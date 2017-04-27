@@ -1,0 +1,203 @@
+<!-- 
+
+Tomador
+Nº de Póliza
+Sección
+Moneda
+Suma Asegurda
+Vigencia (desde / hasta)
+Prima
+Premio Compañia
+Premio
+Plus
+
+ -->
+
+
+
+<script type="text/javascript">
+
+$('#submit_buscar').click(function(){
+	var url = './informes/listado/listado-produccion' ;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	var mes = $('#mes_listado_produccion');
+	var anio = $('#anio_listado_produccion');
+		//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+             buscar:1
+            ,mes:mes.val()
+            ,anio:anio.val()
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+});
+
+</script>
+
+<div id="buscar_polizas_listado_produccion">
+	<form action="./informes/listado/listado-produccion"
+		onSubmit="return listInformeDiario(this)">
+
+		<table id="buscar_asegurado">
+			<tr>
+				<td>Mes:</td>
+				<td><select name="mes" id="mes_listado_produccion">
+						<option value="1">Enero</option>
+						<option value="2">Febrero</option>
+						<option value="3">Marzo</option>
+						<option value="4">Abril</option>
+						<option value="5">Mayo</option>
+						<option value="6">Junio</option>
+						<option value="7">Julio</option>
+						<option value="8">Agosto</option>
+						<option value="9">Septiembre</option>
+						<option value="10">Octubre</option>
+						<option value="11">Noviembre</option>
+						<option value="11">Diciembre</option>
+				</select>
+				</td>
+				<td>A&ntilde;o:</td>
+				<td><select name="anio" id="anio_listado_produccion">
+						<option value="11">2011</option>
+						<option selected value="12">2012</option>
+						<option value="13">2013</option>
+						<option value="14">2014</option>
+						<option value="15">2015</option>
+						<option value="16">2016</option>
+						<option value="17">2017</option>
+						<option value="18">2018</option>
+				</select>
+				</td>
+				<td><input type="button" id="submit_buscar" name="buscar" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	
+	<hr>
+</div>
+<?if($this->buscar):?>
+<h3>Polizas desde: <?=$this->mes_pasado?> hasta: <?=$this->mes_actual?></h3>
+<A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-listado-produccion/mes/<?=$this->mes?>/anio/<?=$this->anio?>')">
+Imprimir Informe</A>
+<table  class="ui-widget">
+<thead class="ui-widget-header">
+	<tr>
+
+		<th>Tomador</th>
+		<th>Nro de Solicitud</th>
+		<th>Nro de Póliza</th>
+		<th>Sección</th>
+		<th>Moneda</th>
+		<th>Suma Asegurda</th>
+		<th>Vigencia</th>
+		<th>Prima</th>
+		<th>Premio</th>
+		<th>Plus</th>
+
+	</tr>
+</thead>		
+<tbody class="ui-widget-content">
+	<?$total_pesos = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0); 
+	  $total_dolar = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0);
+	  $total_euros = array('prima_comision'=>0,'premio_asegurado'=>0,'plus'=>0);
+	?>
+	<?foreach ($this->rows as $row):?>
+	<?
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	
+	$fecha_desde = $d_poliza->getModelPoliza()->fecha_vigencia;
+	$periodo = $d_poliza->getModelPoliza()->periodo_id;
+	//Helper que calcular la fecha de vigencia
+	$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+	$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($row['tipo_poliza_id']);
+	
+	$tipo_moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+	
+	switch ($tipo_moneda) {
+		case 'PESOS':
+		$total_pesos['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_pesos['premio_asegurado'] = $total_pesos['premio_asegurado'] + $m_poliza_valores->premio_asegurado;
+		$total_pesos['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		
+		case 'DOLAR':
+			
+		$total_dolar['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_dolar['premio_asegurado'] = $total_pesos['premio'] + $m_poliza_valores->premio_asegurado;
+		$total_dolar['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		
+		case 'EURO':
+		
+		$total_euros['prima_comision'] = $total_pesos['prima_comision'] + $m_poliza_valores->prima_comision;
+		$total_euros['premio_asegurado'] = $total_pesos['premio'] + $m_poliza_valores->premio_asegurado;
+		$total_euros['plus'] = $total_pesos['plus'] + $m_poliza_valores->plus;
+		break;
+		default:
+			;
+		break;
+	}
+	
+	?>
+	<tr>
+		<td><?=$asegurado_nombre?></td>
+		<td><?=$row['numero_solicitud']?></td>
+		<td><?=$row['numero_poliza']?></td>
+		<td><?=$tipo_poliza?></td>
+		<td><?=$moneda?></td>
+		<td><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+		<td><?=$vigencia?></td>
+		<td><?=round($m_poliza_valores->prima_comision,2)?></td>
+		<td><?=round($m_poliza_valores->premio_asegurado,2)?></td>
+		<td><?=round($m_poliza_valores->plus,2)?></td>
+	</tr>
+	<?endforeach; ?>
+	</tbody>
+</table>
+
+<hr>
+<table>
+<tr><td></td><td>Prima</td><td>Premio</td><td>Plus</td></tr>
+<tr>
+<td>Pesos</td>
+<td><?=round($total_pesos['prima_comision'],2)?></td>
+<td><?=round($total_pesos['premio_asegurado'],2)?></td>
+<td><?=round($total_pesos['plus'],2)?></td>
+</tr>
+<tr><td>Dolar</td>
+<td><?=round($total_dolar['prima_comision'],2)?></td>
+<td><?=round($total_dolar['premio_asegurado'],2)?></td>
+<td><?=round($total_dolar['plus'],2)?></td>
+
+</tr>
+<tr><td>Euro</td>
+<td><?=$total_euros['prima_comision']?></td>
+<td><?=$total_euros['premio_asegurado']?></td>
+<td><?=$total_euros['plus']?></td>
+
+</tr>
+</table>
+<hr>
+<? endif;?>
+ <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-listado-produccion/mes/<?=$this->mes?>/anio/<?=$this->anio?>')">
+Imprimir Informe</A>
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+

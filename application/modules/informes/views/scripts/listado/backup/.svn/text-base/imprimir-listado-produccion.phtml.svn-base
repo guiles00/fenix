@@ -1,0 +1,84 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+
+<h3>Polizas desde: <?=$this->mes_pasado?> hasta: <?=$this->mes_actual?></h3>
+<table  class="ui-widget">
+<thead class="ui-widget-header">
+	<tr>
+
+		<th>Tomador</th>
+		<th>Nro de Póliza</th>
+		<th>Sección</th>
+		<th>Moneda</th>
+		<th>Suma Asegurda</th>
+		<th>Vigencia</th>
+		<th>Prima</th>
+		<th>Premio Compañia</th>
+		<th>Premio</th>
+		<th>Plus</th>
+
+	</tr>
+</thead>
+<tbody class="ui-widget-content">
+	<?foreach ($this->rows as $row):?>
+	<?
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	$fecha_desde = $d_poliza->getModelPoliza()->fecha_vigencia;
+	$periodo = $d_poliza->getModelPoliza()->periodo_id;
+				//Helper que calcular la fecha de vigencia
+	$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+				
+	$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta); 
+	
+	?>
+	<tr>
+		<td><?=$asegurado_nombre?></td>
+		<td><?=$row['numero_poliza']?></td>
+		<td><?=$row['numero_poliza']?></td>
+		<td><?=$moneda?></td>
+		<td><?=$m_poliza_valores->monto_asegurado?></td>
+		<td><?=$vigencia?></td>
+		<td><?=$m_poliza_valores->premio_compania?></td>
+		<td><?=$m_poliza_valores->premio_asegurado?></td>
+		<td><?=$m_poliza_valores->plus?></td>
+	</tr>
+	<?endforeach; ?>
+	</tbody>
+</table>
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>

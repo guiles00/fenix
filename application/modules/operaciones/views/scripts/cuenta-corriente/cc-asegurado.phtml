@@ -1,0 +1,89 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.operaciones.cuenta-corriente.cc-asegurado.js');?>
+<?php setlocale(LC_MONETARY, 'en_US.UTF-8');?>
+<b>Cliente:</b> <?=$this->asegurado?>
+<table border= "1px solid" style="border-collapse: collapse;">
+  <tr>
+    <th>Moneda</th>
+    <th>Polizas Pagas</th>
+    <th>Pagos realizados</th>
+    <th>Dif. A/C</th>
+    <th>Polizas Adeudadas</th>
+    <th>Saldo</th>
+  </tr>
+  <tr>
+    <td>Pesos</td>
+    <td><?=(empty($this->pago_pesos))?'0': money_format('%.2n', $this->pago_pesos)?></td>
+    <td><?=(empty($this->suma_movimientos_pesos))?'0': money_format('%.2n', $this->suma_movimientos_pesos )?></td>
+    <td><?= money_format('%.2n',  ( $this->pago_pesos - $this->suma_movimientos_pesos ) )?></td>
+    <td><?=(empty($this->debe_pesos))?'0': money_format('%.2n', $this->debe_pesos )?></td>
+    <td><?= money_format('%.2n',  ( ($this->debe_pesos+$this->pago_pesos) - $this->suma_movimientos_pesos ) )?></td>
+  </tr>
+  <tr>
+    <td>Dolar</td>
+    <td><?=(empty($this->pago_dolar))?'0': money_format('%.2n', $this->pago_dolar)?></td>
+    <td><?=(empty($this->suma_movimientos_dolar))?'0': money_format('%.2n', $this->suma_movimientos_dolar )?></td>
+    <td><?= money_format('%.2n', ( $this->pago_dolar - $this->suma_movimientos_dolar ) )?></td>
+    <td><?=(empty($this->debe_dolar))?'0':money_format('%.2n',  $this->debe_dolar )?></td>
+    <td><?= money_format('%.2n',  ( ($this->debe_dolar+$this->pago_dolar) - $this->suma_movimientos_dolar ) )?></td>
+  </tr>
+  <tr>
+    <td>Euro</td>
+    <td><?=(empty($this->pago_euro))?'0': money_format('%.2n', $this->pago_euro)?></td>
+    <td><?=(empty($this->suma_movimientos_euro))?'0': money_format('%.2n', $this->suma_movimientos_euro )?></td>
+    <td><?= money_format('%.2n', ( $this->pago_euro - $this->suma_movimientos_euro ))?></td>
+    <td><?=(empty($this->debe_euro))?'0': money_format('%.2n', $this->debe_euro)?></td>
+    <td><?= money_format('%.2n',  (($this->debe_euro+$this->pago_euro) - $this->suma_movimientos_euro ))?></td>
+  </tr>
+</table>
+<form id="busqueda_poliza_movimientos_form" onSubmit="return false"> 
+<table>
+ <tr><td>Nro: P&oacute;liza</td>
+  <input type="hidden" name="buscar_poliza" value=1></input>
+  <input type="hidden" name="buscar_poliza_anterior" id="buscar_poliza_anterior" value=<?=$this->busqueda_numero_poliza?> ></input>
+  <td><input name="busqueda_asegurado" id="id_asegurado_movimientos" type="hidden" value=<?=$this->asegurado_id?> ></input></td>
+  <td><input type="text" name="numero_poliza" id="numero_poliza" value=""></input></td>
+  <td><input id="busqueda_poliza_movimientos" type="button" value="Buscar"></input></td>
+</tr>
+</table>
+</form>
+
+<table class="ui-widget">
+	<thead class="ui-widget-header">
+	<tr>
+		<th>Nro. Movimiento</th>	
+		<th>Fecha</th>
+		<th>Moneda</th>
+		<th>Importe</th>
+		<th>Descuento</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody class="ui-widget-content">
+	
+	<?
+foreach ($this->rows as $row):
+$moneda = Domain_Helper::getHelperNameById('moneda', $row['moneda_id']);
+$datos_cheques = Domain_Movimiento::getDatosCheques($row['movimiento_id']);
+?>
+
+	<tr id="<?=$row['movimiento_id']?>">
+		<td ><?=$row['movimiento_id']?></td>
+    <td ><?=$row['fecha_pago']?></td>
+    <td ><?=$moneda?></td>
+    <td ><?=round($row['importe'],2)?></td>
+    <td ><?=$row['descuento']?></td>
+		<!--td><input type="button" value="Ver Detalle" onClick="return viewDetalleMovimiento('./operaciones/cuenta-corriente/detalle-movimiento/movimiento_id/<?=$row[movimiento_id]?>')"> </input> </td-->
+    <td><input type="button" class="imprimir_detalle_movimiento_asegurado_poliza" value="Ver Detalle" onClick="return false"> </input>
+       </td>
+<?if($this->perfil_id == 1):?>
+        <td><input type="button" class="eliminar_movimiento_asegurado_poliza" value="Eliminar" onClick="return false"> </input></td> 
+<?endif;?>
+	</tr>
+	<?endforeach;?>
+</tbody>
+</table>
+<input id="atras_cuenta_corriente" type="button" value="Atras" onClick="return onClickAtras('./operaciones/cuenta-corriente/list')"></input>
+</form>
+
+</div>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('asegurado_id'=>$this->asegurado_id)); ?>

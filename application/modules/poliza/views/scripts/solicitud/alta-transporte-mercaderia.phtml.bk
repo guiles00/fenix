@@ -1,0 +1,547 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.solicitud.alta-transporte-mercaderia.js');?>
+
+<div id="content">
+
+	<fieldset>
+		<legend>Solicitud Transporte Mercaderial</legend>
+
+		<form id="solicitud_poliza_transporte_mercaderia"
+			name="solicitud_poliza"
+			action="./poliza/solicitud/alta-responsabilidad-civil"
+			onSubmit="return false">
+			<input type="hidden" name="save" value=1>
+
+			<h3 id="datos_solicitud_transporte_mercaderia_show">Datos de la
+				Solicitud</h3>
+			<div id="datos_solicitud_transporte_mercaderia">
+				<table>
+					<tr>
+						<td>Número de solicitud:</td>
+						<td><input readonly type="text" name="numero_solicitud"
+							id="numero_solicitud_transporte_mercaderia"
+							value="<?=$this->solicitud->numero_solicitud?>" /> <input
+							type="hidden" name="solicitud_id"
+							id="solicitud_transporte_mercaderia_id"
+							value="<?=$this->solicitud->poliza_id?>" />
+						</td>
+					</tr>
+
+					<!-- Autocomplente para Clientes -->
+					<tr>
+						<td>Cliente:</td>
+						<?if( empty($this->solicitud->poliza_id) ):?>
+						<td><input id="asegurado_transporte_mercaderia" type="text"
+							name="asegurado" value="<?=$this->solicitud->asegurado_id?>"></input>
+							<input type="hidden" id="asegurado_transporte_mercaderia_id"
+							name="asegurado_id" value=""></input>
+						</td>
+						<?else:?>
+						<td><input readonly id="asegurado_transporte_mercaderia"
+							type="text" name="asegurado" value="<?=$this->asegurado_nombre?>"></input>
+							<input type="hidden" id="asegurado_transporte_mercaderia_id"
+							name="asegurado_id" value="<?=$this->solicitud->asegurado_id?>"></input>
+						</td>
+						<?endif;?>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+						<?if($this->isAgente):?>
+						<td><?=$this->agente_nombre?> <input name="agente_id"
+							value=<?=$this->agente_id?> type="hidden"></input>
+						</td>
+						<?else:?>
+						<td><select name="agente_id">
+								<option value="0">Seleccione Agente</option>
+								<? foreach($this->agentes as $row ):?>
+								<?if($this->solicitud->agente_id==$row['agente_id']):?>
+								<option selected value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select> <?endif;?>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><select name="compania_id">
+								<option value="0">Seleccione Compania</option>
+								<? foreach($this->companias as $row ):?>
+								<?if($this->solicitud->compania_id==$row['compania_id']):?>
+								<option selected value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><select name="productor_id">
+								<option value="0">Seleccione Productor</option>
+								<? foreach($this->productores as $row ):?>
+								<?if($this->solicitud->productor_id==$row['productor_id']):?>
+								<option selected value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><select name="cobrador_id">
+								<option value="0">Seleccione Cobrador</option>
+								<? foreach($this->cobradores as $row ):?>
+								<?if($this->solicitud->cobrador_id==$row['cobrador_id']):?>
+								<option selected value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_transporte_mercaderia_show">Datos del Seguro</h3>
+			<div id="datos_seguro_transporte_mercaderia">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<?if($this->isAgente):?> <td><input readonly type="text"
+							id="fecha_pedido_agente_transporte_mercaderia"
+							name="fecha_pedido" value="<?=$this->solicitud->fecha_pedido?>" />
+						</td>
+						<?else:?>
+						<td>
+						<input type="text" id="fecha_pedido_transporte_mercaderia"
+							name="fecha_pedido" value="<?=$this->solicitud->fecha_pedido?>" />
+						</td>
+						<?endif;?>
+					</tr>
+					<!--  tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>-->
+
+					<tr>
+						<td>Fecha Vigencia:</td>
+						<td><input type="text" id="fecha_vigencia_transporte_mercaderia"
+							name="fecha_vigencia"
+							value="<?=$this->solicitud->fecha_vigencia?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="periodo_transporte_mercaderia_id"
+							name="periodo_id">
+								<option value="0">Seleccione periodo</option>
+								<? foreach($this->periodos as $row ):?>
+								<?if($this->solicitud->periodo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+			<!-- 
+			Detalle del Riesgo
+- Tipo de Garantia - Motivo de la Garantia: - Beneficiario - Domicilio riesgo - Localidad riesgo - Provincia riesgo
+- Obra - Expediente - Clausula especial - Descripcion adicional
+			 -->
+			<hr>
+			<h3 id="detalle_riesgo_transporte_mercaderia_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_transporte_mercaderia">
+				<table>
+					<tr>
+						<td>Tipo de Garantia:</td>
+						<td><select id="tipo_garantia_transporte_mercaderia_id"
+							name="tipo_garantia_id">
+								<option value="0">Seleccione Tipo Garantia</option>
+								<? foreach($this->tipo_garantias as $row ):?>
+								<?if($this->poliza_detalle->tipo_garantia_id==$row['t_garantia_id']):?>
+								<option selected value=<?=$row['t_garantia_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['t_garantia_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Motivo de Garantia:</td>
+						<td><select id="motivo_garantia_transporte_mercaderia_id"
+							name="motivo_garantia_id">
+								<option value="0">Seleccione Motivo Garantia</option>
+								<? foreach($this->motivo_garantias as $row ):?>
+								<?if($this->poliza_detalle->motivo_garantia_id==$row['motivo_garantia_id']):?>
+								<option selected value=<?=$row['motivo_garantia_id']?>>
+								<?=$row['motivo_garantia']?>
+								<?else:?>
+								
+								<option value=<?=$row['motivo_garantia_id']?>>
+								<?=$row['motivo_garantia']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td >Beneficiario:</td>
+						<td><select style="width:200px" id="beneficiario_transporte_mercaderia_id" 
+							name="beneficiario_id">
+								<option value="0">Seleccione Beneficiario</option>
+								<? foreach($this->beneficiarios as $row ):?>
+								<?if($this->poliza_detalle->beneficiario_id==$row['beneficiario_id']):?>
+								<option selected value=<?=$row['beneficiario_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['beneficiario_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Mercaderia:</td>
+						<td><textarea id="mercaderia_transporte_mercaderia" name="mercaderia">
+							<?=$this->poliza_detalle->mercaderia?>
+						<textarea>
+						</td>
+
+						<td>Transporte:</td>
+						<td><input type="text" id="transporte_transporte_mercaderia"
+							name="transporte"
+							value="<?=$this->poliza_detalle->transporte?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>CUIT Transportista:</td>
+						<td><input type="text" id="cuit_transportista_transporte_mercaderia"
+							name="cuit_transportista"
+							value="<?=$this->poliza_detalle->cuit_transportista?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Origen Desde:</td>
+						<td><input type="text" id="origen_desde_mercaderia" name="origen_desde"
+							value="<?=$this->poliza_detalle->origen_desde?>" />
+						</td>
+						<td>Origen Hasta:</td>
+						<td><input type="text" id="origen_hasta_transporte_mercaderia" name="origen_hasta"
+							value="<?=$this->poliza_detalle->origen_hasta?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Tipo Transporte:</td>
+						<td><input type="text" id="tipo_transporte_transporte_mercaderia"
+							name="tipo_transporte_id"
+							value="<?=$this->poliza_detalle->tipo_transporte_id?>" />
+						</td>
+					</tr>
+				</table>
+				
+				<h3 id="detalle_riesgo_datos_transporte_transporte_mercaderia_show">Datos Transporte</h3>
+				<table>		
+						<td>Marca:</td>
+						<td><input type="text" id="marca_transporte_mercaderia"
+							name="marca"
+							value="<?=$this->poliza_detalle->marca?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Modelo:</td>
+						<td><input type="text" id="modelo_transporte_mercaderia"
+							name="modelo"
+							value="<?=$this->poliza_detalle->modelo?>" />
+						</td>
+						<td>Patente:</td>
+						<td><input type="text" id="patente_transporte_mercaderia"
+							name="patente"
+							value="<?=$this->poliza_detalle->patente?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Patente Semi:</td>
+						<td><input type="text" id="patente_semi_transporte_mercaderia"
+							name="patente_semi"
+							value="<?=$this->poliza_detalle->patente_semi?>" />
+						</td>
+						<td>Nombre Chofer:</td>
+						<td><input type="text" id="nombre_chofer_transporte_mercaderia"
+							name="nombre_chofer"
+							value="<?=$this->poliza_detalle->nombre_chofer?>" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Documento Chofer:</td>
+						<td><input type="text" id="documento_chofer_transporte_mercaderia"
+							name="documento_chofer"
+							value="<?=$this->poliza_detalle->documento_chofer?>" />
+						</td>
+						<td>Custodia:</td>
+						<td><input type="text" id="custodia_transporte_mercaderia"
+							name="custodia_id"
+							value="<?=$this->poliza_detalle->custodia_id?>" />
+						</td>
+					</tr>
+					<tr>
+					<td>Datos Custodia:</td>
+						<td><input type="text" id="datos_custodia_transporte_mercaderia"
+							name="datos_custodia"
+							value="<?=$this->poliza_detalle->datos_custodia?>" />
+						</td>
+						<td>Descripcion Adicional:</td>
+						<td><input type="text" id="descripcion_adicional_transporte_mercaderia"
+							name="descripcion_adicional"
+							value="<?=$this->poliza_detalle->descripcion_adicional?>" />
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+
+			<hr>
+			<h3 id="valores_seguro_transporte_mercaderia_show">Valores del seguro</h3>
+			<div id="valores_seguro_transporte_mercaderia">
+				<table>
+					<tr>
+						<td>Moneda:</td>
+						<td><select name="moneda_id">
+						<? foreach($this->monedas as $row ):?>
+						<?if($this->poliza_valores->moneda_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><input type="text" name="monto_asegurado" id="monto_asegurado"
+							value="<?=$this->escape($this->poliza_valores->monto_asegurado)?>" />
+						</td>
+
+						<td>Prima:</td>
+						<td><input type="text" name="prima"
+							value="<?=$this->escape($this->poliza_valores->prima_comision)?>" />
+						</td>
+
+					</tr>
+					<tr id="forma_pago">
+						<td>Forma de Pago:</td>
+						<td><select name="forma_pago_id" id="forma_pago_transporte_mercaderia_id">
+						<? foreach($this->forma_pagos as $row ):?>
+						<?if($this->detalle_pago->forma_pago_id==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					
+					
+					<tr id="datos_tarjeta_transporte_mercaderia_show">
+						<td>Tipo:</td>
+						<td><select>
+								<option>VISA</option>
+								<option>MASTERCARD</option>
+								<option>AMERICAN EXPRESS</option>
+								<option>GUILES CARD PREMIUM</option>
+						</select>
+						</td>
+						<td>Numero:</td>
+						<td><input value=""></input>
+						</td>
+						<td>Otros:</td>
+						<td><input value=""></input>
+						</td>
+					</tr>
+					<tr>
+						<td>Cuotas:</td>
+						<td><select id="cuotas_transporte_mercaderia" name="cuotas">
+
+						<? foreach($this->cuotas as $row ):?>
+
+						<?if($this->cantidad_cuotas==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><input id="valor_cuota_transporte_mercaderia"
+							name="valor_cuota" value=<?=$this->escape($this->valor_cuotas)?>>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Importe total a cobrar:</td>
+						<td><input readonly type="text" name="importe"
+							id="importe_transporte_mercaderia" value=<?=$this->importe?>></input>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<hr>
+			<h3 id="observaciones_seguro_transporte_mercaderia_show">Observaciones</h3>
+			<div id="observaciones_seguro_transporte_mercaderia">
+				<table>
+
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea name="observaciones_asegurado">
+						<?=$this->escape($this->solicitud->observaciones_asegurado)?>
+						</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea name="observaciones_compania">
+						<?=$this->escape($this->solicitud->observaciones_compania)?>
+						</textarea>
+						</td>
+					</tr>
+				</table>
+
+
+			</div>
+			<hr>
+
+			<?if($this->isAgente):?>
+			<?if(empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_transporte_mercaderia"
+				id="save_solicitud_transporte_mercaderia" value="Solicitar"></input>
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+
+			<input type="submit" name="save_solicitud_transporte_mercaderia"
+				id="save_solicitud_transporte_mercaderia" value="Guardar Cambios"></input>
+				<?endif;?>
+				<?endif;?>
+
+				<?//pregunto si es operador, si no, no hace nada?>
+				<?if($this->operador):?>
+				<?if(empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_transporte_mercaderia"
+				id="save_solicitud_transporte_mercaderia" value="Solicitar"></input>
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+
+			<input type="submit" name="save_solicitud_transporte_mercaderia"
+				id="save_solicitud_transporte_mercaderia" value="Guardar Cambios"></input>
+				<?
+				$codigo_estado = Domain_EstadoPoliza::getCodigoById($this->solicitud->estado_id);
+				switch ($codigo_estado) {
+					case 'SOLICITUD_PENDIENTE':?>
+
+			<input type='submit' name='aprobar_solicitud_transporte_mercaderia'
+				id='aprobar_solicitud_transporte_mercaderia' value='Aprobar Solicitud'
+				onClick="return false"> </input> <input type='submit'
+				name='confirmar_solicitud_transporte_mercaderia'
+				id='confirmar_solicitud_transporte_mercaderia'
+				value='Aprobar Solicitud y Crear Poliza' onClick="return false"> </input>
+<input type='submit'
+				name='enviar_compania_solicitud_transporte_mercaderia' id='enviar_compania_solicitud_transporte_mercaderia'
+				value='Enviar Solicitud Compania' onClick="return false" />
+				
+			<input type='submit' name='anular_solicitud_transporte_mercaderia'
+				id='anular_solicitud_transporte_mercaderia' value='Anular Solicitud'
+				onClick="return false" />
+
+
+				<?break;
+case 'SOLICITUD_CONFIRMADA':?>
+			<input type='submit' name='confirmar_solicitud_transporte_mercaderia'
+				id='confirmar_solicitud_transporte_mercaderia' value='Crear Poliza'
+				onClick="return false"> </input> <input type='submit'
+				name='anular_solicitud_transporte_mercaderia' id='anular_solicitud_transporte_mercaderia'
+				value='Anular Solicitud' onClick="return false" />
+				<?break;
+default:
+
+	break;
+				}?>
+
+
+				<?endif;?>
+			<input type="button" name="Cancel" onclick="" value="Cancelar" />
+			<?endif;?>
+
+
+
+		</form>
+		<div id="show_result">
+			
+			</div>
+	</fieldset>
+</div>
+

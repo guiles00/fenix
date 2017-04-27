@@ -1,0 +1,24 @@
+<script type="text/javascript">
+
+function listUsuario(f){
+	
+		url="./admin/usuario/list";
+		
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+</script>
+
+<input type="button" value="Volver"  onClick="return listUsuario(this)"> </input> 
+

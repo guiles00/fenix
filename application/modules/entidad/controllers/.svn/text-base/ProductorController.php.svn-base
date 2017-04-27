@@ -1,0 +1,148 @@
+<?php
+require_once ('IndexController.php');
+
+class Entidad_ProductorController extends Entidad_IndexController
+{
+	private $_productor = null;
+	private $_services_simple_crud = null;
+	private $_sesion = null;
+	private $_usuario = null;
+
+	public function init()
+	{
+
+		if ( ! (Zend_Auth::getInstance()->hasIdentity())  ) {
+
+			$this->_helper->redirector('index','login','default');
+		}
+
+		$this->_helper->layout->disableLayout();
+		$this->_productor = new Domain_Productor();
+		$this->_services_simple_crud = new Services_SimpleCrud();
+		$this->_sesion = Domain_Sesion::getInstance();
+		$this->_usuario = $this->_sesion->getUsuario();
+
+		if( $this->_usuario->getAcl()->hasPermission('solicitud') ) {
+
+			//exit('tiene permiso');
+		} else {
+			//exit('no tiene permiso');
+		}
+			
+
+		$logger = Zend_Registry::get('logger');
+		$logger->log($this->_usuario->getEntidad() , Zend_Log::INFO);
+			
+	}
+
+	public function indexAction()
+	{
+		$this->_forward('list','productor','entidad');
+
+	}
+
+	public function listAction()
+	{
+
+		$service_model = new Services_SimpleCrud();
+		$params = $this->_request->getParams();
+		$rows = $this->_services_simple_crud
+		->findByName($this->_productor->getModel(),array('campo'=>'nombre','valor'=>$params['criterio']));
+		$page=$this->_getParam('page',1);
+		 
+		$paginator = Zend_Paginator::factory($rows);
+		$paginator->setItemCountPerPage(10);
+		$paginator->setCurrentPageNumber($page);
+		$this->view->criterio = $params['criterio'];
+		$this->view->rows = $paginator;
+	}
+	public function viewAction()
+	{
+
+		$params = $this->_request->getParams();
+		$row = $this->_services_simple_crud
+		->getById($this->_productor->getModel(),array('primary_key'=>'productor_id','value'=>$params['id']));
+
+		$this->view->row = $row;
+
+	}
+	public function addAction()
+	{
+	$params = $this->_request->getParams();
+		$values =  array_slice($params,4); //saca la data de mas
+
+		if( isset($params['add']) ){
+			$this->_services_simple_crud->save($this->_productor->getModel(),$values);
+		}
+
+	}
+	public function editAction()
+	{
+		
+		$params = $this->_request->getParams();
+		$values =  array_slice($params,3); //saca la data de mas
+		$this->_services_simple_crud->save($this->_productor->getModel(),$values);
+		$this->view->params = $params;
+		
+
+	}
+	public function deleteAction()
+	{
+
+	}
+	
+	public function verCodigosAction(){
+		
+		$params = $this->_request->getParams();
+		//echo "<pre>";
+		//print_r($params);
+		$productor_id = (!empty($params['id']))?$params['id']:$params['productor_id'];
+		
+		$productor = new Domain_Productor();
+		$this->view->nombre_productor = $productor->getNameById($productor_id);
+		
+		$compania = new Domain_Compania();
+		$this->view->companias= $compania->getModel()->getTable()->findAll()->toArray();
+		
+		$this->view->productor_id = $productor_id; 
+		
+	if( $params['op'] ==  'add'){
+			$m_codigo_productor_compania = new Model_CodigoProductorCompania();
+			$m_codigo_productor_compania->codigo_productor = $params['codigo_productor'];
+			$m_codigo_productor_compania->compania_id = $params['compania_id'];
+			$m_codigo_productor_compania->productor_id = $params['productor_id'];
+			$m_codigo_productor_compania->save();
+			
+			echo "Agregado con exito";
+			
+			
+			
+		}
+	if( $params['op'] == 'del'){
+		
+		
+	 Doctrine_Query::create()
+    ->delete('Model_CodigoProductorCompania c')
+    ->where('c.codigo_productor_compania_id = ? ',$params['codigo_productor_compania_id'] )
+    ->execute();
+			
+			
+			
+		}
+	
+		$this->view->codigo_productor_companias = Model_CodigoProductorCompania::getCompaniasByProductorId($productor_id);
+		
+	}
+	
+	public function saveCodigoAction(){
+		$this->_helper->viewRenderer->setNoRender ();
+		$params = $this->_request->getParams();
+		echo "<pre>";
+		print_r($params);
+		//$this->view->companias = Model_CodigoProductorCompania::getCompaniasByProductorId(1);
+		
+	}
+	
+	
+	
+}

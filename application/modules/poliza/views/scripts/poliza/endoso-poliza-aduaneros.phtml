@@ -1,0 +1,347 @@
+
+<?php //endoso-poliza-aduaneros.phtml
+echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.endoso-poliza-aduaneros.js');?>
+<div id="content">
+
+	<fieldset>
+		<legend>Endoso Aduaneros</legend>
+
+		<!--<form id="endoso_poliza_aduanero" name="endoso_poliza"
+			action="./poliza/solicitud/alta-aduaneros"
+			onSubmit="return addSolicitudAduaneros(this)">
+		-->
+		<form id="endoso_poliza_aduaneros" name="endoso_poliza"
+			action="./poliza/poliza/endoso-poliza-aduaneros"
+			onSubmit="return false">
+			<input type="hidden" name="save" value=1>
+			
+			<input type="hidden" id="poliza_endoso_id"
+				name="poliza_id"
+				value="<?=$this->escape($this->poliza_endoso_id)?>" />
+
+			<h3 id="datos_poliza_poliza_show">Datos de la Poliza</h3>
+			<div id="datos_poliza_poliza">
+				<table>
+						<tr>
+				<td>Tipo de Endoso:</td>
+						<td><select id="tipo_aduaneros_endoso" name="tipo_endoso_id" >
+								
+								<? foreach($this->tipo_endoso as $row ):?>
+								<?if($this->poliza->tipo_endoso_id==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+				</tr>
+					<tr>
+						<td>Número de Solicitud:</td>
+						<td><?=$this->escape($this->poliza->numero_solicitud)?></td>
+
+					</tr>
+					<tr>
+						<td>Número de poliza:</td>
+						<td><input type="text" name="numero_poliza"
+							value="<?=$this->escape($this->poliza->numero_poliza)?>" /></td>
+						<td>Endoso:</td>
+						<td><?=$this->escape($this->poliza->endoso)?></td>	
+						<td>Tipo:</td>
+						<td><?=$this->escape($this->tipo_endoso_text)?></td>	
+					</tr>
+
+					<tr>
+						<td>Cliente:</td>
+						<td><?=$this->escape($this->asegurado)?></td>
+					</tr>
+					<tr>
+						<td>Ejecutivo de Cuentas:</td>
+
+						<td><?=$this->escape($this->agente)?>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><?=$this->compania?>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><?=$this->productor?>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><?=$this->cobrador?>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_show">Datos del Seguro</h3>
+			<div id="datos_seguro">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<td><?if($this->isAgente):?> <input readonly type="text"
+							id="fecha_pedido_agente" name="fecha_pedido"
+							value="<?=$this->poliza->fecha_vigencia_hasta?>" />
+						</td>
+						<?else:?>
+						<input type="text" id="fecha_pedido" name="fecha_pedido"
+							value="<?=$this->poliza->fecha_vigencia_hasta?>" />
+						</td>
+						<?endif;?>
+					</tr>
+					<!--  tr>
+						<td>Seguimiento:</td>
+						<td><select name="tipo_poliza_id">
+								<option value="0">Seleccione tipo</option>
+						</select>
+						</td>
+					</tr>-->
+
+					<tr>
+						<td>Fecha Vigencia:</td>
+						<td><input type="text" id="fecha_vigencia" name="fecha_vigencia"
+							value="<?=$this->poliza->fecha_vigencia_hasta?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="periodo_id" name="periodo_id">
+								<option value="0">Seleccione periodo</option>
+								<? foreach($this->periodos as $row ):?>
+								<?if($this->poliza->periodo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<!--  tr>
+						<td>Plan Comision:</td>
+						<td><select name="plan_comision">
+								<option value="0">Seleccione Plan</option>
+						</select>
+						</td>
+					<tr>-->
+				</table>
+			</div>
+			<!-- `detalle_aduaneros_id`, `tipo_garantia_id`, `motivo_garantia_id`, `domicilio_riesgo`,
+ `localidad_riesgo`, `provincia_riesgo`, `acreedor_prendario`, `mercaderia`, 
+ `descripcion_adicional`, `bl`, `factura`, `sim`
+ 
+ 5a.- En aduaneras
+Fila 1: Tipo de Garantia
+Fila 2: Motivo de la Garantia
+Fila 3: Despachante de aduanas / Beneficiario (invierto el orden porque el desplegable de beneficiario es el que desplaza todo)
+Luego el resto ordenando en 2 columnas
+ 
+ 
+  -->
+  			<hr>
+			<h3 id="detalle_riesgo_aduaneros_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_aduaneros">
+				<table>
+					<tr>
+						<td>Tipo de Garantia:</td>
+						<td><?=$this->tipo_garantia?></td>
+					</tr>
+					<tr>
+						<td>Motivo de Garantia:</td>
+						<td><?=$this->motivo_garantia?></td>
+					</tr>
+					<tr>
+						<td>Despachante de aduanas:</td>
+						<td><?=$this->escape($this->despachante_aduana)?>	</td>
+						<td>Domicilio Riesgo:</td>
+						<td><?=$this->escape($this->poliza_detalle->domicilio_riesgo)?>	</td>
+					</tr>
+					<td>Beneficiario:</td>
+					<td>
+							<?=$this->beneficiario?>
+					</td>
+					
+					<tr>
+						<td>Localidad Riesgo:</td>
+						<td><?=$this->escape($this->poliza_detalle->localidad_riesgo)?>	</td>
+						<td>Provincia Riesgo:</td>
+						<td><?=$this->escape($this->poliza_detalle->provincia_riesgo)?>	</td>
+					</tr>
+					<tr>
+						<td>Acreedor Prendario:</td>
+						<td><?=$this->escape($this->poliza_detalle->acreedor_prendario)?></td>
+						<td>Mercaderia:</td>
+						<td><?=$this->escape($this->poliza_detalle->mercaderia)?></td>
+					</tr>
+					<tr>
+						<td>Descripcion Adicional:</td>
+						<td><?=$this->escape($this->poliza_detalle->descripcion_adicional)?> </td>
+						<td>BL:</td>
+						<td><?=$this->escape($this->poliza_detalle->bl)?></td>
+					</tr>
+					<tr>		
+						<td>Factura:</td>
+						<td><?=$this->escape($this->poliza_detalle->factura)?></td>
+						<td>SIM:</td>
+						<td><?=$this->escape($this->poliza_detalle->sim)?></td>
+					</tr>
+
+				</table>
+			</div>
+
+
+			<hr>
+			<h3 id="valores_seguro_aduaneros_show">Valores del seguro</h3>
+			<div id="valores_seguro_aduaneros">
+				<table>
+		
+					<tr id="forma_pago">
+						<td>Forma de Pago:</td>
+						<td><input type="hidden" value="<?=$this->forma_pago_id?>" name="forma_pago_id">
+							<?=$this->forma_pago?> 
+						</td>
+					</tr>
+					<tr id="endoso_cuotas_aduaneros">
+						<td>Cuotas:</td>
+						<td><select id="cuotas_aduaneros_endoso" name="cuotas">
+								
+								<? foreach($this->cuotas as $row ):?>
+
+								<?if($this->cantidad_cuotas==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><input id="valor_cuota_aduaneros_endoso" name="valor_cuota"
+							value=<?=$this->escape($this->valor_cuotas)?>>
+						</td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><input  type="text" name="monto_asegurado"
+							value="<?=$this->escape($this->poliza_valores->monto_asegurado)?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Moneda:</td>
+						<td><input type="hidden" value="<?=$this->poliza_valores->moneda_id?>" name="moneda_id"></input>
+							<?=$this->moneda?> 
+						</td>
+					</tr>
+					<tr>
+						<td>Iva:</td>
+						<td><input type="text" name="iva"
+							value="<?=$this->escape($this->poliza_valores->iva)?>" /></td>
+					</tr>
+					<tr>
+						<td>Prima:</td>
+						<td><input type="text" name="prima_comision"
+							value="<?=$this->escape($this->poliza_valores->prima_comision)?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>Premio Compania:</td>
+						<td><input type="text" name="premio_compania" id="premio_compania"
+							value="<?=$this->escape($this->poliza_valores->premio_compania)?>" />
+						</td>
+
+					</tr>
+
+					<tr>
+						<td>Premio Asegurado:</td>
+						<td><input type="text" name="premio_asegurado"
+							id="premio_asegurado_endoso"
+							value="<?=$this->escape($this->poliza_valores->premio_asegurado)?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Plus:</td>
+						<td><input type="text" name="plus" id="plus_endoso"
+							value="<?=$this->escape($this->poliza_valores->plus)?>" /></td>
+					</tr>
+					<tr>
+						<td>Importe total a cobrar:</td>
+						<td><input readonly type="text" name="importe"
+							id="importe_aduaneros_endoso" value=<?=$this->importe?>></input>
+						</td>
+					</tr>
+					
+				</table>	 
+			</div>
+			<hr>
+			<h3 id="observaciones_seguro_aduaneros_show">Observaciones</h3>
+			<div id="observaciones_seguro_aduaneros">
+				<table>
+
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea name="observaciones_asegurado">
+						<?=$this->escape($this->poliza->observaciones_asegurado)?>
+						</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea name="observaciones_compania">
+						<?=$this->escape($this->poliza->observaciones_compania)?>
+						</textarea>
+						</td>
+					</tr>
+				</table>
+
+
+			</div>
+
+
+			<hr>
+			<div id="show_result"></div>
+			<?if($this->isAgente):?>
+			<?if(empty($this->poliza->poliza_id)):?>
+			<input type="submit" name="save_solicitud_aduanero"
+				id="save_solicitud_aduanero" value="Solicitar"></input>
+				<?elseif(!empty($this->poliza->poliza_id)):?>
+
+			<input type="submit" name="save_solicitud_aduanero"
+				id="save_solicitud_aduanero" value="Guardar Cambios"></input>
+<?endif;?>
+				<?endif;?>
+			
+<?//pregunto si es operador, si no, no hace nada?>
+	<?if($this->operador):?>
+			<input type="submit" name="save_endoso_poliza_aduaneros" id="save_endoso_poliza_aduaneros" value="Solicitud Endoso Poliza"></input>
+			
+			
+<?if($this->poliza_endoso_id):?>
+			<input type="submit" name="enviar_compania_endoso_poliza_aduaneros" id="enviar_compania_endoso_poliza_aduaneros" value="Enviar email a Compania "></input>
+<?endif;?>
+			<input type="button" name="Cancel" onclick="" value="Cancelar" />
+
+		<?endif;?>
+	</fieldset>
+</div>
+

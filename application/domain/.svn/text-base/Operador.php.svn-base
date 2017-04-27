@@ -1,0 +1,900 @@
+<?php
+class Domain_Operador implements Domain_IEntidad {
+
+	private $_nombre = "OPERADOR";
+
+	public function __construct($id=null){
+
+
+		/*		if($id==null){
+
+		}else{
+
+		$model_poliza = new Model_Poliza();
+		$model_poliza_valores = new Model_PolizaValores();
+
+		$this->_model_poliza =  $model_poliza->getTable()->find($id) ;
+		$this->_model_poliza_valores = $model_poliza_valores->getTable()->find($this->_model_poliza->poliza_valores_id);
+		}
+		*/
+		//como tengo varios modelos en esta clase tengo que instanciar primero el Modelo
+		//Principal, luego traer los id de los otros modelos e instanciarlos
+		//$model_poliza_valores = new Model_PolizaValores();
+		//$this->_model_poliza_valores = ($id==null)?new $model_poliza_valores: $model_poliza->getTable()->find($id) ;
+
+	}
+	public function getNombre(){
+		return $this->_nombre;
+	}
+	public function getModelPoliza(){
+		return $this->_model_poliza;
+	}
+	public function getModelPolizaValores(){
+		return $this->_model_poliza_valores;
+	}
+	//trae polizas sin filtrar porque es el perfil Operador
+	public function getPolizas(){
+		//Buscar el estado Vigente
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$this->_model_poliza = new Model_Poliza();
+		//estado_id=1 => solicitudes confirmadas
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->andWhere('estado_id = ?',$estado)
+		->orderBy('poliza_id DESC')
+		->execute()
+		->toArray();
+
+		return $row;
+
+	}
+	//Trae solicitudes sin filtrar porque es el perfil Operador
+	//Trae las solicitudes, por ahora lo hardcodeo
+	public function getSolicitudes(){
+
+		//$estado = Domain_EstadoPoliza::getIdByCodigo('SOLICITUD_PENDIENTE');
+
+		$this->_model_poliza = new Model_Poliza();
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id in (0,1)')
+		->orderBy('numero_solicitud DESC')
+		->execute()
+		->toArray();
+
+		return $row;
+
+	}
+	
+	public function searchPoliza($params){
+
+		
+		$this->_model_poliza = new Model_Poliza();
+		$table_poliza = $this->_model_poliza->getTable();
+		
+		$query=$table_poliza->createQuery();
+		
+		foreach ($params as $arr) {
+			$campo = $arr['nombre'];
+			$valor = $arr['valor'];
+			
+			$query->addWhere("$campo = ? ", $valor);
+		}
+		
+		//$q = $query->getSqlQuery();
+		$q = $query->execute()->toArray();
+		
+		return $q;
+	}
+	
+	//Filtrar solicitud por perfil
+	//Por ahora trae las vigentes
+	public function findPolizaByNumero($numero){
+
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_renovado = Domain_EstadoPoliza::getIdByCodigo('RENOVADO');
+		
+		$this->_model_poliza = new Model_Poliza();
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id not in (0,1)' )
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->andWhere('numero_solicitud like ? OR numero_poliza like ?',array("%$numero%","%$numero%"))
+
+		->orderBy('numero_solicitud DESC')
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo "<pre>";
+		//print_r($row);
+		//exit;
+		return $row;
+
+	}
+
+	public function findPolizaByNumeroAndAsegurado($numero,$asegurado_id){
+
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+
+		$this->_model_poliza = new Model_Poliza();
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id not in (0,1)' )
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->andWhere('numero_solicitud like ? OR numero_poliza like ?',array("%$numero%","%$numero%"))
+		->andWhere('asegurado_id = ?',$asegurado_id)
+		->orderBy('numero_solicitud DESC')
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo "<pre>";
+		//print_r($row);
+		//exit;
+		return $row;
+
+	}
+
+
+	public function getPolizasDefault(){
+
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+
+		$this->_model_poliza = new Model_Poliza();
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id not in (0,1)' )
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		//->andWhere('numero_solicitud like ? OR numero_poliza like ?',array("%$numero%","%$numero%"))
+		->limit(50)
+		->orderBy('numero_solicitud DESC')
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo "<pre>";
+		//print_r($row);
+		//exit;
+		return $row;
+
+	}
+
+	// Estado = 0 es Poliza no confirmada => Solicitud
+	public function findSolicitudByNumero($numero){
+
+		//$estado = Domain_EstadoPoliza::getIdByCodigo('SOLICITUD_PENDIENTE');
+
+		$this->_model_poliza = new Model_Poliza();
+		$row = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id in (0,1)')
+		->andWhere('numero_solicitud like ? OR numero_poliza like ?',array("%$numero%","%$numero%"))
+		->orderBy('numero_solicitud DESC')
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo "<pre>";
+		//print_r($row);
+		//exit;
+		return $row;
+
+	}
+	//Aca no filtra pero en los otros tipos de usuario deberia filtrar por agente_id
+	public function findAseguradoByNombre($nombre){
+
+		$asegurado = new Model_Asegurado();
+		$rows = $asegurado->getTable()
+		->createQuery()
+		->where('nombre like ?',"%$nombre%")
+		->execute()
+		->toArray();
+		return $rows;
+	}
+
+	public function getAsegurados(){
+
+		$asegurado = new Model_Asegurado();
+
+		return $asegurado->getTable()->findAll()->toArray();
+
+	}
+
+	//Filtrar solicitud por perfil
+	public function getPolizaByAsegurado($asegurado_id,$estado='VIGENTE'){
+
+		$estado_id = Domain_EstadoPoliza::getIdByCodigo($estado);
+
+		$this->_model_poliza = new Model_Poliza();
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->Where('estado_id in ?',$estado)
+		->andWhere('asegurado_id = ?',$asegurado_id)
+		->getSqlQuery();
+		//->execute()
+		//->toArray();
+		print_r($rows);
+		return $rows;
+
+	}
+
+	/*
+	 * Trae las polizas del asegurado que tiene alguna cuota impaga
+	 * Si tiene todas las cuotas pagas esa poliza obviamente esta paga
+	 * y no se muestra
+	 */
+	public function getPolizaInpagaByAsegurado($asegurado_id){
+
+		$estado_id = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		->where('p.asegurado_id = ? and dpc.pago_id = ?',array($asegurado_id,$estado_id))
+		->execute()
+		->toArray();
+
+		return $rows;
+	}
+
+
+	/*
+	 * 1.Trae las polizas del asegurado y por tipo de poliza que tiene alguna cuota impaga
+	 * 2.Si tiene todas las cuotas pagas esa poliza obviamente esta paga
+	 * y no se muestra
+	 * 3.Solo muestra las polizas con los estados siguientes:
+	 * -AFECTADA
+	 * -BAJA POR LIBERACION
+	 */
+	public function getPolizaInpagaByAseguradoAndTipo($asegurado_id,$tipo_poliza_id){
+
+		$estado_id = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_no_renovado = Domain_EstadoPoliza::getIdByCodigo('NO_RENOVADO');
+		$estado_nota_credito = Domain_EstadoPoliza::getIdByCodigo('NOTA_DE_CREDITO');
+
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		->where('p.asegurado_id = ? and dpc.pago_id = ?',array($asegurado_id,$estado_id))
+		->andwhere('p.tipo_poliza_id = ? ',$tipo_poliza_id)
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id = ? OR p.estado_id = ? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_baja,$estado_afectada,$estado_refacturado,$estado_vigente,$estado_baja_devolucion,$estado_no_renovado,$estado_nota_credito))
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+
+
+		//echo $rows;
+		//exit;
+		return $rows;
+	}
+
+	/*
+	 * Panel Deuda Asegurado : Busqueda de poliza
+	 */
+	public function findPolizaInpagaByAsegurado($nro_poliza,$asegurado_id){
+
+		$estado_id = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_no_renovado = Domain_EstadoPoliza::getIdByCodigo('NO_RENOVADO');
+		$estado_nota_credito = Domain_EstadoPoliza::getIdByCodigo('NOTA_DE_CREDITO');
+
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		->where('p.asegurado_id = ? and dpc.pago_id = ? and p.numero_poliza like ?',array($asegurado_id,$estado_id,"%$nro_poliza%"))
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id = ? OR p.estado_id = ? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_baja,$estado_afectada,$estado_refacturado,$estado_vigente,$estado_baja_devolucion,$estado_no_renovado,$estado_nota_credito))
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+
+
+		//echo $rows;
+		//exit;
+		return $rows;
+	}
+
+	public function  getSaldo(){
+		return false;
+	}
+
+	/*
+	 * En este informe, Que estados de la poliza muestra??
+	 */
+	public function getPolizasInformeDiarioRango($fecha_desde,$fecha_hasta,$operacion_id=null){
+
+		//Buscar el estado Vigente
+		$estado_aceptada = Domain_EstadoPoliza::getIdByCodigo('ACEPTADA');
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_pago = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'PAGO');
+
+		if($operacion_id==null){
+		
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p')
+		->andWhere("fecha_pedido between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_aceptada))
+		->orderBy('p.fecha_pedido')
+		->execute()
+		->toArray();
+		
+		}else{
+		echo "entro operacion";
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p')
+		->andWhere("fecha_pedido between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_aceptada))
+		->andWhere("p.operacion_id = ?", $operacion_id)
+		->orderBy('p.fecha_pedido')
+		->execute()
+		->toArray();	
+		}
+		
+		//->getSqlQuery();
+
+		//print_r($rows);
+		//exit;
+		return $rows;
+	}
+
+	public function getPolizasInformeDiario($fecha_pedido){
+
+		//Buscar el estado Vigente
+		$estado_aceptada = Domain_EstadoPoliza::getIdByCodigo('ACEPTADA');
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_pago = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'PAGO');
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p')
+		->andWhere("fecha_pedido = ? ", $fecha_pedido)
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_aceptada))
+		->orderBy('p.fecha_pedido')
+		->execute()
+		->toArray();
+
+		return $rows;
+
+	}
+
+	public function getPolizasListadoProduccion(){
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+
+		$date = new DateTime();
+		$hoy =  $date->format('Y-m-d');
+
+		$mes_pasado_timestamp = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+		$mes_pasado =  date('Y-m-d',$mes_pasado_timestamp);
+		 
+		$this->_model_poliza = new Model_Poliza();
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->andWhere('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado_vigente,$estado_afectada,$estado_refacturado))
+		//->andWhere("fecha_vigencia = ?" , $fecha)
+		->andWhere("fecha_vigencia between ? AND ?", array($mes_pasado,$hoy))
+		//->getSqlQuery();
+		->execute()
+		->toArray();
+		//echo $rows;
+		//exit;
+		return $rows;
+
+	}
+
+	public function getPolizasListadoProduccionByMonth($mes,$anio){
+		
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+
+		$imes = intval($mes);
+		$ianio = intval($anio);
+		
+		$mes_pasado_timestamp = mktime(0, 0, 0, $imes-1, "01", $ianio);
+		$mes_pasado =  date('Y-m-d',$mes_pasado_timestamp);
+		
+		$mes_actual_timestamp = mktime(0, 0, 0, $imes, "01", $ianio);
+		$mes_actual =  date('Y-m-d',$mes_actual_timestamp);
+		
+				
+		$this->_model_poliza = new Model_Poliza();
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		->andWhere('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado_vigente,$estado_afectada,$estado_refacturado))
+		//->andWhere("fecha_vigencia = ?" , $fecha)
+		->andWhere("fecha_vigencia between ? AND ?", array($mes_pasado,$mes_actual))
+		//->getSqlQuery();
+		->execute()
+		->toArray();
+		
+		//echo $rows;
+		//exit;
+		
+		return $rows;
+
+	}
+
+	//trae polizas sin filtrar porque es el perfil Operador
+	public function getPolizasVencimiento($fecha_desde,$fecha_hasta,$asegurado_id){
+		//Buscar el estado Vigente
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		//Que muester todas las polizas, despues veo el filtro
+		$this->_model_poliza = new Model_Poliza();
+		
+		if(empty($asegurado_id)){
+
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		//->andWhere("fecha_vigencia_hasta => ? AND fecha_vigencia_hasta =< ?", array($fecha_desde,$fecha_hasta))
+		->orderBy('fecha_vigencia_hasta')
+		->execute()
+		->toArray();
+			
+		}else{
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->andWhere("asegurado_id = ?",$asegurado_id)
+		//->andWhere("fecha_vigencia_hasta => ? AND fecha_vigencia_hasta =< ?", array($fecha_desde,$fecha_hasta))
+		->orderBy('fecha_vigencia_hasta')
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo $rows;
+		//exit;
+		}
+		//echo $fecha_desde."hasta".$fecha_hasta;
+		/*
+		 *
+		// Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_baja_liberacion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		->andWhere("dpc.pago_id = ? ", $estado_debe)
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+		->andWhere("p.asegurado_id = ? ", $asegurado_id)
+		->execute()
+		->toArray();
+		 * 
+		 */
+		return $rows;
+
+	}
+
+	//trae polizas sin filtrar porque es el perfil Operador
+	public function getPolizasVencimientoCuotas($fecha_desde,$fecha_hasta,$asegurado_id){
+		//Buscar el estado Vigente
+		$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		
+		//Que muestre todas las polizas, despues veo el filtro
+		$this->_model_poliza = new Model_Poliza();
+		
+		if(empty($asegurado_id)){
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		//->andWhere("dpc.pago_id = ? ", $estado_debe)
+		//->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+		//,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		//->andWhere("p.asegurado_id = ? ", $asegurado_id)
+		->execute()
+		->toArray();
+			
+		/*	
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		//->andWhere("fecha_vigencia_hasta => ? AND fecha_vigencia_hasta =< ?", array($fecha_desde,$fecha_hasta))
+		->orderBy('fecha_vigencia_hasta')
+		->execute()
+		->toArray();
+		*/
+		}else{
+		/*	
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->andWhere("asegurado_id = ?",$asegurado_id)
+		//->andWhere("fecha_vigencia_hasta => ? AND fecha_vigencia_hasta =< ?", array($fecha_desde,$fecha_hasta))
+		->orderBy('fecha_vigencia_hasta')
+		->execute()
+		->toArray();*/
+		//->getSqlQuery();
+		
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		//->andWhere("dpc.pago_id = ? ", $estado_debe)
+		//->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+		//,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("fecha_vigencia_hasta between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->andWhere("p.asegurado_id = ? ", $asegurado_id)
+		->execute()
+		->toArray();
+		
+		
+		}
+		//echo $fecha_desde."hasta".$fecha_hasta;
+		/*
+		 *
+		// Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_baja_liberacion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+
+				 * 
+		 */
+		return $rows;
+
+	}
+	
+
+	//trae polizas sin filtrar porque es el perfil Operador
+	public function getListadoOperacionesByProductorId($productor_id){
+		//Buscar el estado Vigente
+		//$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		//$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		//$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		//Que muester todas las polizas, despues veo el filtro
+		$this->_model_poliza = new Model_Poliza();
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("productor_id = ? ", $productor_id)
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		return $rows;
+	}
+
+	//trae polizas sin filtrar porque es el perfil Operador
+	public function getListadoOperacionesByProductorIdAndMonth($productor_id,$mes,$anio){
+		//Buscar el estado Vigente
+		//$estado = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		//$estado_caucion = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		//$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		//Que muester todas las polizas, despues veo el filtro
+		$imes = intval($mes);
+		$ianio = intval($anio);
+		
+		$mes_pasado_timestamp = mktime(0, 0, 0, $imes-1, "01", $ianio);
+		$mes_pasado =  date('Y-m-d',$mes_pasado_timestamp);
+		
+		$mes_actual_timestamp = mktime(0, 0, 0, $imes, "01", $ianio);
+		$mes_actual =  date('Y-m-d',$mes_actual_timestamp);
+		
+		$this->_model_poliza = new Model_Poliza();
+		$rows = $this->_model_poliza
+		->getTable()
+		->createQuery()
+		//->Where('estado_id = ? OR estado_id = ? OR estado_id = ?',array($estado,$estado_caucion,$estado_refacturado))
+		->Where('estado_id not in (0,1)' )
+		->andWhere("productor_id = ? ", $productor_id)
+		->andWhere("fecha_vigencia between ? AND ?", array($mes_pasado,$mes_actual))
+		->orderBy("fecha_vigencia")
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		
+		return $rows;
+	}
+	
+
+
+
+
+	//trae polizas sin filtrar porque es el perfil Operador
+	//trae todas las polizas adeudadas
+	public function getListadoDeudaClienteByEntidadId($asegurado_id,$agente_id=null,$compania_id=null){
+
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_baja_liberacion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+
+		if( (empty($agente_id) AND empty($compania_id)) ){
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+			->andWhere("dpc.pago_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+			->andWhere("p.asegurado_id = ? ", $asegurado_id)
+			->execute()
+			->toArray();
+
+
+		}elseif(empty($agente_id)){
+			//echo "agente is empty";
+			//exit;
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+			->andWhere("dpc.pago_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+			->andWhere("p.asegurado_id = ? and p.compania_id = ?", array($asegurado_id,$compania_id))
+			->execute()
+			->toArray();
+			//->getSqlQuery();
+
+
+		}elseif(empty($compania_id)){
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+			->andWhere("dpc.pago_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+			->andWhere("p.asegurado_id = ? and p.agente_id = ?", array($asegurado_id,$agente_id))
+			->execute()
+			->toArray();
+
+		}else{
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+			->andWhere("dpc.pago_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+			->andWhere("p.asegurado_id = ? and p.agente_id = ? and p.compania_id = ?", array($asegurado_id,$agente_id,$compania_id))
+			->execute()
+			->toArray();
+			//->getSqlQuery();
+		}
+			
+
+		return $rows;
+	}
+	
+	public function getListadoDeudaCliente($asegurado_id){
+
+
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_baja_liberacion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_DetallePago dp, dp.Model_DetallePagoCuota dpc')
+		->andWhere("dpc.pago_id = ? ", $estado_debe)
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?' 
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion,$estado_baja_liberacion))
+		->andWhere("p.asegurado_id = ? ", $asegurado_id)
+		->execute()
+		->toArray();
+
+		return $rows;
+
+	}
+
+public function getListadoDeudaCompaniaByEntidadId($compania_id,$agente_id=null,$asegurado_id=null){
+
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+
+		if( (empty($agente_id) AND empty($asegurado_id)) ){
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_PolizaValores pv')
+			->andWhere("p.pago_compania_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion))
+			->andWhere("p.compania_id = ? ", $compania_id)
+			->execute()
+			->toArray();
+			//->getSqlQuery();
+
+		}elseif(empty($agente_id)){
+			//echo "agente is empty";
+			//exit;
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_PolizaValores pv')
+			->andWhere("p.pago_compania_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion))
+			->andWhere("p.asegurado_id = ? and p.compania_id = ?", array($asegurado_id,$compania_id))
+			->execute()
+			->toArray();
+			//->getSqlQuery();
+
+
+		}elseif(empty($asegurado_id)){
+		
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_PolizaValores pv')
+			->andWhere("p.pago_compania_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion))
+			->andWhere("p.compania_id = ? and p.agente_id = ?", array($compania_id,$agente_id))
+			->execute()
+			->toArray();
+
+		}else{
+
+			$rows = Doctrine_Query::create()
+			->from('Model_Poliza p, p.Model_PolizaValores pv')
+			->andWhere("p.pago_compania_id = ? ", $estado_debe)
+			->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+			,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion))
+			->andWhere("p.asegurado_id = ? and p.agente_id = ? and p.compania_id = ?", array($asegurado_id,$agente_id,$compania_id))
+			->execute()
+			->toArray();
+			//->getSqlQuery();
+
+
+		}
+			
+
+		return $rows;
+	}
+	
+	public function getListadoDeudaCompania($compania_id){
+
+		//Buscar el estado Vigente
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p, p.Model_PolizaValores pv')
+		->andWhere("p.pago_compania_id = ? ", $estado_debe)
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_vigente,$estado_afectada,$estado_refacturado,$estado_baja_devolucion))
+		->andWhere("p.compania_id = ? ", $compania_id)
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		
+		return $rows;
+
+	}
+	
+	//Seccion Pago Compania
+	//Aca no filtra pero en los otros tipos de usuario deberia filtrar por agente_id
+	public function findCompaniaByNombre($nombre){
+
+		$compania = new Model_Compania();
+		$rows = $compania->getTable()
+		->createQuery()
+		->where('nombre like ?',"%$nombre%")
+		->execute()
+		->toArray();
+		return $rows;
+	}
+//Panel Pago Compania
+
+public function findPolizaInpagaByCompania($nro_poliza,$compania_id){
+
+		$estado_id = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+		$estado_baja = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_LIBERACION');
+		$estado_afectada = Domain_EstadoPoliza::getIdByCodigo('AFECTADA');
+		$estado_vigente = Domain_EstadoPoliza::getIdByCodigo('VIGENTE');
+		$estado_refacturado = Domain_EstadoPoliza::getIdByCodigo('REFACTURADO');
+		$estado_baja_devolucion = Domain_EstadoPoliza::getIdByCodigo('BAJA_POR_DEVOLUCION');
+		$estado_no_renovado = Domain_EstadoPoliza::getIdByCodigo('NO_RENOVADO');
+		$estado_nota_credito = Domain_EstadoPoliza::getIdByCodigo('NOTA_DE_CREDITO');
+
+
+
+		$rows = Doctrine_Query::create()
+		->from('Model_Poliza p')
+		->where('p.compania_id = ? and p.pago_compania_id = ? and p.numero_poliza like ?',array($compania_id,$estado_id,"%$nro_poliza%"))
+		->andwhere('p.estado_id = ? OR p.estado_id =? OR p.estado_id =? OR p.estado_id = ? OR p.estado_id = ? OR p.estado_id =? OR p.estado_id =?'
+		,array($estado_baja,$estado_afectada,$estado_refacturado,$estado_vigente,$estado_baja_devolucion,$estado_no_renovado,$estado_nota_credito))
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+
+		//echo $rows;
+		//exit;
+		return $rows;
+	}
+	
+	public function getMovimientosByFecha($fecha_desde,$fecha_hasta){
+		
+		//Que muester todas las polizas, despues veo el filtro
+		$this->_model_poliza = new Model_Poliza();
+		
+		
+	   /*
+		* SELECT *
+		* FROM movimiento m
+		* LEFT JOIN movimiento_poliza mp ON m.movimiento_id = mp.movimiento_id
+		* WHERE m.movimiento_id =423
+        */
+		
+		$m_movimiento = new Model_Movimiento();
+
+		$movimiento_polizas = Doctrine_Query::create()
+		->from('Model_Movimiento m')
+		->leftJoin('m.Model_MovimientoPoliza mp')
+		//->where('m.movimiento_id = ? ',$movimiento_id)
+		->where("m.fecha_pago between ? AND ?", array($fecha_desde,$fecha_hasta))
+		->execute()
+		->toArray();
+		//->getSqlQuery();
+		//echo "<pre>";
+		//print_r($movimiento_polizas);
+		//exit;
+		return $movimiento_polizas;
+	}
+	
+	
+}
+
+

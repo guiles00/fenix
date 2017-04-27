@@ -1,0 +1,205 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.search.js');?>
+
+<form action="" id="form_search_poliza">
+<input type="hidden" name="busqueda" value=true></input>
+	<table id="table_search_poliza">
+		<tr>
+			<td>Buscar Polizas:</td>
+			<td></td>
+		</tr>
+		<tr>	
+			<td>Tipo:</td>
+			<td><select name="tipo_poliza_id">
+								<option value="">Todos</option>
+								<? foreach($this->poliza_tipos as $row ):?>
+								<option value=<?=$row['t_poliza_id']?>>
+								<?=$row['nombre']?>
+								<? endforeach; ?>
+				</select>
+			</td>
+			<td>Estado:</td>
+			<td><select name="estado_id">
+								<option value="">Todos</option>
+								<? foreach($this->poliza_estados as $row ):?>
+								<option value=<?=$row['estado_id']?>>
+								<?=$row['nombre']?>
+								<? endforeach; ?>
+						</select>
+			</td>
+		</tr>
+		<tr>	
+			<td>Tipo Operacion:</td>
+			<td><select name="operacion_id">
+								<option value="">Todos</option>
+								<? foreach($this->operacion as $row ):?>
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<? endforeach; ?>
+				</select>
+			</td>
+			<td>Pago Compania:</td>
+			<td><select name="pago_compania_id">
+								<option value="">No</option>
+								<option value="1">Si</option>
+				</select>
+			</td>
+		</tr>
+		<tr>	
+			<td>Asegurado:</td>
+			<td><select name="asegurado_id">
+								<option value="">Todos</option>
+								<? foreach($this->asegurados as $row ):?>
+								<option value=<?=$row['asegurado_id']?>>
+								<?=$row['nombre']?>
+								<? endforeach; ?>
+				</select>
+			</td>
+			<td>Compania:</td>
+			<td><select name="compania_id">
+								<option value="">Todos</option>
+								<? foreach($this->companias as $row ):?>
+								<option value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								<? endforeach; ?>
+				</select>
+			</td>
+		</tr>
+		<tr>
+		<td>Nro Factura:</td>
+			<td><input type="text" name="numero_factura" id="numero_factura"></input>
+			</td>
+		</tr>
+		<tr>
+		<td>Fecha desde:</td>
+			<td><input type="text" name="fecha_desde" id="s_fecha_desde" value="<?=$this->fecha_desde?>"></input>
+			</td>	
+			<td>hasta:</td>
+			<td><input type="text" name="fecha_hasta" id="s_fecha_hasta" value="<?=$this->fecha_hasta?>"></input>
+			</td>
+		</tr>
+		
+		<tr>
+		<td><input type="button" name="buscar" value="Buscar" id="confirm_search_poliza"></input></td>
+		</tr>
+	</table>
+</form>
+<?if($this->busqueda):?>
+<div id="div_table_poliza_search">
+<table id="poliza_search" class="ui-widget" cellspacing="1" cellpadding="0" border="0" >
+
+	<thead  class="ui-widget-header" >
+		<tr>
+			<th>Tomador</th>
+			<th>Numero Solicitud</th>	
+			<th>Compania</th>
+			<th>Numero Poliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Secci&oacute;n</th>
+			<th>Tipo de Cobertura</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<th>Premio</th>
+			<th>Plus</th>
+			<th>Estado</th>
+			<th>Fecha Baja</th>
+			<th>Nro Factura</th>
+		</tr>
+	</thead>
+	<tbody   class="ui-widget-content" >
+	<?foreach ($this->rows as $poliza):?>
+	<? //Esto lo puedo hacer con metodos estaticos
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado = new Domain_Asegurado($poliza['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$compania = new Domain_Compania($poliza['compania_id']);
+	$m_compania = $compania->getModel();
+	$estado = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	$estado_codigo = Domain_EstadoPoliza::getCodigoById($poliza['estado_id']);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($poliza['tipo_poliza_id']);
+	$cantidad_cuotas = (float) Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float) Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+	$operacion = Domain_Helper::getHelperNameById('operacion', $poliza['operacion_id']);
+
+	$m_detalle_poliza = $d_poliza->getModelDetalle();
+	//Aca podria traer el objeto correspondiente en vez de instanciarlo por separado
+	
+	switch ($tipo_poliza) {
+		case 'AUTOMOTORES':
+
+			$tipo_cobertura = Domain_Helper::getHelperNameById('tipo_cobertura_automotores', $m_detalle_poliza->tipo_cobertura_id);
+			break;
+
+		case 'ADUANEROS':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			
+			break;
+			
+		case 'ACCIDENTES_PERSONALES':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+			
+		case 'CONSTRUCCION':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+
+		case 'ALQUILER':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_polizadetalle->motivo_garantia_id, $poliza['tipo_poliza_id']);
+			break;
+	case 'TRANSPORTE_MERCADERIA':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+	case 'JUDICIALES':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+			
+		default:
+			$tipo_cobertura = null;
+			break;
+
+	}
+	?>
+		<tr>
+			<td><?=$m_asegurado->nombre ?></td>
+			<td><?=$poliza['numero_solicitud']?></td>	
+			<td><?=$m_compania->nombre ?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=$tipo_cobertura?></td>
+			<td><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->prima_comision,2)?></td>
+			<td><?=round($m_poliza_valores->premio_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->plus,2)?></td>
+			<td><?=$estado?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+			<td><?=$poliza['numero_factura']?></td>
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+
+<table>
+</div>
+	<tr>
+			<td><input type="button" name="atras" value="atras" id="tab_search_poliza"></input></td>
+			<input id="g_search_params" type="hidden" value='<?=$this->arrayBusqueda?>' </input>
+
+			
+			<!--td><a href='javascript:printContent("div_tabla_polizas_compania")' id='imprimir_search_poliza'>Imprimir Listado</a></td-->
+			<td> <A HREF="javascript:void(0)"onclick="window.open('./poliza/poliza/imprimir-listado-poliza-detalle/tipo_poliza_id/<?=$this->searchParams[tipo_poliza_id]?>/estado_id/<?=$this->searchParams[estado_id]?>/operacion_id/<?=$this->searchParams[operacion_id]?>/pago_compania_id/<?=$this->searchParams[pago_compania_id]?>/asegurado_id/<?=$this->searchParams[asegurado_id]?>/compania_id/<?=$this->searchParams[compania_id]?>/numero_factura/<?=$this->searchParams[numero_factura]?>/fecha_desde/<?=$this->searchParams[fecha_desde]?>/fecha_hasta/<?=$this->searchParams[fecha_hasta]?>')">Imprimir Listado Detalle</a> </td>
+	</tr>
+</table>
+<?endif;?>
+
+<div id="g_res_search"></div>

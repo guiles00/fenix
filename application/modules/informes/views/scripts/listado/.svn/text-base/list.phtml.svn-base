@@ -1,0 +1,239 @@
+<!-- Fecha de Pedido
+Tomador
+Nº de Póliza
+Endoso
+Agente
+Riesgo
+Moneda
+Suma Asegurada
+Compañia
+Operación
+Premio Compañia
+Premio
+Plus
+Importe
+Fecha de Pago
+Cobrador
+Importe Cobrado -->
+<script type="text/javascript">
+//Hacer todo en JQuery
+$('#fecha_desde').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+$('#fecha_hasta').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+function loadPageSolicitud(url, title){
+	var existe=false;
+	tab_url = './poliza/solicitud/alta-automotores';
+	temp_url = './poliza/solicitud/alta-automotores';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala para poder ver la Solicitud');
+				
+			return false;  	
+		}
+
+function viewPoliza(url, title){
+	var existe=false;
+	tab_url = url;
+		
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+		   var href = $(this).attr('tab_url');
+				   if (href==url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				
+			return false;  	
+}
+function listInformeDiario(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,fecha_desde: f.fecha_desde.value
+            ,fecha_hasta: f.fecha_hasta.value
+            ,operacion: f.operacion.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function loadPagePoliza(url, title){
+	var existe=false;
+	tab_url = './operaciones/deuda-asegurado/deuda-asegurado';
+	temp_url = './operaciones/deuda-asegurado/deuda-asegurado';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala :)	');
+				
+			return false;  	
+	
+}
+
+
+function loadPagoPoliza(url){
+	//var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	/*data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }*/
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+
+</script>
+
+
+<div id="buscar_asegurado">
+	<form action="./informes/listado/list"
+		onSubmit="return listInformeDiario(this)">
+
+		<table id="buscar_asegurado">
+			<tr>
+				<td><b>Buscar:</b></td>
+				<td><input type="text" name="fecha_desde" id="fecha_desde" /></td>
+				<td><input type="text" name="fecha_hasta" id="fecha_hasta" /></td>
+				<td><select name="operacion" id="operacion">
+						<option value="1">Todos</option>
+						<option value="2">Emision</option>
+						<option value="3">Renovacion</option>
+						<option value="4">Refacturacion</option>
+				</select>
+				</td>
+				<td><input type="submit" name="buscar" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+<?if($this->buscar):exit;?>
+<table>
+	<tr>
+		<th>Tomador</th>
+		<th>Nro de Póliza</th>
+		<th>Endoso</th>
+		<th>Agente</th>
+		<th>Riesgo</th>
+		<th>Moneda</th>
+		<th>Suma Asegurada</th>
+		<th>Compañia</th>
+		<th>Operación</th>
+		<th>Premio Compañia</th>
+		<th>Premio</th>
+		<th>Plus</th>
+		<th>Importe</th>
+		<th>Fecha de Pago</th>
+		<th>Cobrador</th>
+		<th>Importe Cobrado</th>
+	</tr>
+
+	<?foreach ($this->rows as $row):?>
+	<?
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$cantidad_cuotas = (int)Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float)Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+	$agente_nombre = Domain_Agente::getNameById( $row['agente_id'] );
+	$cobrador_nombre = Domain_Cobrador::getNameById($row['cobrador_id']);
+	$compania_nombre = Domain_Compania::getNameById($row['compania_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	?>
+	<tr>
+		<td><?=$asegurado_nombre?></td>
+		<td><?=$row['numero_poliza']?></td>
+		<td><?=$row['endoso']?></td>
+		<td><?=$agente_nombre?></td>
+		<td>Riesgo</td>
+		<td><?=$moneda?></td>
+		<td><?=$m_poliza_valores->monto_asegurado?></td>
+		<td><?=$compania_nombre?></td>
+		<td>Operación</td>
+		<td><?=$m_poliza_valores->premio_compania?></td>
+		<td><?=$m_poliza_valores->premio_asegurado?></td>
+		<td><?=$m_poliza_valores->plus?></td>
+		<td><?=$importe?></td>
+		<td>Fecha de Pago</td>
+		<td><?=$cobrador_nombre?></td>
+		<td>Importe Cobrado</td>
+	</tr>
+	<?endforeach; ?>
+</table>
+	<?endif;?>
+
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->

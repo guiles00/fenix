@@ -1,0 +1,112 @@
+<script type="text/javascript">
+/*function listar(){
+	
+url="./default/menues/list";
+		$.ajax({url: url,
+	        success:function(result){
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+}
+
+function editForm(f){
+//console.debug(f);
+    var url = f.action;
+    
+    $.ajax({url: url,
+        data:{add: f.add.value
+            ,id: f.id.value 
+            ,menu: f.menu.value
+            ,url: f.url.value
+            ,padre_id: f.padre_id.value
+            ,orden: f.orden.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+    return false;
+}*/
+
+function addMenu(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+    
+    $.ajax({url: url,
+        data:{add: f.add.value
+            ,id: f.id.value 
+            ,menu: f.menu.value
+            ,url: f.url.value
+            ,padre_id: f.padre_id.value
+            ,orden: f.orden.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+
+		    return false;
+	}
+
+function menues(f){
+	var url = $(f).attr('url');
+	if(url == null){
+		var url="./default/menues/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+</script>
+
+<form action="./default/menues/add" onSubmit="return addMenu(this)">
+	<input type="hidden" name="add" value="1"></input>
+	<table>
+		<tr>
+			<td>menu_id</td>
+			<td><input type="text" name="id" value=""></input></td>
+		</tr>
+		<tr>
+			<td>menu</td>
+			<td><input type="text" name="menu" value=""></input></td>
+		</tr>
+		<tr>
+			<td>url</td>
+			<td><input type="text" name="url" value=""></input></td>
+		</tr>
+		<tr>
+			<td>padre_id</td>
+			<td><input type="text" name="padre_id" value=""></input></td>
+		</tr>
+		<tr>
+			<td>orden</td>
+			<td><input type="text" name="orden" value=""></input></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="guardar"></input></td>
+			<td><input type="button" name="Cancel" onclick="return menues()"
+				value="cancel" /></input></td>
+		</tr>
+	</table>
+</form>

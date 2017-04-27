@@ -1,0 +1,158 @@
+
+<head>
+<script type="text/javascript">
+
+// traigo la fecha actual con el formato yyyy-mm-dd
+// sumo un mes, tres meses, etc.. y cambio el formato
+// le asigno los valores
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1;// January is 0!
+var yyyy = today.getFullYear();
+if (dd < 10) {
+	dd = '0' + dd
+}
+if (mm < 10) {
+	mm = '0' + mm
+}
+var date_today = yyyy + '-' + mm + '-' + dd;
+// alert(date_today);
+// Por defecto va la fecha del pedido del dia
+// alert($('#fecha_pedido'));
+// if($('#fecha_pedido').val())
+$('#fecha_baja').val(date_today);
+
+
+
+$('#fecha_baja').datepicker(
+		{
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju',
+					'Vi', 'Sa' ],
+			monthNames : [ 'Enero', 'Febrero', 'Marzo',
+					'Abril', 'Mayo', 'Junio', 'Julio',
+					'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ]
+		});
+
+function confirmar(){
+	return confirm('Desea realizar la operacion?');
+	}
+
+function listadoPolizaBaja(){
+	var url = './poliza/poliza/list';
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function listadoPolizaBaja(){
+	var url = './poliza/poliza/list';
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function darBajaLiberacionPoliza(f){
+
+	if(!confirmar()) return false;
+    var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        ,data:{
+            baja:f.baja.value
+            ,poliza_id: f.poliza_id.value
+			,fecha_baja : f.fecha_baja.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+	
+	
+}
+
+
+</script>
+
+</head>
+
+<?
+$d_poliza = new Domain_Poliza($this->poliza_id);
+$m_poliza = $d_poliza->getModelPoliza();
+$nombre_cliente = Domain_Asegurado::getNameById($m_poliza->asegurado_id)
+?>
+
+<?if(!$this->baja): ?>
+<form id="baja_poliza" name="baja_poliza" action="./poliza/poliza/baja-liberacion-poliza/" 
+onSubmit="return darBajaLiberacionPoliza(this)">
+<input type="hidden" name="poliza_id" value="<?=$this->poliza_id?>"/>
+<input type="hidden" name="baja" value="true"></input>
+	<table>
+	<tr>
+			<td>BAJA POR LIBERACION</td>
+			
+		</tr>
+		<tr>
+			<td>Cliente:</td>
+			<td><?=$nombre_cliente?></td>
+		</tr>
+		<tr>
+			<td>Nro Poliza:</td>
+			<td><?=$m_poliza->numero_poliza?></td>
+		</tr>
+		<tr>
+			<td>Fecha baja</td>
+			<td><input readonly id="fecha_baja" name="fecha_baja" value=""></input></td>
+		</tr>
+		<tr>
+			<td><input type='button' value='Cancelar'
+				onClick="return listadoPolizaBaja()"> </input>
+			</td>
+
+			<td><input type='submit' value='Baja'>
+				</input>
+			</td>
+		</tr>
+	</table>
+
+</form>
+
+<?else:?>
+<table>
+
+<tr>
+<td>
+<input type='button' value='Volver'
+				onClick="return listadoPolizaBaja()"> </input>
+</td></tr>
+
+</table>
+<?endif; ?>

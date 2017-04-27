@@ -1,0 +1,32 @@
+<head>
+<script type="text/javascript">
+
+function confirmar(){
+	return confirm('Desea realizar la operacion?');
+	}
+	
+function listadoPolizaAfectada(){
+
+	var url = './poliza/poliza/list';
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+</script>
+</head>
+<table>
+<tr><td><input type='button' value='Volver'
+				onClick="return listadoPolizaAfectada()"> </input>
+</td></tr>
+
+</table>

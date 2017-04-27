@@ -1,0 +1,48 @@
+<head>
+<script type="text/javascript">
+function listadoVencimientoRefacturacion(){
+	var url = './poliza/operaciones/listado-vencimiento';
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function listadoVencimientoRefacturacion(){
+	var url = './poliza/poliza/list';
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+</script>
+</head>
+<table>
+<tr><td><input type='button' value='Volver Listado Vencimiento'
+				onClick="return listadoVencimientoRefacturacion()"> </input>
+</td>
+<td><input type='button' value='Volver Listado Polizas'
+				onClick="return listadoVencimientoRefacturacion()"> </input>
+</td>
+</tr>
+
+</table>

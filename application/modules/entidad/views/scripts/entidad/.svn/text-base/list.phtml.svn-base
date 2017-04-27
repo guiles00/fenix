@@ -1,0 +1,39 @@
+
+<script type="text/javascript">
+function action(entidad){
+
+
+
+console.debug($(entidad).val());
+var url = $(entidad).attr('url')
+
+    $.ajax({url: url,success:function(result){
+        console.debug(result);
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+<table>
+  <tr>
+    <th>Apellido</th>
+    <th>Nombre</th>
+    <th></th>
+  </tr>
+<?php 
+foreach ($this->entidades as $entidad):?>
+  <tr>
+    <td><?=$entidad['nombre'] ?></td>
+    <td><?=$entidad['apellido'] ?></td>
+    <td><input type="button" value="Ver" url="./entidad/entidad/view/id/<?=$entidad['entidad_id']?>" onClick="return action(this)"> </input> </td>
+     <td><input type="button" value="Del" url="./entidad/entidad/delete/id/<?=$entidad['entidad_id']?>" onClick="return action(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/entidad/add/" onClick="return view(this)"> </input> </td>
+  </tr>
+
+</table>

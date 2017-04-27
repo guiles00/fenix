@@ -1,0 +1,222 @@
+<?php
+require_once ('IndexController.php');
+class Admin_UsuarioController extends Admin_IndexController
+{
+	private $_usuario = null;
+	private $_services_simple_crud = null;
+
+	public function init()
+	{
+		$this->_helper->layout->disableLayout();
+		$this->_usuario = new Domain_Usuario();
+		$this->_services_simple_crud = new Services_SimpleCrud();
+	}
+
+	public function indexAction()
+	{
+		$this->_forward('list','usuario','admin');
+	}
+
+	public function listAction(){
+			
+		$params = $this->_request->getParams();
+		$service_model = new Services_SimpleCrud();
+		$rows = $this->_services_simple_crud
+		->findByName($this->_usuario->getModel(),array('campo'=>'username','valor'=>$params['criterio']));
+
+		
+		
+		$page=$this->_getParam('page',1);
+			
+		$paginator = Zend_Paginator::factory($rows);
+		$paginator->setItemCountPerPage(10);
+		$paginator->setCurrentPageNumber($page);
+		$this->view->criterio = $params['criterio'];
+
+//		echo "criterio:";
+	//	print_r($params);
+		
+		$this->view->rows = $paginator;
+	}
+
+	public function viewAction()
+	{
+		$params = $this->_request->getParams();
+
+		$row = $this->_services_simple_crud
+		->getById($this->_usuario->getModel(),array('primary_key'=>'usuario_id','value'=>$params['id']));
+
+		$this->view->usuario_perfil_id = $this->_usuario->getPerfilIdById($params['id']);
+		//Traigo Perfil creado
+		$this->view->perfiles = Domain_Perfil::getPerfiles();
+		//echo "<pre>";
+		//print_r($this->view->perfiles);
+		//foreach ($this->view->perfiles as $perfil) {
+			//echo "<br>".$perfil['perfil_id'];
+		//}
+		$this->view->tipo_usuarios = Domain_Helper::getHelperByDominio('entidad');
+
+		//Traigo a los agentes para poder seleccionarlo( pensar si puede ser un factory)
+		//O utilizar el cascade
+		$d_agente = new Domain_Agente();
+		$this->view->agentes = $d_agente->getModel()->getTable()->findAll()->toArray();
+		$d_cliente = new Domain_Cliente();
+		$this->view->clientes = $d_cliente->getModel()->getTable()->findAll()->toArray();
+		//echo "<pre>";
+		//print_r($this->view->agentes);
+		//print_r($this->view->clientes);
+
+		$this->view->row = $row;
+
+	}
+
+	public function editAction()
+	{
+		$params = $this->_request->getParams();
+		echo "<pre>";
+		print_r($params);
+		//exit;
+		//saca la data de mas
+		//$usuario_perfil_id = array_pop($values); //saco el id del perfil
+		$usuario_perfil_id = $params['usuario_perfil_id'];
+		unset($params['usuario_perfil_id']); //saco el id del perfil
+		$values =  array_slice($params,3); 
+
+		//Traigo el modelo y lo modifico porque es solo uno.
+		$d_usuario = new Domain_Usuario($params['id']);
+		$m_usuario_perfil = $d_usuario->getModelUsuarioPerfil();
+		$m_usuario_perfil->perfil_id = $usuario_perfil_id;
+		$m_usuario_perfil->save();
+		//echo"<pre>";
+		//print_r($m_usuario_perfil);
+		//print_r($values);
+
+		//exit;
+		$this->_services_simple_crud->save($this->_usuario->getModel(),$values);
+		$this->view->params = $params;
+
+	}
+
+	public function addAction()
+	{
+		$params = $this->_request->getParams();
+		$values =  array_slice($params,4); //saca la data de mas
+		$usuario_perfil_id = array_pop($values); //saco el id del perfil
+		$values['password']=md5($values['password']);
+		$this->view->perfiles = Domain_Perfil::getPerfiles();
+		//echo "<pre>";
+		//print_r($this->view->perfiles);
+		$this->view->tipo_usuarios = Domain_Helper::getHelperByDominio('entidad');
+		$d_agente = new Domain_Agente();
+		$this->view->agentes = $d_agente->getModel()->getTable()->findAll()->toArray();
+
+		$d_cliente = new Domain_Cliente();
+		$this->view->clientes = $d_cliente->getModel()->getTable()->findAll()->toArray();
+
+		$d_compania = new Domain_Compania();
+		$this->view->companias = $d_compania->getModel()->getTable()->findAll()->toArray();
+
+		if( isset($params['add']) ){
+				//echo "<pre>";
+				//print_r($this->_usuario->getModel());
+				//exit;
+			$m_usuario = $this->_services_simple_crud->save($this->_usuario->getModel(),$values);
+			//Mejorar esto
+			$m_usuario_perfil = new Model_UsuarioPerfil();
+
+			$m_usuario_perfil->usuario_id = $m_usuario->usuario_id;
+			$m_usuario_perfil->perfil_id = $usuario_perfil_id;
+			$m_usuario_perfil->save();
+
+		}
+	}
+	
+	public function passwordAction()
+	{
+		$params = $this->_request->getParams();
+		$this->view->save = false;
+		//echo "<pre>";
+		//print_r($params);
+		//exit;
+		$d_usuario = new Domain_Usuario($params['id']);
+		//print_r($d_usuario);
+		$usuario = $d_usuario->getModel();
+		//print_r($usuario->usuario_id);
+		$this->view->username = $usuario->username; 
+		$this->view->usuario_id = $usuario->usuario_id;
+		 
+	if( isset($params['save']) ){
+		$this->view->save = true;
+		try {
+
+		$usuario->password = md5($params['password']);
+		$usuario->save();
+		
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			exit;
+		}
+		echo "Password Modificado con exito";	
+			
+		}
+
+	}
+	
+	public function checkUsuarioAction(){
+		$this->_helper->viewRenderer->setNoRender();
+		$params = $this->_request->getParams();
+		//echo "<pre>";
+		//print_r($params);
+		$usuario = Domain_Usuario::getUsuarioByName($params['username']);
+		
+		//print_r($usuario);
+		//exit;
+		if(empty($usuario)){
+		$this->getResponse()->appendBody("true");
+		}else{
+		$this->getResponse()->appendBody("false");	
+		}
+	} 
+	
+
+	public function ajaxListadoCargosUsuarioAction()
+	{
+		$this->_helper->viewRenderer->setNoRender();
+		$model = new Model_CargoUsuario();
+		$options=array();
+		$model_grid_panel_facade = new MyZend_Doctrine_Record_GridPanelFacade_Base($model, $options);
+
+		$params=$this->_getAllParams();
+		unset($params['columns']);//.=',ubicacion,secretaria';
+		$respuesta = $model_grid_panel_facade->ajaxGridList($params);
+
+		$this->getResponse()->setHeader('Content-Type', 'application/json');
+		$json = Zend_Json::encode($respuesta);
+		$this->getResponse()->appendBody($json);
+	}
+
+	public function getUbicacionIdUsuarioAction()
+	{
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender();
+		$respuesta=array('success'=>true, data=>array('ubicacion_id'=>MyZend_Usuario::getInstance()->getUbicacionId()) );
+		$this->getResponse()->setHeader('Content-Type', 'application/json');
+		$json = Zend_Json::encode($respuesta);
+		$this->getResponse()->appendBody($json);
+	}
+
+	public function getUbicacionesIdJuzgadoUsuarioAction()
+	{
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender();
+		// **
+		$ubicaciones_id= MyZend_Usuario::getInstance()->getUbicacionesIdJuzgadoUsuario();
+		// **
+		$respuesta=array('success'=>true, data=>array('ubicaciones_id'=>$ubicaciones_id) );
+		$this->getResponse()->setHeader('Content-Type', 'application/json');
+		$json = Zend_Json::encode($respuesta);
+		$this->getResponse()->appendBody($json);
+	}
+
+
+}

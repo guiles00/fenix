@@ -1,0 +1,502 @@
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.solicitud.alta-responsabilidad-civil.js');?>
+
+<div id="content">
+
+	<fieldset>
+		<legend>Solicitud Responsabilidad Civil</legend>
+
+		<form id="solicitud_poliza_responsabilidad_civil"
+			name="solicitud_poliza"
+			action="./poliza/solicitud/alta-responsabilidad-civil"
+			onSubmit="return false">
+			<input type="hidden" name="save" value=1>
+
+			<h3 id="datos_solicitud_responsabilidad_civil_show">Datos de la
+				Solicitud</h3>
+			<div id="datos_solicitud_responsabilidad_civil">
+				<table>
+					<tr>
+						<td>Número de solicitud:</td>
+						<td><input readonly type="text" name="numero_solicitud"
+							id="numero_solicitud_responsabilidad_civil"
+							value="<?=$this->solicitud->numero_solicitud?>" /> <input
+							type="hidden" name="solicitud_id"
+							id="solicitud_responsabilidad_civil_id"
+							value="<?=$this->solicitud->poliza_id?>" />
+						</td>
+					</tr>
+
+					<!-- Autocomplente para Clientes -->
+					<tr>
+						<td>Cliente:</td>
+						<?if( empty($this->solicitud->poliza_id) ):?>
+						<td><input id="asegurado_responsabilidad_civil" type="text"
+							name="asegurado" value="<?=$this->solicitud->asegurado_id?>"></input>
+							<input type="hidden" id="asegurado_responsabilidad_civil_id"
+							name="asegurado_id" value=""></input>
+						</td>
+						<?else:?>
+						<td><input readonly id="asegurado_responsabilidad_civil"
+							type="text" name="asegurado" value="<?=$this->asegurado_nombre?>"></input>
+							<input type="hidden" id="asegurado_responsabilidad_civil_id"
+							name="asegurado_id" value="<?=$this->solicitud->asegurado_id?>"></input>
+						</td>
+						<?endif;?>
+					</tr>
+					<tr>
+						<td>Agente:</td>
+						<?if($this->isAgente):?>
+						<td><?=$this->agente_nombre?> <input name="agente_id"
+							value=<?=$this->agente_id?> type="hidden"></input>
+						</td>
+						<?else:?>
+						<td><select name="agente_id">
+								<option value="0">Seleccione Agente</option>
+								<? foreach($this->agentes as $row ):?>
+								<?if($this->solicitud->agente_id==$row['agente_id']):?>
+								<option selected value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['agente_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select> <?endif;?>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania Aseguradora:</td>
+						<td><select name="compania_id">
+								<option value="0">Seleccione Compania</option>
+								<? foreach($this->companias as $row ):?>
+								<?if($this->solicitud->compania_id==$row['compania_id']):?>
+								<option selected value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['compania_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Productor:</td>
+						<td><select name="productor_id">
+								<option value="0">Seleccione Productor</option>
+								<? foreach($this->productores as $row ):?>
+								<?if($this->solicitud->productor_id==$row['productor_id']):?>
+								<option selected value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['productor_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Cobrador:</td>
+						<td><select name="cobrador_id">
+								<option value="0">Seleccione Cobrador</option>
+								<? foreach($this->cobradores as $row ):?>
+								<?if($this->solicitud->cobrador_id==$row['cobrador_id']):?>
+								<option selected value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['cobrador_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+
+						</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+			<h3 id="datos_seguro_responsabilidad_civil_show">Datos del Seguro</h3>
+			<div id="datos_seguro_responsabilidad_civil">
+				<table>
+					<tr>
+						<td>Fecha de pedido:</td>
+						<?if($this->isAgente):?>
+						<td> <input readonly type="text"
+							id="fecha_pedido_agente_responsabilidad_civil"
+							name="fecha_pedido" value="<?=$this->solicitud->fecha_pedido?>" />
+						</td>
+						<?else:?>
+						<td>
+						<input type="text" id="fecha_pedido_responsabilidad_civil"
+							name="fecha_pedido" value="<?=$this->solicitud->fecha_pedido?>" />
+						</td>
+						<?endif;?>
+					</tr>
+					<tr>
+						<td>Fecha Vigencia:</td>
+						<td><input type="text" id="fecha_vigencia_responsabilidad_civil"
+							name="fecha_vigencia"
+							value="<?=$this->solicitud->fecha_vigencia?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>Periodo:</td>
+						<td><select id="periodo_responsabilidad_civil_id"
+							name="periodo_id">
+								<option value="0">Seleccione periodo</option>
+								<? foreach($this->periodos as $row ):?>
+								<?if($this->solicitud->periodo_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+			<!-- 
+			Detalle del Riesgo
+- Tipo de Garantia - Motivo de la Garantia: - Beneficiario - Domicilio riesgo - Localidad riesgo - Provincia riesgo
+- Obra - Expediente - Clausula especial - Descripcion adicional
+			 -->
+			<hr>
+			<h3 id="detalle_riesgo_responsabilidad_civil_show">Detalle del Riesgo</h3>
+			<div id="detalle_riesgo_responsabilidad_civil">
+				<table>
+					<tr>
+						<td>Tipo de Garantia:</td>
+						<td><select id="tipo_garantia_responsabilidad_civil_id"
+							name="tipo_garantia_id">
+								<option value="0">Seleccione Tipo Garantia</option>
+								<? foreach($this->tipo_garantias as $row ):?>
+								<?if($this->poliza_detalle->tipo_garantia_id==$row['t_garantia_id']):?>
+								<option selected value=<?=$row['t_garantia_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['t_garantia_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Motivo de Garantia:</td>
+						<td><select id="motivo_garantia_responsabilidad_civil_id"
+							name="motivo_garantia_id">
+								<option value="0">Seleccione Motivo Garantia</option>
+								<? foreach($this->motivo_garantias as $row ):?>
+								<?if($this->poliza_detalle->motivo_garantia_id==$row['motivo_garantia_id']):?>
+								<option selected value=<?=$row['motivo_garantia_id']?>>
+								<?=$row['motivo_garantia']?>
+								<?else:?>
+								
+								<option value=<?=$row['motivo_garantia_id']?>>
+								<?=$row['motivo_garantia']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td>Beneficiario:</td>
+						<td><select id="beneficiario_responsabilidad_civil_id"
+							name="beneficiario_id">
+								<option value="0">Seleccione Beneficiario</option>
+								<? foreach($this->beneficiarios as $row ):?>
+								<?if($this->poliza_detalle->beneficiario_id==$row['beneficiario_id']):?>
+								<option selected value=<?=$row['beneficiario_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['beneficiario_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+
+					</tr>
+					<tr>
+						<td>Domicilio Riesgo:</td>
+						<td><input type="text" id="domicilio_riesgo_responsabilidad_civil"
+							name="domicilio_riesgo"
+							value="<?=$this->escape($this->poliza_detalle->domicilio_riesgo)?>" />
+						</td>
+
+						<td>Localidad Riesgo:</td>
+						<td><input type="text" id="localidad_riesgo_responsabilidad_civil"
+							name="localidad_riesgo"
+							value="<?=$this->escape($this->poliza_detalle->localidad_riesgo)?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Provincia Riesgo:</td>
+						<td><input type="text" id="provincia_riesgo_responsabilidad_civil"
+							name="provincia_riesgo"
+							value="<?=$this->escape($this->poliza_detalle->provincia_riesgo)?>" />
+						</td>
+
+					</tr>
+					
+					<tr>
+						<td>Obra:</td>
+						<td><textarea id="obra_responsabilidad_civil" name="obra">
+
+							<?=$this->escape($this->poliza_detalle->obra)?>
+						</textarea>
+						</td>
+						<td>Expediente:</td>
+						<td><input type="text" id="expediente_responsabilidad_civil" name="expediente"
+							value="<?=$this->escape($this->poliza_detalle->expediente)?>" />
+						</td>
+					</tr>
+					<tr>
+						<td>Clausula Especial:</td>
+						<td><input type="text" id="clausula_especial_responsabilidad_civil"
+							name="clausula_especial"
+							value="<?=$this->escape($this->poliza_detalle->clausula_especial)?>" />
+						</td>
+						<td>Personal:</td>
+						<td><input type="text" id="personal_responsabilidad_civil"
+							name="personal"
+							value="<?=$this->escape($this->poliza_detalle->personal)?>" />
+						</td>
+					</tr>
+					<tr>
+					<td>Presupuesto Oficial:</td>
+						<td><input type="text" id="presupuesto_oficial_responsabilidad_civil"
+							name="presupuesto_oficial"
+							value="<?=$this->escape($this->poliza_detalle->presupuesto_oficial)?>" />
+						</td>
+						<td>Descripcion Adicional:</td>
+						<td><input type="text" id="descripcion_adicional_responsabilidad_civil"
+							name="descripcion_adicional"
+							value="<?=$this->escape($this->poliza_detalle->descripcion_adicional)?>" />
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+
+			<hr>
+			<h3 id="valores_seguro_responsabilidad_civil_show">Valores del seguro</h3>
+			<div id="valores_seguro_responsabilidad_civil">
+				<table>
+					<tr>
+						<td>Moneda:</td>
+						<td><select name="moneda_id">
+						<? foreach($this->monedas as $row ):?>
+						<?if($this->poliza_valores->moneda_id==$row['dominio_id']):?>
+								<option selected value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else:?>
+								
+								<option value=<?=$row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif; ?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Monto Asegurado:</td>
+						<td><input type="text" name="monto_asegurado" id="monto_asegurado"
+							value="<?=$this->escape($this->poliza_valores->monto_asegurado)?>" />
+						</td>
+
+						<td>Prima:</td>
+						<td><input type="text" name="prima"
+							value="<?=$this->escape($this->poliza_valores->prima_comision)?>" />
+						</td>
+
+					</tr>
+					<tr id="forma_pago">
+						<td>Forma de Pago:</td>
+						<td><select name="forma_pago_id" id="forma_pago_responsabilidad_civil_id">
+						<? foreach($this->forma_pagos as $row ):?>
+						<?if($this->detalle_pago->forma_pago_id==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								<? endforeach; ?>
+						</select>
+						</td>
+					
+					
+					<tr id="datos_tarjeta_responsabilidad_civil_show">
+						<td>Tipo:</td>
+						<td><select>
+								<option>VISA</option>
+								<option>MASTERCARD</option>
+								<option>AMERICAN EXPRESS</option>
+								<option>GUILES CARD PREMIUM</option>
+						</select>
+						</td>
+						<td>Numero:</td>
+						<td><input value=""></input>
+						</td>
+						<td>Otros:</td>
+						<td><input value=""></input>
+						</td>
+					</tr>
+					<tr>
+						<td>Cuotas:</td>
+						<td><select id="cuotas_responsabilidad_civil" name="cuotas">
+
+						<? foreach($this->cuotas as $row ):?>
+
+						<?if($this->cantidad_cuotas==$row['dominio_id']):?>
+								<option selected value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								<?else: ?>
+								
+								<option value=<?= $row['dominio_id']?>>
+								<?=$row['nombre']?>
+								</option>
+								<?endif;?>
+								</option>
+								<? endforeach; ?>
+						</select>
+						</td>
+						<td>Valor Cuota:</td>
+						<td><input id="valor_cuota_responsabilidad_civil"
+							name="valor_cuota" value=<?=$this->escape($this->valor_cuotas)?>>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Importe total a cobrar:</td>
+						<td><input readonly type="text" name="importe"
+							id="importe_responsabilidad_civil" value=<?=$this->importe?>></input>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<hr>
+			<h3 id="observaciones_seguro_responsabilidad_civil_show">Observaciones</h3>
+			<div id="observaciones_seguro_responsabilidad_civil">
+				<table>
+
+					<tr>
+						<td>Asegurado:</td>
+						<td><textarea name="observaciones_asegurado">
+						<?=$this->escape($this->solicitud->observaciones_asegurado)?>
+						</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>Compania</td>
+						<td><textarea name="observaciones_compania">
+						<?=$this->escape($this->solicitud->observaciones_compania)?>
+						</textarea>
+						</td>
+					</tr>
+				</table>
+
+
+			</div>
+			<hr>
+
+			<?if($this->isAgente):?>
+			<?if(empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_responsabilidad_civil"
+				id="save_solicitud_responsabilidad_civil" value="Solicitar"></input>
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+
+			<input type="submit" name="save_solicitud_responsabilidad_civil"
+				id="save_solicitud_responsabilidad_civil" value="Guardar Cambios"></input>
+				<?endif;?>
+				<?endif;?>
+
+				<?//pregunto si es operador, si no, no hace nada?>
+				<?if($this->operador):?>
+				<?if(empty($this->solicitud->poliza_id)):?>
+			<input type="submit" name="save_solicitud_responsabilidad_civil"
+				id="save_solicitud_responsabilidad_civil" value="Solicitar"></input>
+				<?elseif(!empty($this->solicitud->poliza_id)):?>
+
+			<input type="submit" name="save_solicitud_responsabilidad_civil"
+				id="save_solicitud_responsabilidad_civil" value="Guardar Cambios"></input>
+				<?
+				$codigo_estado = Domain_EstadoPoliza::getCodigoById($this->solicitud->estado_id);
+				switch ($codigo_estado) {
+					case 'SOLICITUD_PENDIENTE':?>
+
+			<input type='submit' name='aprobar_solicitud_responsabilidad_civil'
+				id='aprobar_solicitud_responsabilidad_civil' value='Aprobar Solicitud'
+				onClick="return false"> </input> 
+				
+				<input type='submit'
+				name='confirmar_solicitud_responsabilidad_civil'
+				id='confirmar_solicitud_responsabilidad_civil'
+				value='Aprobar Solicitud y Crear Poliza' onClick="return false"> </input>
+
+<input type='submit'
+				name='enviar_compania_solicitud_responsabilidad_civil' id='enviar_compania_solicitud_responsabilidad_civil'
+				value='Enviar Solicitud Compania' onClick="return false" />
+
+			<input type='submit' name='anular_solicitud_responsabilidad_civil'
+				id='anular_solicitud_responsabilidad_civil' value='Anular Solicitud'
+				onClick="return false" />
+
+
+				<?break;
+case 'SOLICITUD_CONFIRMADA':?>
+			<input type='submit' name='confirmar_solicitud_responsabilidad_civil'
+				id='confirmar_solicitud_responsabilidad_civil' value='Crear Poliza'
+				onClick="return false"> </input> <input type='submit'
+				name='anular_solicitud_responsabilidad_civil' id='anular_solicitud_responsabilidad_civil'
+				value='Anular Solicitud' onClick="return false" />
+				<?break;
+default:
+
+	break;
+				}?>
+
+
+				<?endif;?>
+			<input type="button" name="Cancel" onclick="" value="Cancelar" />
+			<?endif;?>
+
+
+
+		</form>
+		<div id="show_result">
+			
+			</div>
+	</fieldset>
+</div>
+

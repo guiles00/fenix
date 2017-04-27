@@ -1,0 +1,87 @@
+<script type="text/javascript">
+function listarCuentaCorriente(url){
+	//var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	/*data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }*/
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+</script>
+
+
+<table id="poliza_search" class="ui-widget" cellspacing="1" cellpadding="0" border="0" >
+
+	<thead  class="ui-widget-header" >
+		<tr>
+		<tr>
+			<th >Tomador</th>
+			<th>Numero Solicitud</th>	
+			<th>Compania</th>
+			<th>Numero Poliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Secci&oacute;n</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<th>Importe</th>
+			<th>Estado</th>
+			<th>Fecha Baja</th>
+			<th></th>
+		</tr>
+		</tr>
+	</thead>
+	<tbody   class="ui-widget-content" >
+<?foreach($this->rows as $poliza):?>
+<? 
+   //Esto lo puedo hacer con metodos estaticos
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado = new Domain_Asegurado($poliza['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$compania = new Domain_Compania($poliza['compania_id']);
+	$m_compania = $compania->getModel();
+	$estado = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	$estado_codigo = Domain_EstadoPoliza::getCodigoById($poliza['estado_id']);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($poliza['tipo_poliza_id']);
+	$cantidad_cuotas = (float) Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float) Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+	$operacion = Domain_Helper::getHelperNameById('operacion', $poliza['operacion_id']);
+
+	$m_detalle_poliza = $d_poliza->getModelDetalle();
+?>
+		<tr>
+			<td><?=$m_asegurado->nombre ?></td>
+			<td><?=$poliza['numero_solicitud']?></td>	
+			<td><?=$m_compania->nombre ?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=round($m_poliza_valores->monto_asegurado,2)?></td>
+			<td><?=round($m_poliza_valores->prima_comision,2)?></td>
+			<td><?=$importe?></td>
+			<td><?=$estado?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+			
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+
+<input type="button" value="Atras" onClick="return listarCuentaCorriente('./operaciones/cuenta-corriente/cc-asegurado/asegurado_id/<?=$this->rows[0]['asegurado_id'] ?>')"/>

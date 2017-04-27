@@ -1,0 +1,35 @@
+<script type="text/javascript">
+function loginForm(f){
+
+    var url = f.action;
+    
+    $.ajax({url: url,
+        data:{add: f.add.value
+            ,username: f.username.value 
+            ,password: f.password.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+<input type="hidden"
+	name="add" value="1"></input>
+<table cellspacing="0" cellpadding="0" border="0" width="300"
+	height="100%" align="center">
+	<tr valign="middle">
+		<td align="center" valign="center">GSeguros
+			<form action="./login/process"
+				onSubmit="return loginForm(this)">
+				Login: <input type="text" name="username" size="20" class="com10"><br>
+				<br> Pass: <input type="Password" name="password" size="20"
+					class="com10"><br> <br> <input type="Submit" value="Entrar"
+					class="fia10">
+			</form>
+		</td>
+	</tr>
+</table>
+</form>

@@ -1,0 +1,61 @@
+<script type="text/javascript">
+function listarPerfil(){
+	
+url="./admin/perfil/list";
+		$.ajax({url: url,
+	        success:function(result){
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+}
+
+function editForm(f){
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{add: f.add.value
+            ,id: f.id.value 
+            ,nombre: f.nombre.value
+            }
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+   
+    return false;
+}
+function addPerfil(f){
+
+	var url = f.action;
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	 $.ajax({url: url,
+		 data:{add: f.add.value
+	            ,id: f.id.value 
+	            ,nombre: f.nombre.value
+	            }
+	        , success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	   
+	    return false;
+	}
+
+</script>
+<form action="./admin/perfil/add" onSubmit="return addPerfil(this)">
+<input type="hidden" name="add" value="1"></input>
+<table>
+<tr><td>perfil_id</td><td><input type="text" name="id" value=""></input></td></tr>
+<tr><td>nombre</td><td><input type="text" name="nombre" value=""></input></td></tr>
+<tr><td></td><td><input type="submit" value="guardar"></input></td>
+<td><input type="button" name="Cancel" onclick="return listrPerfil()" value="cancel" /></input></td></tr>
+</table>	
+</form>

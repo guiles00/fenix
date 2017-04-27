@@ -1,0 +1,121 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+<h2>Listado de Vencimientos</h2><h3>Fecha desde: <?=$this->fecha_desde?> hasta: <?=$this->fecha_hasta?></h3>
+<table id="poliza_vencimiento_list" class="ui-widget">
+	<thead class="ui-widget-header">
+		<tr>
+			<th>Fecha Vencimiento</th>
+			<th>Vigencia</th>
+			<th>Tomador</th>
+			<th>Nro de Póliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Tipo de Cobertura</th>
+			<th>Moneda</th>
+			<th>Suma Asegurada</th>
+			<th>Prima</th>
+			<th>Premio Cia.</th>
+			<th>Premio</th>
+			<th>Importe Plus</th>
+			<th>Documentacion</th>
+			<th>Estado</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?foreach ($this->rows as $row):?>
+	<?//Aca se instancian muchos objetos, tengo que ver como hacer mas liviano este listado
+	$d_poliza = new Domain_Poliza($row['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	
+	//Solo para Aduaneros
+	if($row['tipo_poliza_id']!=7)
+	$riesgo = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_poliza_detalle->motivo_garantia_id,$row['tipo_poliza_id']);
+
+	$documentacion = ($row['tipo_poliza_id']==2)?Domain_Helper::getHelperNameById('documentacion', $m_poliza_detalle->documentacion_id):null;
+
+
+
+	$cantidad_cuotas = (int)Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float)Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+
+	$asegurado_nombre = Domain_Asegurado::getNameById($row['asegurado_id']);
+	$moneda = Domain_Helper::getHelperNameById('moneda', $m_poliza_valores->moneda_id);
+
+	$fecha_desde = $d_poliza->getModelPoliza()->fecha_vigencia;
+	$periodo = $d_poliza->getModelPoliza()->periodo_id;
+	//Helper que calcular la fecha de vigencia
+	$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+
+	$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+	$operacion = Domain_Helper::getHelperNameById('operacion', $row['operacion_id']);
+	$estado = Domain_EstadoPoliza::getNameById($row['estado_id']);
+
+
+	?>
+		<tr>
+			<td><p1><?=$fecha_hasta?></p1></td>
+			<td><p><?=$vigencia?></p></td>
+			<td><p><?=$asegurado_nombre?></p></td>
+			<td align="center"><p1><?=$row['numero_poliza']?></p1></td>
+			<td align="center"><p1><?=$row['endoso']?></p1></td>
+		  <td align="center"><p><?=$operacion?></p></td>
+	    <td><p><?=$riesgo?></p></td>
+			<td align="center"><p><?=$moneda?></p></td>
+	    <td align="right"><p1><?=round($m_poliza_valores->monto_asegurado,2)?></p1></td>
+		  <td align="center"><p><?=round($m_poliza_valores->prima_comision,2)?></p></td>
+		  <td align="right"><p><?=round($m_poliza_valores->premio_compania,2)?></p></td>
+		  <td align="right"><p1><?=round($m_poliza_valores->premio_asegurado,2)?></p1></td>
+		  <td align="right"><?=round($m_poliza_valores->plus,2)?></td>
+		  <td align="center"><p><?=$documentacion?></p></td>
+			<td align="center"><p1><?=$estado?></p1></td>
+
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>

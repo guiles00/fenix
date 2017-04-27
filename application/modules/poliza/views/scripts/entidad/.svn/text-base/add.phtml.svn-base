@@ -1,0 +1,36 @@
+<script type="text/javascript">
+function listar(){
+	
+url="./entidad/entidad/list";
+		$.ajax({url: url,
+	        success:function(result){
+	        $('#content').html(result);
+	      }});
+	   
+	    return false;
+}
+
+function editForm(f){
+
+    //console.debug(f.nombre.value);
+    //console.debug(f.apellido.value);
+
+    var url = f.action;
+    $.ajax({url: url,
+        data:{add:f.add.value,id:f.id.value ,nombre: f.nombre.value,apellido: f.apellido.value}
+        , success:function(result){
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+<form action="./entidad/entidad/add"  onSubmit="return editForm(this)">
+<input type="hidden" name="add" value="1"></input>
+<input type="text" name="id" value=""></input>
+<input type="text" name="nombre" value=""></input>
+<input type="text" name="apellido" value=""></input>
+<input type="submit" value="guardar"></input>
+<input type="button" name="Cancel" onclick="return listar()" value="cancel" /></input>
+</form>

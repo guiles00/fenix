@@ -1,0 +1,99 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+@media screen {
+	body {
+		font-family:Arial, Helvetica, sans-serif;}
+	p {font-size:10px;}
+	p1 {font-size:12px;}
+	h3 {font-size:20px;}
+	table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+
+
+<!--  h2>Informe Cobranza</h2><h4>Productor:  
+Desde  hasta  </h4>-->
+<?/*=$this->fecha_hasta
+=$this->fecha_desde
+=$this->productor_nombre*/?>
+<table class="ui-widget" id="informe_diario_list"> 
+	<thead class="ui-widget-header">
+		<th>FECHA DE REGISTRACION</th>
+		<th>CONCEPTO DEL IMPORTE REGISTRADO</th>
+		<th>NUMERO DE POLIZA/ENDOSO</th>
+		<th>ENTIDAD ASEGURADORA</th>
+		<th>IMPORTE DEL INGRESO</th>
+		<th>IMPORTE DEL EGRESO</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?php $count=0;?>
+	<?foreach ($this->informe_cobranzas as $informe_cobranza):?>
+	<?php $count++;?>
+
+		<tr>
+
+			<td><?=$informe_cobranza['fecha_registracion']?></td>
+			<td><?=$informe_cobranza['concepto']?></td>		
+			<td><?=$informe_cobranza['numero_poliza']?></td>
+			<td><?=$informe_cobranza['entidad_aseguradora']?></td>
+			<td><?=$informe_cobranza['importe_ingreso']?></td>
+			<td><?=$informe_cobranza['importe_egreso']?></td>
+		</tr>
+		
+				<?if($count==31):
+		$count = 0;?>
+		  <div style="page-break-after: always"></div>
+</table>
+<table>
+<tr>
+		<th>FECHA DE REGISTRACION</th>
+		<th>CONCEPTO DEL IMPORTE REGISTRADO</th>
+		<th>NUMERO DE POLIZA/ENDOSO</th>
+		<th>ENTIDAD ASEGURADORA</th>
+		<th>IMPORTE DEL INGRESO</th>
+		<th>IMPORTE DEL EGRESO</th>
+</tr>
+
+	<?endif;?>
+
+		
+		
+	<?endforeach;?>
+	</tbody>
+</table>
+
+
+<input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>
+
+

@@ -1,0 +1,28 @@
+<script type="text/javascript">
+function listarPagoCompania(){
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	
+	var href = $(tab).attr('href') ;
+	                       
+	var url = "./operaciones/pago-compania/list";
+
+	$.ajax({
+	    url: url,
+    	    success:function(result){
+        //console.debug(result);
+        $(href).html(result);
+      	}
+      });
+	   
+	    return false;
+
+
+}
+</script>
+
+Pago realizado, Numero de Movimiento:<?=$this->nro_movimiento?>
+<input type="button" value="Atras" onClick="return listarPagoCompania()"/>

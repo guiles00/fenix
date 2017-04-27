@@ -1,0 +1,158 @@
+<script type="text/javascript">
+
+esta = false;
+$(document).ready(
+		function(){
+			
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	
+	var href = $(tab).attr('href') ;
+	
+	var table_polizas = href+' #div_tabla_polizas #deuda_tabla_polizas';
+	var table_busqueda = href+' #tabla_busqueda_poliza'+' input:checkbox:checked';
+	//alert(table_busqueda);
+
+	 //$("#tabla_busqueda_poliza input:checkbox").click(function(o){
+		 
+		 $(".eliminar_poliza").live("click", function(){
+
+				////console.debug($(this).closest('tr'));
+		  		//$(this).closest('tr').not(':only-child').remove();
+		  		$(this).closest('tr').remove();
+		});
+		 
+
+	
+	//alert(table);
+	//$(table).html('<span> a verrr </span>');
+	$('#pasar_polizas').click(function(){
+
+		
+		$("#tabla_busqueda_poliza input:checkbox:checked ").each(function(index) {
+
+			////console.debug(index);
+			var row_busqueda_id = $(this).val();
+			         //alert('entro');
+			//table_row = $('#tabla_busqueda_poliza input:checkbox:checked').closest('tr').clone();        
+			//console.debug('id'+row_busqueda_id);
+
+			$("#deuda_tabla_polizas input ").each(function(index) {
+
+				////console.debug(index);
+				var row_id = $(this).val();
+				         //alert('entro');
+				//table_row = $('#tabla_busqueda_poliza input:checkbox:checked').closest('tr').clone();        
+				//console.debug('id_a_comparar'+row_id);
+
+				if(row_busqueda_id==row_id){
+					//console.debug('ya esta la poliza');
+					esta = true;
+				}
+				
+			});		
+
+			
+		});
+		 
+		
+		//agrego a la tabla
+				if(esta){
+					alert('La poliza ya se encuentra en el listado');
+					esta = false;
+				}else{
+					esta = false;
+					//clono el registro		
+					var table_row = $('#tabla_busqueda_poliza input:checkbox:checked').closest('tr').clone();
+					////console.debug(table_row);
+					
+					//le agrego el boton quitar	
+					var html = '<td><input class="eliminar_poliza" type="button"  value="Quitar"></input></td>';
+					
+					table_row.append(html);
+					$(table_polizas).append(table_row);	
+					
+				}
+		
+		//$(table_polizas).append('<span> a verrr </span>');
+		
+		});
+	   
+	});
+</script>
+
+<hr>
+
+
+<table id="tabla_busqueda_poliza" class="ui-widget">
+<thead class="ui-widget-header">
+				<tr>
+					<th></th>
+					<th>Nro Solicitud</th>
+					<th>Nro de Póliza</th>
+					<th>Endoso</th>
+					<th>Compañia</th>
+					<th>Tomador</th>
+					<th>Asegurado</th>
+					<th>Premio</th>
+					<th>Plus</th>
+					<th>Fecha Pago</th>
+					<th>Moneda</th>
+					<th>Cuota</th>
+					<th>Importe</th>
+					<th></th>
+				</tr>
+</thead>
+<tbody class="ui-widget-content">
+<?foreach ($this->polizas as $row):
+			$d_poliza = new Domain_Poliza($row['poliza_id']);
+			$m_poliza = $d_poliza->getModelPoliza();
+			$m_detalle_pago = $d_poliza->getModelDetallePago();
+			$m_poliza_valores = $d_poliza->getModelPolizaValores();
+			$m_poliza_detalle = $d_poliza->getModelDetalle();
+			
+			//$despachante_aduana	=	Domain_DespachanteAduana::getNameById($m_poliza_detalle->despachante_aduana_id)	;
+			$asegurado = Domain_Asegurado::getNameById($m_poliza->asegurado_id);
+			$moneda = Domain_Helper::getHelperNameById('moneda', $m_detalle_pago->moneda_id);
+			$estado_poliza = Domain_EstadoPoliza::getNameById($m_poliza->estado_id);
+
+			$rows = Domain_DetallePago::getCuotas($m_detalle_pago->detalle_pago_id);
+
+			$compania_nombre = Domain_Compania::getNameById($m_poliza->compania_id);
+			$fecha_desde = $m_poliza->fecha_vigencia;
+			$periodo = $m_poliza->periodo_id;
+			
+			//Helper que calcular la fecha de vigencia
+			$fecha_hasta = $this->calcularPeriodo($fecha_desde,$periodo);
+			$vigencia = $this->traduceFecha($fecha_desde)." hasta ".$this->traduceFecha($fecha_hasta);
+?>			
+			<?foreach ($rows as $row):?>
+
+				<tr>
+					<td><input type="checkbox" name="poliza_a_pagar"
+						value=<?=$row['detalle_pago_cuota_id']?>
+						moneda=<?="$m_detalle_pago->moneda_id"	?>
+						importe=<?=$row['importe']?>></input>
+					</td>
+					<td><?=$m_poliza->numero_solicitud?></td>
+					<td><?=$m_poliza->numero_poliza?></td>
+					<td><?=$m_poliza->endoso?></td>
+					<td><?=$compania_nombre ?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$asegurado?></td>
+					<td><?=$m_poliza_valores->premio_asegurado?></td>
+					<td><?=$m_poliza_valores->plus?></td>
+					<td><?=$row['fecha_pago']?></td>
+					<td><?=$moneda?></td>
+					<td><?=$row['cuota_id']?></td>
+					<td><?=$row['importe']?></td>
+				</tr>
+				<?endforeach;?>
+
+
+				<?endforeach;?>
+			</tbody>
+		</table>
+<input type="button" value="Pasar Polizas" id="pasar_polizas"></input>

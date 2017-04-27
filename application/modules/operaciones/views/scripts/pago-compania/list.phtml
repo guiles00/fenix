@@ -1,0 +1,113 @@
+<script type="text/javascript">
+function listPaginator(g){
+
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+
+function loadPagePoliza(url, title){
+	var existe=false;
+	tab_url = './operaciones/deuda-compania/deuda-compania';
+	temp_url = './operaciones/deuda-compania/deuda-compania';
+			$('div#CenterPane>div#tabs>ul.ui-tabs-nav>li a').each(function() {
+				
+		   var href = $(this).attr('tab_url');
+		   //console.debug(href);
+				   if (href==temp_url)existe=true;
+				})
+				
+				if(!existe)$("#tabs").tabs("add",url,title);
+				if(existe)alert('Ya esta abierta la solapa, cerrala :)	');
+				
+			return false;  	
+	
+}
+
+
+function loadPagoPolizaCompania(url){
+	
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url
+        
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+function listDeudaCompania(f){
+	var url = f.action;
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	var href = $(tab).attr('href') ;                       
+	
+    $.ajax({url: url,
+        data:{
+            buscar:f.buscar.value
+            ,criterio: f.criterio.value
+            }
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+</script>
+
+
+<div id="buscar_compania">
+<form action="./operaciones/pago-compania/list" onSubmit="return listDeudaCompania(this)">
+
+	<table id="buscar_compania">
+		<tr>
+			<td><b>Buscar Compania:</b></td>
+			<td><input type="text" name="criterio" /></td>
+			<td><input type="submit" name="buscar" value="buscar"></input></td>
+		</tr>
+	</table>
+</form>
+<hr>
+</div>
+<?if($this->buscar):?>
+<table>
+  <tr>
+    <th>compania_id</th>
+    <th>Nombre</th>
+    <th></th>
+  </tr>
+
+<?foreach ($this->rows as $compania):?> 
+  <tr>
+    <td><?=$compania['compania_id'] ?></td>
+    <td><?=$compania['nombre']?></td>
+    <td><input type="button" value="Ver Polizas" onClick="return loadPagoPolizaCompania('./operaciones/pago-compania/pago-compania/compania_id/<?=$compania['compania_id'] ?>')"> </input> </td>
+  </tr>
+	<?php //onClick="return loadPagePoliza('./operaciones/deuda-compania/deuda-compania/compania_id/<?=$compania['compania_id'] ?><?//','Deuda-compania')?>
+<?endforeach; ?>
+</table>
+<?endif;?>
+<?= $this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); ?>

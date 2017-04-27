@@ -1,0 +1,64 @@
+
+<script type="text/javascript">
+function view(entidad){
+
+//console.debug($(entidad).val());
+var url = $(entidad).attr('url')
+
+    $.ajax({url: url,success:function(result){
+        console.debug(result);
+        $('#content').html(result);
+      }});
+   
+    return false;
+}
+</script>
+<!-- 
+`productor_id`, `nombre`, `cuit`, `domicilio`, `codigo_postal`, 
+`localidad`, `provincia`, `telefono`, `email`
+ -->
+<table>
+  <tr>
+    <th>productor_id</th>
+    <th>Nombre</th>
+    <th>Matricula</th>
+    <th>CUIT</th>
+    <th>Codigo Postal</th>
+    <th>Domicilio</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Telefono</th>
+    <th>Email</th>
+    <th>Ingresos Brutos</th>
+    <th>Jubilacion</th>
+    <th>Situacion IVA</th>
+    <th>Situacion Juridica</th>
+    <th></th>
+    <th></th>
+  </tr>
+<?foreach($this->rows as $row):?>
+  <tr>
+  	<td><?=$row['productor_id'] ?></td>
+    <td><?=$row['nombre'] ?></td>
+    <td><?=$row['matricula'] ?></td>
+    <td><?=$row['cuit'] ?></td>
+    <td><?=$row['codigo_postal'] ?></td>
+    <td><?=$row['domicilio'] ?></td>
+    <td><?=$row['provincia'] ?></td>
+    <td><?=$row['localidad'] ?></td>
+    <td><?=$row['telefono'] ?></td>
+    <td><?=$row['email'] ?></td>
+    <td><?=$row['ingresos_brutos'] ?></td>
+    <td><?=$row['jubilacion'] ?></td>
+    <td><?=$row['situacion_iva'] ?></td>
+    <td><?=$row['situacion_juridica'] ?></td>
+    <td><input type="button" value="Ver" url="./entidad/productor/view/id/<?=$row['productor_id']?>" onClick="return view(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./entidad/productor/delete/id/<?=$row['productor_id']?>" onClick="return view(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./entidad/productor/add/" onClick="return view(this)"> </input> </td>
+  </tr>
+
+</table>

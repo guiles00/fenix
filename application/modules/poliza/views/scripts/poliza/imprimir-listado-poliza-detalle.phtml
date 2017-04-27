@@ -1,0 +1,150 @@
+<script type="text/javascript">
+window.print();
+function imprimir(){
+window.print();
+}
+</script>
+<style type="text/css">
+@media print {
+	table {
+		border-collapse: collapse;
+		font-size:70%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:70%;
+	}
+	
+	 .noprint { display: none; }
+	 
+}
+
+
+@media screen {
+table {
+		border-collapse: collapse;
+		font-size:80%;
+	}
+	th {
+		border-bottom: 1px solid black;
+		font-size:80%;
+	}
+}
+</style>
+<?php echo $this->headScript()->appendFile('./js/gseguros.poliza.poliza.search.js');?>
+
+
+<div id="div_table_poliza_search">
+<table id="poliza_search" class="ui-widget" cellspacing="1" cellpadding="0" border="0" >
+<!--
+tomador, nro poliza, nro endoso, compania, tipo cobertura, beneficiario, nro licitacion, objeto, expediente
+ -->
+	<thead  class="ui-widget-header" >
+		<tr>
+			<th>Tomador</th>
+			<th>Numero Solicitud</th>	
+			<th>Compania</th>
+			<th>Numero Poliza</th>
+			<th>Endoso</th>
+			<th>Operacion</th>
+			<th>Secci&oacute;n</th>
+			<th>Tipo de Cobertura</th>
+			<th>Beneficiario</th>
+			<th>Nro Licitacion</th>
+			<th>Objeto</th>
+			<th>Expediente</th>
+		</tr>
+	</thead>
+	<tbody   class="ui-widget-content" >
+	<?foreach ($this->rows as $poliza):?>
+	<? //Esto lo puedo hacer con metodos estaticos
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+
+	$asegurado = new Domain_Asegurado($poliza['asegurado_id']);
+	$m_asegurado = $asegurado->getModel();
+	$compania = new Domain_Compania($poliza['compania_id']);
+	$m_compania = $compania->getModel();
+	$estado = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	$estado_codigo = Domain_EstadoPoliza::getCodigoById($poliza['estado_id']);
+	$tipo_poliza = Domain_TipoPoliza::getNameById($poliza['tipo_poliza_id']);
+	$cantidad_cuotas = (float) Domain_DetallePago::getCantidadCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$valor_cuotas = (float) Domain_DetallePago::getValorCuotas($d_poliza->getModelDetallePago()->detalle_pago_id);
+	$importe = $cantidad_cuotas * $valor_cuotas;
+	$operacion = Domain_Helper::getHelperNameById('operacion', $poliza['operacion_id']);
+
+	$m_detalle_poliza = $d_poliza->getModelDetalle();
+	//Aca podria traer el objeto correspondiente en vez de instanciarlo por separado
+	$beneficiario = Domain_Beneficiario::getNameById($m_detalle_poliza->beneficiario_id);
+	$numero_licitacion = (isset($m_detalle_poliza->numero_licitacion))? $m_detalle_poliza->numero_licitacion : '';
+
+	$objeto = (isset($m_detalle_poliza->objeto))? $m_detalle_poliza->objeto : '';
+	$expediente = (isset($m_detalle_poliza->expediente))? $m_detalle_poliza->expediente : '';
+
+	switch ($tipo_poliza) {
+		case 'AUTOMOTORES':
+
+			$tipo_cobertura = Domain_Helper::getHelperNameById('tipo_cobertura_automotores', $m_detalle_poliza->tipo_cobertura_id);
+			break;
+
+		case 'ADUANEROS':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			
+			break;
+			
+		case 'ACCIDENTES_PERSONALES':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+			
+		case 'CONSTRUCCION':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+			break;
+
+		case 'ALQUILER':
+
+			$tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_polizadetalle->motivo_garantia_id, $poliza['tipo_poliza_id']);
+			break;
+	case 'TRANSPORTE_MERCADERIA':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+	case 'JUDICIALES':
+                        $tipo_cobertura = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id,$poliza['tipo_poliza_id']);
+                        
+               break;
+			
+		default:
+			$tipo_cobertura = null;
+			break;
+
+	}
+	?>
+		<tr>
+			<td><?=$m_asegurado->nombre ?></td>
+			<td><?=$poliza['numero_solicitud']?></td>	
+			<td><?=$m_compania->nombre ?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$operacion?></td>
+			<td><?=$tipo_poliza?></td>
+			<td><?=$tipo_cobertura?></td>
+			<td><?=$beneficiario?></td>
+			<td><?=$numero_licitacion?></td>
+			<td><?=$objeto?></td>
+			<td><?=$expediente?></td>
+		</tr>
+		<?endforeach; ?>
+	</tbody>
+</table>
+
+<table>
+</div>
+	<tr>
+			<td><input class="noprint" type="button" onClick="imprimir()" value="Imprimir Informe"/>
+</td>
+	</tr>
+</table>
+

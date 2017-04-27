@@ -1,0 +1,95 @@
+
+<script type="text/javascript">
+function listPaginator(g){
+
+	//alert("clic");
+//	console.debug(g);
+	var url = $(g).attr('url')
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;       
+	var url = $(g).attr('href')
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+	   
+	    return false;
+	}
+
+function listarMenues(){
+	
+	url="./default/menues/list";
+
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+	
+			$.ajax({url: url,
+		        success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		    return false;
+	}
+
+function menues(f){
+	
+	
+	var url = $(f).attr('url');
+	if(url == null){
+		var url="./default/menues/list";
+	}
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+</script>
+
+<table>
+  <tr>
+    <th>menu_id</th>
+    <th>menu</th>
+    <th>url</th>
+    <th>padre_id</th>
+    <th>orden</th>
+    <th></th>
+    <th></th>
+  </tr>
+<?php 
+foreach ($this->rows as $menu):?>
+  <tr>
+    <td><?=$menu['menu_id'] ?></td>
+    <td><?=$menu['menu'] ?></td>
+    <td><?=$menu['url'] ?></td>
+    <td><?=$menu['padre_id'] ?></td>
+    <td><?=$menu['orden'] ?></td>
+    <td><input type="button" value="Ver" url="./default/menues/view/id/<?=$menu['menu_id']?>" onClick="return menues(this)"> </input> </td>
+    <td><input type="button" value="Eliminar" url="./default/menues/delete/id/<?=$menu['menu_id']?>" onClick="return menues(this)"> </input> </td>
+  </tr>
+
+<?endforeach;?>
+<tr>
+    <td><input type="button" value="Agregar" url="./default/menues/add/" onClick="return menues(this)"> </input> </td>
+  </tr>
+</table>
+<?=$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml'); ?>

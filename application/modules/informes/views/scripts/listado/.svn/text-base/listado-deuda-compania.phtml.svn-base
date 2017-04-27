@@ -1,0 +1,210 @@
+<!--
+
+/* Listado por agente.
+*Fecha de pedido / Vigencia / Nº Solicitud / Nº Poliza / Endoso / Cliente (en vez de Compañia) / Agente / Prima / Cuota / Importe Cuota (aca iria lo que corresponde a Premio Asegurado) / Estado / Fecha Baja
+*/
+ -->
+<script type="text/javascript">
+
+$(document).ready(
+		function() {
+
+			// Guardar Solicitud
+			$('#buscar_deuda_compania').click(function() {
+				
+			// trae id de tab
+			var tabs_sel = $('#tabs').tabs();
+			var idx = tabs_sel.tabs('option',
+					'selected');
+
+			// Trae el tab correspondiente
+			var tab = $('#tabs ul li a')[idx];
+			// //console.debug($('#tabs ul li a'));
+			var href = $(tab).attr('href');
+
+			// suponemos que el form es valido
+	
+			var data = $('#listado_deuda_compania_form').serializeArray();
+			 console.debug(data);
+			 var data_string = JSON.stringify(data); 
+			 console.debug(data_string);
+			 
+					$.ajax({
+							url : "./informes/listado/listado-deuda-compania",
+							data :data
+							,success : function(result) {
+								$(href).html(result);
+							}
+							});
+
+				});
+
+			$('#informe_diario_list').tablesorter();
+});	
+</script>
+
+	
+<?if($this->isOperador):?>
+<div id="listado_deuda_compania">
+<form id="listado_deuda_compania_form" action="" onSubmit="return false">
+<input type="hidden" name="buscar" value="true"/>
+<input type="hidden" name="compania_id" value=<?=$this->compania_id?>></input>
+		<table id="buscar_deuda_compania_tabla">
+			<tr>
+				<td>Agente:</td>
+				<td><select name="agente_id">
+						<option value="">Todos</option>
+						<? foreach($this->agentes as $row ):?>
+						<?if($this->agente_id==$row['agente_id']):?>
+						<option selected value=<?=$row['agente_id']?>>
+						<?=$row['nombre']?>
+						<?else:?>
+						<option value=<?=$row['agente_id']?>>
+						<?=$row['nombre']?>
+						</option>
+						<?endif; ?>
+						<? endforeach; ?>
+				</select>
+				</td>
+								<td>Asegurado:</td>
+				<td><select name="asegurado_id">
+						<option value="">Todos</option>
+						<? foreach($this->asegurados as $row ):?>
+						<?if($this->asegurado_id==$row['asegurado_id']):?>
+						<option selected value=<?=$row['asegurado_id']?>>
+						<?=$row['nombre']?>
+						<?else:?>
+						
+						<option value=<?=$row['asegurado_id']?>>
+						<?=$row['nombre']?>
+						</option>
+						<?endif; ?>
+						<? endforeach; ?>
+				</select>
+				</td>
+				
+
+				<td><input type="button" name="buscar_deuda_compania" id="buscar_deuda_compania" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+<?elseif($this->isAgente):?>
+<div id="listado_deuda_compania">
+<form id="listado_deuda_compania_form" action="" onSubmit="return false">
+<input type="hidden" name="buscar" value="true"/>
+		<table id="buscar_deuda_compania_tabla">
+			<tr>
+				<td>Compania:</td>
+				<td><select name="compania_id">
+						<option value="">Todos</option>
+						<? foreach($this->companias as $row ):?>
+						<?if($this->compania_id==$row['compania_id']):?>
+						<option selected value=<?=$row['compania_id']?>>
+						<?=$row['nombre']?>
+						<?else:?>
+						
+						<option value=<?=$row['compania_id']?>>
+						<?=$row['nombre']?>
+						</option>
+						<?endif; ?>
+						<? endforeach; ?>
+				</select>
+				</td>
+
+				<td><input type="button" name="buscar_deuda_compania" id="buscar_deuda_compania" value="buscar"></input></td>
+			</tr>
+		</table>
+	</form>
+	<hr>
+</div>
+<?endif;?>
+
+
+<?//if($this->buscar):?>
+<!-- 
+Fecha de pedido / Vigencia / Nº Solicitud / Nº Poliza / Endoso / Cliente (en vez de Compañia) / Agente / Prima / Cuota / Importe Cuota (aca iria lo que corresponde a Premio Asegurado) / Estado / Fecha Baja
+ -->
+
+ <A HREF="javascript:void(0)"
+onclick="window.open('./informes/listado/imprimir-listado-deuda-compania/compania_id/<?=$this->compania_id?>/asegurado_id/<?=$this->asegurado_id?>/agente_id/<?=$this->agente_id?>')">
+Imprimir Informe</A>
+<h3><b>Compania:</b><?=$this->compania_nombre?></h3>
+<?//window.open('./informes/listado/pdf/agente_id/<?=$this->agente_id')?>
+
+<table class="ui-widget" id="informe_diario_list">
+	<thead class="ui-widget-header">
+		<th>Fecha de Pedido</th>
+		<th>Vigencia</th>
+		<th>Nro Solicitud</th>
+		<th>Nro Poliza</th>
+		<th>Endoso</th>
+		<th>Cliente</th>
+		<?if($this->isOperador):?>
+		<th>Agente</th>
+		<th>Prima</th>
+		<th>Plus</th>
+		<?endif;?>
+		<th>Cuota</th>
+		<th>Importe Cuota</th>
+		<th>Estado</th>
+		<th>Fecha Baja</th>
+	</thead>
+	<tbody class="ui-widget-content">
+	<?
+	//echo"<pre>";
+	//print_r($this->listado_deuda_compania);
+	//exit;
+	
+	foreach ($this->listado_deuda_compania as $poliza):
+	
+	//$compania_nombre = Domain_Compania::getNameById($poliza['compania_id']);
+	
+	$compania_nombre = Domain_Compania::getNameById($poliza['compania_id']);
+	$asegurado_nombre = Domain_Asegurado::getNameById($poliza['asegurado_id']);
+	$agente_nombre = Domain_Agente::getNameById($poliza['agente_id']);
+	
+	$d_poliza = new Domain_Poliza($poliza['poliza_id']);
+	$m_poliza = $d_poliza->getModelPoliza();
+	$m_detalle_pago = $d_poliza->getModelDetallePago();
+	$m_poliza_valores = $d_poliza->getModelPolizaValores();
+	$m_poliza_detalle = $d_poliza->getModelDetalle();
+	$estado_poliza = Domain_EstadoPoliza::getNameById($poliza['estado_id']);
+	
+	$estado_debe = Domain_Helper::getHelperIdByDominioAndName('estado_pago', 'DEBE');
+	$rows = Domain_DetallePago::getDetalleCuotas($m_detalle_pago->detalle_pago_id,$estado_debe);
+	//echo "<pre>";
+	
+	$vigencia = $poliza['fecha_vigencia']." a ".$poliza['fecha_vigencia_hasta'];
+?>
+		<tr>
+			<td><?=$poliza['fecha_pedido']?></td>
+			<td><?=$vigencia?></td>
+			<td><?=$poliza['numero_solicitud']?></td>
+			<td><?=$poliza['numero_poliza']?></td>
+			<td><?=$poliza['endoso']?></td>
+			<td><?=$asegurado_nombre?></td>
+			<?if($this->isOperador):?> 
+			<td><?=$agente_nombre?></td>
+			<td><?=$m_poliza_valores->prima_comision?></td>
+			<td><?=$m_poliza_valores->plus?></td>
+			<?endif;?>
+			<td></td>
+			<td><?=$m_poliza_valores->premio_asegurado?></td>
+			<td><?=$estado_poliza?></td>
+			<td><?=$poliza['fecha_baja']?></td>
+		</tr>
+		<?endforeach;?>
+	</tbody>
+</table>
+		<?//endif;?>
+
+<!--   //$this->paginationControl($this->rows, 'Sliding', 'paginator.phtml',array('criterio'=>$this->criterio)); -->
+
+
+
+
+
+
+

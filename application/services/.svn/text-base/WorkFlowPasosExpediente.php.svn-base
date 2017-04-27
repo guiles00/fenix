@@ -1,0 +1,48 @@
+<?php
+class Servicios_WorkFlowPasosExpediente
+{
+	private $_autorizador;
+	
+	function __construct(Servicios_Autorizacion_WorkFlowPasosExpediente $sa)
+	{
+		if ($sa instanceof Servicios_Autorizacion_WorkFlowPasosExpediente)
+		{
+			$this->_autorizador=$sa;	
+		}else{
+			$this->_autorizador=null;//new Servicios_Autorizacion_WorkFlowPasosExpediente($u);	
+		}
+    } 
+    
+    public function setAutorizador(Servicios_Autorizacion_WorkFlowPasosExpediente $sa)
+    {
+    	if ($sa instanceof Servicios_Autorizacion_WorkFlowPasosExpediente)
+		{
+			$this->_autorizador=$sa;	
+		}else{
+			throw new Servicios_Exception_WorkFlowPasosExpediente_Generic("clase Autorizadora invalida!");	
+		}
+    }
+    
+    public function getAutorizador()
+    {
+    	if ($this->_autorizador instanceof Servicios_Autorizacion_WorkFlowPasosExpediente)
+		{
+    		return $this->_autorizador;
+		}else{
+			throw new Servicios_Exception_WorkFlowPasosExpediente_Generic("No hay clase Autorizadora!");
+		}
+    }
+    
+    public function ejemploDeMetodo(/*Model_Expediente $e, Model_PasoExpediente $pe,*/ Servicios_Autorizacion_WorkFlowPasosExpediente  $sa)
+	{
+		if (!$sa instanceof Servicios_Autorizacion_WorkFlowPasosExpediente) $sa=$this->getAutorizador();
+		//	
+		if ($sa->isAllowed('metodo_a_consultar'/*, $e, $pe*/))
+		{
+			return true;
+		}else{
+			throw new Servicios_Exception_WorkFlowPasosExpediente_Generic("No Autorizado!");
+		}
+	}
+	
+}

@@ -1,0 +1,120 @@
+Model_HcaHcaCrt:
+  connection: iurix
+  tableName: hca_hca_crt
+  columns:
+    hcc_carat:
+      type: string(900)
+      fixed: false
+      notnull: false
+      primary: false
+      autoincrement: false
+    org_codigo:
+      type: string(6)
+      fixed: false
+      primary: true
+      autoincrement: false
+    tcc_codigo:
+      type: string(3)
+      fixed: false
+      primary: true
+      autoincrement: false
+    hca_numero:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    hca_anio:
+      type: integer(2)
+      primary: true
+      autoincrement: false
+    hcc_orden:
+      type: integer(2)
+      primary: true
+      autoincrement: false
+    hcc_id:
+      type: integer(4)
+      notnull: true
+      primary: false
+      autoincrement: true
+Model_HcaHcaCst:
+  connection: iurix
+  tableName: hca_hca_cst
+  columns:
+    cst_codigo:
+      type: string(6)
+      fixed: false
+      primary: true
+      autoincrement: false
+    org_codigo:
+      type: string(6)
+      fixed: false
+      primary: true
+      autoincrement: false
+    tcc_codigo:
+      type: string(3)
+      fixed: false
+      primary: true
+      autoincrement: false
+    hca_numero:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    hca_anio:
+      type: integer(2)
+      primary: true
+      autoincrement: false
+    t_amparo:
+      type: integer(4)
+      notnull: false
+      primary: false
+      autoincrement: false
+  relations:
+    Model_Vdpc:
+      local: hca_numero
+      foreign: hca_numero
+      type: many
+Model_Vdpc:
+  connection: iurix
+  tableName: vdpc
+  columns:
+    vpc_person:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    org_codigo:
+      type: string(6)
+      fixed: false
+      primary: true
+      autoincrement: false
+    tcc_codigo:
+      type: string(3)
+      fixed: false
+      primary: true
+      autoincrement: false
+    hca_numero:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    vpc_codigo:
+      type: string(6)
+      fixed: false
+      primary: true
+      autoincrement: false
+    vpc_fecvin:
+      type: integer(4)
+      notnull: false
+      primary: false
+      autoincrement: false
+    hca_anio:
+      type: integer(2)
+      primary: true
+      autoincrement: false
+    vdpc_orden:
+      type: integer(4)
+      notnull: true
+      primary: false
+      autoincrement: true
+  relations:
+    Model_HcaHcaCst:
+      local: hca_numero
+      foreign: hca_numero
+      type: many

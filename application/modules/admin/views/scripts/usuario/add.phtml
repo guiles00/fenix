@@ -1,0 +1,296 @@
+
+<script type="text/javascript">
+
+function listUsuario(f){
+	
+		url="./admin/usuario/list";
+		
+	var tabs_sel = $('#tabs').tabs();
+	var idx = tabs_sel.tabs('option', 'selected');
+
+	//Trae el tab correspondiente
+	var tab = $('#tabs ul li a')[idx];
+	//console.debug($('#tabs ul li a'));
+	var href = $(tab).attr('href') ;                       
+
+	    $.ajax({url: url,success:function(result){
+	        $(href).html(result);
+	      }});
+
+	    return false;
+	}
+
+$(document).ready(function() { 
+$("#alta_usuario").validate({
+    rules: {
+        username: {
+            required: true,
+            minlength: 2,
+            remote: "./admin/usuario/check-usuario"
+        },
+        password: {
+            required: true,
+            minlength: 3
+        },
+        confirm_password: {
+            required: true,
+            minlength: 3,
+            equalTo: "#password"
+        },
+        tipo_usuario_id: {
+            required: true
+        },
+        usuario_perfil_id: {
+            required: true
+        }
+        
+    },
+    messages: {
+        
+        username: {
+            required: "No puede estar vacio",
+            minlength: "Al menos 2 caracteres",
+            remote: "Ya esta en la base"
+        },
+        password: {
+            required: "No puede estar vacio",
+            minlength: "Longitud mayor a 3 caracteres"
+        },
+        confirm_password: {
+            required: "confirma el password",
+            minlength: "",
+            equalTo: "Tiene que ser igual"
+        },
+        tipo_usuario_id: {
+            required: "Selecciona un tipo de usuario"
+        },
+        usuario_perfil_id: {
+            required: "Selecciona un perfil"
+        }
+    }
+});
+
+/*
+ * Muestra listado de usuario segun tipo de usuario
+ */
+ $("#usuario_agente_id").hide();
+ $("#usuario_cliente_id").hide();
+ 
+ $("#tipo_usuario_id").change(function() {
+
+	 var id_selected = $('#tipo_usuario_id option:selected').val();
+	//console.debug(id_selected);
+	 switch(id_selected)
+	 {
+
+	case '1': //Compania
+		 $("#usuario_compania_id").show();
+		 $("#usuario_cliente_id").hide();
+		 $("#usuario_agente_id").hide();
+	   break;
+	case '2': //Productor
+		 //$("#usuario_cliente_id").show();
+		 //$("#usuario_agente_id").hide();
+	   break;
+
+	 case '3': //Cliente - OK
+		 $("#usuario_cliente_id").show();
+		 $("#usuario_compania_id").hide();
+		 $("#usuario_agente_id").hide();
+	   break;
+	  case '4': // Operador - Ok
+		 //$("#usuario_cliente_id").show();
+		 //$("#usuario_agente_id").hide();
+	   break;
+	  case '5': // Ejecutivo
+		 //$("#usuario_cliente_id").show();
+		 //$("#usuario_agente_id").hide();
+	   break; 
+	 case '6': //Agente 
+		 $("#usuario_cliente_id").hide();
+		 $("#usuario_compania_id").hide();
+		 $("#usuario_agente_id").show();
+	   break;
+	 default:
+		 $("#usuario_cliente_id").hide();
+ 	     $("#usuario_agente_id").hide();
+	 } 
+	 //console.debug('change');
+	 
+ });
+
+
+$("#save_usuario").click(function() {
+
+	  //alert("Valid: " + $("#alta_usuario").valid());
+	var url ="./admin/usuario/add";
+	  var username = $( "#username" ),
+      password = $( "#password" ),
+      usuario_id = $( "#usuario_id" ),
+      add_usuario = $("#add_usuario"),
+      tipo_usuario_id = $("#tipo_usuario_id"),
+      usuario_tipo_id = $("#usuario_tipo_id"),
+      usuario_perfil_id =$("#usuario_perfil_id");
+      
+      
+ //Si no es valido devuelve false y me voy del script     
+if(!$("#alta_usuario").valid())return false;	  
+
+		var tabs_sel = $('#tabs').tabs();
+		var idx = tabs_sel.tabs('option', 'selected');
+
+		//Trae el tab correspondiente
+		var tab = $('#tabs ul li a')[idx];
+		//console.debug($('#tabs ul li a'));
+		var href = $(tab).attr('href') ;                       
+
+		
+		 $.ajax({url: url,
+		        data:{
+			        add: true
+		            ,id: usuario_id.val() 
+		            ,tipo_usuario_id: tipo_usuario_id.val()
+		            ,usuario_tipo_id: usuario_tipo_id.val()
+		            ,username: username.val()
+		            ,password: password.val()
+		            ,usuario_perfil_id: usuario_perfil_id.val()
+		            }
+		        , success:function(result){
+		        $(href).html(result);
+		      }});
+		   
+		   
+		    return false;
+		  
+	});
+
+
+});
+
+</script>
+
+
+<form id="alta_usuario" action="#" method="GET">
+	 <!-- onSubmit="return addUsuario(this)" -->
+	<input type="hidden" value="1" name="add"></input>
+	<input type="hidden" name="usuario_id" id="usuario_id" 	value="">
+	<table>
+	
+		<tr>
+			<td>username</td>
+			<td><input type="text" name="username" id="username"
+				value="<?=$this->row['username']?>"></input></td>
+		</tr>
+		<tr>
+			<td>password</td>
+			<td><input type="password" id="password" id="password" name="password"
+				value="<?=$this->row['password']?>"></input></td>
+		</tr>
+		<tr>
+			<td>Confirme password</td>
+			<td><input type="password" id="confirm_password" name="confirm_password"
+				value="<?=$this->row['password']?>"></input></td>
+		</tr>
+		<td>usuario_perfil_id</td>
+		<td><select name="usuario_perfil_id" id="usuario_perfil_id">
+				<!--  -->
+				<option value="">Perfil</option>
+				<? foreach($this->perfiles as $perfil ):?>
+				<?if($this->usuario_perfil_id==$perfil['perfil_id']):?>
+				<option selected value=<?=$perfil['perfil_id']?>>
+				<?=$perfil['nombre']?>
+				<?else:?>
+				
+				<option value=<?=$perfil['perfil_id']?>>
+				<?=$perfil['nombre']?>
+				</option>
+				<?endif; ?>
+				<? endforeach; ?>
+		</select>
+		</td>
+		<tr>
+			<td>tipo_usuario_id</td>
+			<td><select name="tipo_usuario_id" id="tipo_usuario_id">
+					<option value="">Tipo Usuario</option>
+					<? foreach($this->tipo_usuarios as $tipo_usuario ):?>
+					<?if($this->row['tipo_usuario_id']==$tipo_usuario['dominio_id']):?>
+					<option selected value=<?=$tipo_usuario['dominio_id']?>>
+					<?=$tipo_usuario['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$tipo_usuario['dominio_id']?>>
+					<?=$tipo_usuario['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>
+		<tr id="usuario_compania_id">
+			<td>Seleccione Compania</td>
+			<td><select name="usuario_tipo_id" id="usuario_tipo_id">
+					<option value="0">Seleccione Compania</option>
+					<? foreach($this->companias as $compania ):?>
+					<?if($this->row['usuario_tipo_id']==$compania['compania_id']):?>
+					<option selected value=<?=$compania['compania_id']?>>
+					<?=$compania['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$compania['compania_id']?>>
+					<?=$compania['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>
+
+
+		<tr id="usuario_agente_id">
+			<td>Seleccione Agente</td>
+			<td><select name="usuario_tipo_id" id="usuario_tipo_id">
+					<option value="0">Seleccione Agente</option>
+					<? foreach($this->agentes as $agente ):?>
+					<?if($this->row['usuario_tipo_id']==$agente['agente_id']):?>
+					<option selected value=<?=$agente['agente_id']?>>
+					<?=$agente['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$agente['agente_id']?>>
+					<?=$agente['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>
+		<tr id="usuario_cliente_id">
+			<td>Seleccione Cliente</td>
+			<td><select name="usuario_tipo_id" id="usuario_tipo_id">
+					<option value="0">Seleccione Cliente</option>
+					<? foreach($this->clientes as $cliente ):?>
+					<?if($this->row['usuario_tipo_id']==$cliente['cliente_id']):?>
+					<option selected value=<?=$cliente['cliente_id']?>>
+					<?=$cliente['nombre']?>
+					<?else:?>
+					
+					<option value=<?=$cliente['cliente_id']?>>
+					<?=$cliente['nombre']?>
+					</option>
+					<?endif; ?>
+					<? endforeach; ?>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" id="save_usuario" value="guardar"></input></td>
+			<td><input type="button" name="Cancel" onclick="return listUsuario()"
+				value="Atras" /></input></td>
+		</tr>
+	</table>
+
+</form>
+
+
+

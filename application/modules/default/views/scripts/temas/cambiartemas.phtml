@@ -1,0 +1,64 @@
+<?php 
+	//ToDo: Usar el helper en vez de la funcion.
+	function objetoToSelect($vista, $idSelect,$valueSelect, $objetoSource, $metodoKey, $metodoValue,  $firstOption=null){
+		$arr=array();
+		if ($firstOption!==null) $arr[0]=$firstOption;
+		foreach($objetoSource as $item){
+			$arr[$item->$metodoKey()]=$item->$metodoValue();
+		}
+		return $vista->formSelect($idSelect,  $valueSelect , null, $arr) ;
+	}		
+	
+	$sel_tema=$this->objetoToSelect('seleccion', 
+									1/*$this->persona_item->tipo_documento_id*/, 
+									$this->estilo_items, 'estilo_id', 'nombre', null) ;
+?>
+
+
+
+<?php $otk="page_one_time_key_".md5(microtime()) ?>
+<input type=hidden id="<?php echo $otk ?>"></input>
+
+<div id="page">
+
+<h1>Visualizacion</h1>
+
+<h2>Preferencias de Vista</h2>
+<span>Seleccionar Theme</span>
+<?php 
+echo $sel_tema;
+?>
+<a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="boton" href="javascript:void(0)">Cambiar Theme<span class="ui-icon ui-icon-disk"></span></a>
+<br /><br />
+<div id="info"></div>
+<?php if (getenv('APPLICATION_ENV')=='development') : ?>
+<h1>Pd: FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRRRRRRTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</h1>
+<?php endif ?>
+</div>
+
+<script>	
+(function(tab_id){
+
+    /*ACA EL CODIGO DE INICIACION, tab_id es el id del tab que nos lo pasa el tab handler*/
+	
+	//funcion local a la fnc de inicializacion que busca un elemento dentro del contexto del Tab Contenedor 
+	var $this=function(selector){
+		return $(selector, "#"+tab_id+":first ");
+	}
+
+	$this('#boton').click(function() {
+			var tab_id=$.getTabContainer(this).attr('id');
+			var $this=function(selector){
+				return $(selector, "#"+tab_id+":first ");
+			}
+			/*
+			$("#linc").attr({      
+				href: $this("#seleccion").val()
+			});
+			*/
+			$('#info', "#"+tab_id+":first ").load('/default/temas/guardar-tema/estilo_id/'+$this("#seleccion").val());
+	});   
+
+})($.getTabContainer('#<?php echo $otk ?>').attr('id'));
+
+</script>

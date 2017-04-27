@@ -1,0 +1,23 @@
+<span style="color:blue"><h4>Modificado con &eacute;xito</h4></span>
+<br>
+<input type='button' value='Volver' onClick="return listadoAgente()"> </input>
+
+<script>
+function listadoAgente(){
+        var url = './entidad/agente/index';
+        var tabs_sel = $('#tabs').tabs();
+        var idx = tabs_sel.tabs('option', 'selected');
+
+        //Trae el tab correspondiente
+        var tab = $('#tabs ul li a')[idx];
+        var href = $(tab).attr('href') ;                       
+        
+    $.ajax({url: url
+        , success:function(result){
+        $(href).html(result);
+      }});
+   
+    return false;
+}
+
+</script>

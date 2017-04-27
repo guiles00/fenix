@@ -1,0 +1,56 @@
+<?php
+ Class Domain_FactoryDetallePoliza {
+
+	
+	public function crearDetallePolizaCaucion(){
+
+		return new Model_DetalleCaucion();
+		
+	}
+	
+ 	public function crearDetallePolizaAutomotor(){
+
+		return new Model_DetalleAutomotor();
+		
+	}
+	public function crearDetallePolizaAduaneros(){
+
+		return new Model_DetalleAduaneros();
+		
+	}
+	
+ public function crearDetallePolizaAccidentesPersonales(){
+
+		return new Model_DetalleAccidentesPersonales();
+		
+	}
+
+  public function crearDetallePolizaConstruccion(){
+
+		return new Model_DetalleConstruccion();
+		
+	}
+	
+ public function crearDetallePolizaAlquiler(){
+
+		return new Model_DetalleAlquiler();
+		
+	}
+	
+ public function crearDetallePolizaResponsabilidadCivil(){
+
+		return new Model_DetalleResponsabilidadCivil();
+		
+	}
+ public function crearDetallePolizaTransporteMercaderia(){
+
+		return new Model_DetalleTransporteMercaderia();
+		
+	}
+ public function crearDetallePolizaIGJ(){
+
+		return new Model_DetalleIGJ();
+		
+	}
+	
+}
