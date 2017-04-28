@@ -339,6 +339,33 @@ $(document).ready(function() {
 					    }
 					});
 
+
+			// Enviar Solicitud Compania
+			$('#enviar_compania_solicitud_automotores').click(function() {
+
+				// busca el id de la solicitud a confirmar
+				var solicitud_id = $('#solicitud_id').val();
+				// trae id de tab
+				var tabs_sel = $('#tabs').tabs();
+				var idx = tabs_sel.tabs('option', 'selected');
+
+				// Trae el tab correspondiente
+				var tab = $('#tabs ul li a')[idx];
+				// //console.debug($('#tabs ul li a'));
+				var href = $(tab).attr('href');
+				var show_result = href+' #show_result';	
+				$.ajax({
+					url : "./poliza/solicitud/enviar-solicitud-compania-automotores",
+					data : {
+						solicitud_id : solicitud_id
+					},
+					success : function(result) {
+						$(show_result).html(result);
+						//devuelve el resultado e indica si tuvo exito o no
+					}
+				});
+
+			});
 				
 });
 

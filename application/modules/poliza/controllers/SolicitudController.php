@@ -3560,6 +3560,136 @@ public function enviarSolicitudCompaniaIgjAction(){
 		return true;
 	}
 	
+	public function enviarSolicitudCompaniaAutomotoresAction(){
+		
+		$this->_helper->viewRenderer->setNoRender ();
+		$params = $this->_request->getParams();
+
+		$poliza = new Domain_Poliza($params['solicitud_id']);
+		$m_poliza = $poliza->getModelPoliza();
+		$compania_id = $m_poliza->compania_id;
+		//chequear si tiene asignada compania
+		
+		if(empty($compania_id)){
+		echo "<font color='red'>Error: La poliza no tiene compania!</font>";
+			return false;
+		}
+		
+		$compania = new Domain_Compania($compania_id);
+		$m_compania = $compania->getModel(); 
+		$email = $m_compania->email;
+		
+		if(empty($email)){
+		echo "<font color='red'>Error: La compania no tiene email!</font>";	
+		return false;
+		}
+		$asegurado = new Domain_Asegurado($m_poliza->asegurado_id);
+		$m_asegurado = $asegurado->getModel();
+
+		$headers = "MIME-Version: 1.0\r\n";
+	    $headers .= "Content-type: text/html; charset=ISO-8859-1\r\n";
+	    $headers .= "From: Fenix Seguros <info@fenixseguros.com.ar>\r\n";
+	    $headers .= "Bcc:info@fenixseguros.com.ar\r\n";
+	    $subject = " Solicitud de Poliza de ".$m_asegurado->nombre;
+	    $to = $email;
+	
+	    
+	    $contenido = file_get_contents (APPLICATION_PATH.'/../plantillas/email_sconsultora_automotores.html' );
+		
+	    $template=$contenido;
+		
+		$dia = date('w');
+		$meses = array("","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+		$mes =$meses[date('n')];
+		$año = date('Y');
+
+		/*Cargo variables*/
+		
+	
+		
+		$productor = new Domain_Productor($m_poliza->productor_id);
+		$m_productor = $productor->getModel();
+		$tipo_seguro = Domain_TipoPoliza::getNameById($m_poliza->tipo_poliza_id);
+		$m_detalle_poliza = $poliza->getModelDetalle();
+		$m_detalle_poliza_valores = $poliza->getModelPolizaValores();
+
+		$motivo_garantia = Domain_MotivoGarantia::getMotivoGarantiaByIdAndTipoPoliza($m_detalle_poliza->motivo_garantia_id, $m_poliza->tipo_poliza_id);
+		
+		$codigo_productor = Model_CodigoProductorCompania::getCodigoProductorByCompaniaId($m_poliza->productor_id, $m_poliza->compania_id);
+		
+		$beneficiario = new Domain_Beneficiario($m_detalle_poliza->beneficiario_id);
+		$m_beneficiario = $beneficiario->getModel();
+		$tipo_movimiento = 'Emisi&oacute;n';
+		
+		$moneda = '$';	
+		if($m_detalle_poliza_valores->moneda_id == 1){
+		$moneda = '$';	
+		}elseif($m_detalle_poliza_valores->moneda_id == 2){
+		$moneda = 'USD';		
+		}elseif($m_detalle_poliza_valores->moneda_id == 3){
+		$moneda = 'EURO';		
+		};
+		
+		$variables = array(
+			'{numero_solicitud}'=>(empty($m_poliza->numero_solicitud))?'':$m_poliza->numero_solicitud,
+			'{compania}'=>(empty($m_poliza->compania_id))?'':$m_compania->nombre,
+			'{cliente}'=>(empty($m_poliza->asegurado_id))?'':$m_asegurado->nombre,
+			'{domicilio_cliente}'=>(empty($m_asegurado->domicilio))?'':$m_asegurado->domicilio,
+			'{localidad_cliente}'=>(empty($m_asegurado->localidad))?'':$m_asegurado->localidad,
+			'{provincia_cliente}'=>(empty($m_asegurado->provincia))?'':$m_asegurado->provincia,
+			'{cuit_cliente}'=>(empty($m_asegurado->cuit))?'':$m_asegurado->cuit,
+			'{iva_cliente}'=>(empty($m_asegurado->iva))?'':$m_asegurado->iva	,
+			/*'{productor}'=>(empty($m_poliza->productor_id))?'':$m_productor->nombre,	
+			'{codigo_productor}'=>(empty($codigo_productor))?'':$codigo_productor,
+			'{tipo_seguro}'=>(empty($tipo_seguro))?'':$tipo_seguro,
+			'{tipo_movimiento}'=>(empty($tipo_movimiento))?'':$tipo_movimiento,
+			'{vigencia_desde} '=>(empty($m_poliza->fecha_vigencia))?'':$m_poliza->fecha_vigencia,
+			'{vigencia_hasta}'=>(empty($m_poliza->fecha_vigencia_hasta))?'':$m_poliza->fecha_vigencia_hasta,
+			'{asegurado}'=>(empty($m_poliza->asegurado_id))?'':$m_asegurado->nombre,
+			'{motivo_garantia}'=>(empty($motivo_garantia))?'':$motivo_garantia,
+			'{suma_asegurada}'=>(empty($m_detalle_poliza_valores->monto_asegurado))?'':$m_detalle_poliza_valores->monto_asegurado,
+			'{beneficiario}'=>(empty($m_beneficiario->nombre))?'':$m_beneficiario->nombre,
+			'{domicilio_beneficiario}'=>(empty($m_beneficiario->domicilio))?'':$m_beneficiario->domicilio,
+			'{localidad_beneficiario}'=>(empty($m_beneficiario->localidad))?'':$m_beneficiario->localidad,
+			'{provincia_beneficiario}'=>(empty($m_beneficiario->provincia))?'':$m_beneficiario->provincia,
+			'{cuit_beneficiario}'=>(empty($m_beneficiario->cuit))?'':$m_beneficiario->cuit,
+			'{licitacion}'=>(empty($m_detalle_poliza->numero_licitacion))?'':$m_detalle_poliza->numero_licitacion,
+			'{obra}'=>(empty($m_detalle_poliza->obra))?'':$m_detalle_poliza->obra,
+			'{expediente}'=>(empty($m_detalle_poliza->expediente))?'':$m_detalle_poliza->expediente,
+			'{apertura}'=>(empty($m_detalle_poliza->apertura_licitacion))?'':$m_detalle_poliza->apertura_licitacion,
+			'{clausula}'=>(empty($m_detalle_poliza->clausula_especial))?'':$m_detalle_poliza->clausula_especial,
+			'{certificaciones}'=>(empty($m_detalle_poliza->certificaciones))?'':$m_detalle_poliza->certificaciones,
+			'{adicional}'=>(empty($m_detalle_poliza->descripcion_adicional))?'':$m_detalle_poliza->descripcion_adicional,
+			'{observaciones_compania}'=>(empty($m_poliza->observaciones_compania))?'':$m_poliza->observaciones_compania,
+			'{prima}'=>(empty($m_detalle_poliza_valores->prima_comision))?'':$m_detalle_poliza_valores->prima_comision,
+			'{objeto}'=>(empty($m_detalle_poliza->objeto))?'':$m_detalle_poliza->objeto,
+			'{moneda}'=>(empty($moneda))?'':$moneda*/
+			);
+
+			/*Fin Cargo Variables*/
+			
+	$contenido= str_replace(array_keys($variables),array_values($variables),$template);
+
+
+		echo $contenido;
+	    	   
+	    
+		$res = mail("$to", "$subject",$contenido, $headers);
+		
+		if(!$res){
+		echo "<font color='red'>Ocurrio un error al tratar de enviar el email</font>";
+		}else{
+
+			echo "<font color='blue'>El email ha sido enviado correctamente!</font>";
+		}
+		
+				
+		return true;
+	}
+
+
+
+
 	
 	public function traeMotivoGarantiaAction(){
 		
